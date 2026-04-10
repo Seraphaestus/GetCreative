@@ -1,0 +1,5 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": { "item": "minecraft:barrel" },
+  "result": { "id": "get_creative:fluid_barrel", "count": 1 }
+}

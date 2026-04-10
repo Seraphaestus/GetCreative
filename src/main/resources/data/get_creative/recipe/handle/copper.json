@@ -1,0 +1,5 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": { "item": "minecraft:copper_block" },
+  "result": { "id": "get_creative:copper_handle", "count": 3 }
+}

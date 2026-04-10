@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    { "item": "create:redstone_link" },
+    { "tag": "minecraft:wooden_buttons" }
+  ],
+  "result": {
+    "id": "get_creative:linked_remote",
+    "count": 1
+  }
+}

@@ -1,0 +1,5 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": { "item": "minecraft:weathered_copper" },
+  "result": { "id": "get_creative:weathered_copper_handle", "count": 3 }
+}

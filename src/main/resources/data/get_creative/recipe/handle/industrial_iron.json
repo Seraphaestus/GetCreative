@@ -1,0 +1,5 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": { "item": "get_creative:iron_handle" },
+  "result": { "id": "get_creative:industrial_iron_handle", "count": 1 }
+}

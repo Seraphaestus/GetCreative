@@ -1,0 +1,54 @@
+{
+	"format_version": "1.21.6",
+	"credit": "Made with Blockbench",
+	"texture_size": [128, 128],
+	"textures": {
+		"particle": "get_creative:block/breeze_head",
+		"main": "get_creative:block/breeze_head"
+	},
+	"elements": [
+		{
+			"name": "BreezeHead",
+			"from": [4, 4, 4],
+			"to": [12, 12, 12],
+			"faces": {
+				"north": {"uv": [4, 4, 8, 8], "texture": "#main"},
+				"east": {"uv": [0, 4, 4, 8], "texture": "#main"},
+				"south": {"uv": [12, 4, 16, 8], "texture": "#main"},
+				"west": {"uv": [8, 4, 12, 8], "texture": "#main"},
+				"up": {"uv": [4, 0, 8, 4], "texture": "#main"},
+				"down": {"uv": [8, 0, 12, 4], "texture": "#main"}
+			}
+		},
+		{
+			"name": "BreezeEyesFront",
+			"from": [3, 6, 3.8],
+			"to": [13, 9, 3.8],
+			"rotation": {"angle": 0, "axis": "y", "origin": [0, 3, 1]},
+			"faces": {
+				"north": {"uv": [4, 14, 9, 15.5], "texture": "#main"},
+				"south": {"uv": [4, 14, 9, 15.5], "texture": "#main"}
+			}
+		},
+		{
+			"name": "BreezeEyesLeft",
+			"from": [3, 6, 3.8],
+			"to": [3, 9, 11.8],
+			"rotation": {"angle": 0, "axis": "y", "origin": [0, 3, 1]},
+			"faces": {
+				"east": {"uv": [0, 14, 4, 15.5], "texture": "#main"},
+				"west": {"uv": [9, 14, 13, 15.5], "texture": "#main"}
+			}
+		},
+		{
+			"name": "BreezeEyesRight",
+			"from": [13, 6, 3.8],
+			"to": [13, 9, 11.8],
+			"rotation": {"angle": 0, "axis": "y", "origin": [0, 3, 1]},
+			"faces": {
+				"east": {"uv": [0, 14, 4, 15.5], "texture": "#main"},
+				"west": {"uv": [9, 14, 13, 15.5], "texture": "#main"}
+			}
+		}
+	]
+}

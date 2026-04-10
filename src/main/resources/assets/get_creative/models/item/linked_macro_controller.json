@@ -1,0 +1,343 @@
+{
+	"format_version": "1.21.6",
+	"credit": "Made with Blockbench",
+	"parent": "block/block",
+	"textures": {
+		"particle": "get_creative:item/linked_macro_controller",
+		"base": "get_creative:item/linked_macro_controller",
+		"antenna": "create:block/redstone_antenna",
+		"button": "create:item/linked_controller",
+		"button_alt": "get_creative:item/linked_controller/button_alternative"
+	},
+	"elements": [
+		{
+			"name": "Controller",
+			"from": [2.5, 0, 1.5],
+			"to": [11.5, 2, 14.5],
+			"rotation": {"angle": 0, "axis": "y", "origin": [-1.5, 0, 0.5]},
+			"faces": {
+				"north": {"uv": [2, 12, 11, 14], "texture": "#base"},
+				"east": {"uv": [1, 14, 14, 16], "texture": "#base"},
+				"south": {"uv": [9, 12, 0, 14], "texture": "#base"},
+				"west": {"uv": [1, 14, 14, 16], "texture": "#base"},
+				"up": {"uv": [1, 0, 14, 9], "rotation": 270, "texture": "#base"},
+				"down": {"uv": [1, 9, 14, 0], "rotation": 90, "texture": "#base"}
+			}
+		},
+		{
+			"name": "AntennaTop",
+			"from": [1.5, 6, 4.5],
+			"to": [2.5, 7, 5.5],
+			"rotation": {"angle": 0, "axis": "z", "origin": [2.5, 2, 14.5]},
+			"faces": {
+				"up": {"uv": [1, 1, 2, 2], "texture": "#antenna"}
+			}
+		},
+		{
+			"name": "AntennaZ",
+			"from": [1.5, 0, 3.5],
+			"to": [2.5, 8, 6.5],
+			"rotation": {"angle": 0, "axis": "z", "origin": [2.5, 2, 14.5]},
+			"faces": {
+				"east": {"uv": [0, 0, 3, 8], "texture": "#antenna"},
+				"west": {"uv": [0, 0, 3, 8], "texture": "#antenna"}
+			}
+		},
+		{
+			"name": "AntennaX",
+			"from": [0.5, 0, 4.5],
+			"to": [3.5, 8, 5.5],
+			"rotation": {"angle": 0, "axis": "z", "origin": [2.5, 2, 14.5]},
+			"faces": {
+				"north": {"uv": [0, 0, 3, 8], "texture": "#antenna"},
+				"south": {"uv": [0, 0, 3, 8], "texture": "#antenna"},
+				"down": {"uv": [0, 9, 3, 10], "texture": "#antenna"}
+			}
+		},
+		{
+			"name": "buttonW",
+			"from": [3.5, 1, 10.5],
+			"to": [5.5, 3, 12.5],
+			"rotation": {"angle": 0, "axis": "y", "origin": [-1.5, 0, 2.5]},
+			"faces": {
+				"north": {"uv": [2, 11, 4, 13], "texture": "#button"},
+				"east": {"uv": [2, 13, 4, 15], "texture": "#button"},
+				"south": {"uv": [2, 11, 4, 13], "texture": "#button"},
+				"west": {"uv": [2, 11, 4, 13], "texture": "#button"},
+				"up": {"uv": [4, 13, 2, 11], "rotation": 180, "texture": "#button"}
+			}
+		},
+		{
+			"name": "buttonA",
+			"from": [5.5, 1, 12.5],
+			"to": [7.5, 3, 14.5],
+			"rotation": {"angle": 0, "axis": "y", "origin": [-1.5, 0, 2.5]},
+			"faces": {
+				"north": {"uv": [2, 11, 4, 13], "texture": "#button"},
+				"east": {"uv": [2, 13, 4, 15], "texture": "#button"},
+				"south": {"uv": [2, 11, 4, 13], "texture": "#button"},
+				"west": {"uv": [2, 11, 4, 13], "texture": "#button"},
+				"up": {"uv": [4, 13, 2, 11], "rotation": 180, "texture": "#button"}
+			}
+		},
+		{
+			"name": "buttonS",
+			"from": [7.5, 1, 10.5],
+			"to": [9.5, 3, 12.5],
+			"rotation": {"angle": 0, "axis": "y", "origin": [-1.5, 0, 2.5]},
+			"faces": {
+				"north": {"uv": [2, 11, 4, 13], "texture": "#button"},
+				"east": {"uv": [2, 13, 4, 15], "texture": "#button"},
+				"south": {"uv": [2, 11, 4, 13], "texture": "#button"},
+				"west": {"uv": [2, 11, 4, 13], "texture": "#button"},
+				"up": {"uv": [4, 13, 2, 11], "rotation": 180, "texture": "#button"}
+			}
+		},
+		{
+			"name": "buttonD",
+			"from": [5.5, 1, 8.5],
+			"to": [7.5, 3, 10.5],
+			"rotation": {"angle": 0, "axis": "y", "origin": [-1.5, 0, 2.5]},
+			"faces": {
+				"north": {"uv": [2, 11, 4, 13], "texture": "#button"},
+				"east": {"uv": [2, 13, 4, 15], "texture": "#button"},
+				"south": {"uv": [2, 11, 4, 13], "texture": "#button"},
+				"west": {"uv": [2, 11, 4, 13], "texture": "#button"},
+				"up": {"uv": [4, 13, 2, 11], "rotation": 180, "texture": "#button"}
+			}
+		},
+		{
+			"name": "buttonUp",
+			"from": [3.5, 1, 3.5],
+			"to": [5.5, 3, 5.5],
+			"rotation": {"angle": 0, "axis": "y", "origin": [-1.5, 0, -4.5]},
+			"faces": {
+				"north": {"uv": [2, 11, 4, 13], "texture": "#button"},
+				"east": {"uv": [2, 13, 4, 15], "texture": "#button"},
+				"south": {"uv": [2, 11, 4, 13], "texture": "#button"},
+				"west": {"uv": [2, 11, 4, 13], "texture": "#button"},
+				"up": {"uv": [4, 13, 2, 11], "rotation": 180, "texture": "#button"}
+			}
+		},
+		{
+			"name": "buttonLeft",
+			"from": [5.5, 1, 5.5],
+			"to": [7.5, 3, 7.5],
+			"rotation": {"angle": 0, "axis": "y", "origin": [-1.5, 0, -4.5]},
+			"faces": {
+				"north": {"uv": [2, 11, 4, 13], "texture": "#button"},
+				"east": {"uv": [2, 13, 4, 15], "texture": "#button"},
+				"south": {"uv": [2, 11, 4, 13], "texture": "#button"},
+				"west": {"uv": [2, 11, 4, 13], "texture": "#button"},
+				"up": {"uv": [4, 13, 2, 11], "rotation": 180, "texture": "#button"}
+			}
+		},
+		{
+			"name": "buttonDown",
+			"from": [7.5, 1, 3.5],
+			"to": [9.5, 3, 5.5],
+			"rotation": {"angle": 0, "axis": "y", "origin": [-1.5, 0, -4.5]},
+			"faces": {
+				"north": {"uv": [2, 11, 4, 13], "texture": "#button"},
+				"east": {"uv": [2, 13, 4, 15], "texture": "#button"},
+				"south": {"uv": [2, 11, 4, 13], "texture": "#button"},
+				"west": {"uv": [2, 11, 4, 13], "texture": "#button"},
+				"up": {"uv": [4, 13, 2, 11], "rotation": 180, "texture": "#button"}
+			}
+		},
+		{
+			"name": "buttonRight",
+			"from": [5.5, 1, 1.5],
+			"to": [7.5, 3, 3.5],
+			"rotation": {"angle": 0, "axis": "y", "origin": [-1.5, 0, -4.5]},
+			"faces": {
+				"north": {"uv": [2, 11, 4, 13], "texture": "#button"},
+				"east": {"uv": [2, 13, 4, 15], "texture": "#button"},
+				"south": {"uv": [2, 11, 4, 13], "texture": "#button"},
+				"west": {"uv": [2, 11, 4, 13], "texture": "#button"},
+				"up": {"uv": [4, 13, 2, 11], "rotation": 180, "texture": "#button"}
+			}
+		},
+		{
+			"name": "buttonShift",
+			"from": [8.5, 1, 8],
+			"to": [10.5, 3, 10],
+			"rotation": {"angle": 0, "axis": "y", "origin": [0.5, 0, 5]},
+			"faces": {
+				"north": {"uv": [2, 11, 4, 13], "texture": "#button"},
+				"east": {"uv": [2, 13, 4, 15], "texture": "#button"},
+				"south": {"uv": [2, 11, 4, 13], "texture": "#button"},
+				"west": {"uv": [2, 11, 4, 13], "texture": "#button"},
+				"up": {"uv": [4, 13, 2, 11], "rotation": 180, "texture": "#button"}
+			}
+		},
+		{
+			"name": "buttonJump",
+			"from": [8.5, 1, 6],
+			"to": [10.5, 3, 8],
+			"rotation": {"angle": 0, "axis": "y", "origin": [2.5, 0, 3]},
+			"faces": {
+				"north": {"uv": [2, 11, 4, 13], "texture": "#button"},
+				"east": {"uv": [2, 13, 4, 15], "texture": "#button"},
+				"south": {"uv": [2, 11, 4, 13], "texture": "#button"},
+				"west": {"uv": [2, 11, 4, 13], "texture": "#button"},
+				"up": {"uv": [4, 13, 2, 11], "rotation": 180, "texture": "#button"}
+			}
+		},
+		{
+			"name": "buttonQ",
+			"from": [9.5, 1, 13],
+			"to": [11.5, 3, 15],
+			"rotation": {"angle": 0, "axis": "y", "origin": [1.5, 0, 10]},
+			"faces": {
+				"north": {"uv": [2, 11, 4, 13], "texture": "#button_alt"},
+				"east": {"uv": [2, 13, 4, 15], "texture": "#button_alt"},
+				"south": {"uv": [2, 11, 4, 13], "texture": "#button_alt"},
+				"west": {"uv": [2, 11, 4, 13], "texture": "#button_alt"},
+				"up": {"uv": [4, 13, 2, 11], "rotation": 180, "texture": "#button_alt"}
+			}
+		},
+		{
+			"name": "buttonE",
+			"from": [10.5, 1, 11],
+			"to": [12.5, 3, 13],
+			"rotation": {"angle": 0, "axis": "y", "origin": [2.5, 0, 8]},
+			"faces": {
+				"north": {"uv": [2, 11, 4, 13], "texture": "#button"},
+				"east": {"uv": [2, 13, 4, 15], "texture": "#button"},
+				"south": {"uv": [2, 11, 4, 13], "texture": "#button"},
+				"west": {"uv": [2, 11, 4, 13], "texture": "#button"},
+				"up": {"uv": [4, 13, 2, 11], "rotation": 180, "texture": "#button"}
+			}
+		},
+		{
+			"name": "buttonZ",
+			"from": [10.5, 1, 3],
+			"to": [12.5, 3, 5],
+			"rotation": {"angle": 0, "axis": "y", "origin": [2.5, 0, 0]},
+			"faces": {
+				"north": {"uv": [2, 11, 4, 13], "texture": "#button"},
+				"east": {"uv": [2, 13, 4, 15], "texture": "#button"},
+				"south": {"uv": [2, 11, 4, 13], "texture": "#button"},
+				"west": {"uv": [2, 11, 4, 13], "texture": "#button"},
+				"up": {"uv": [4, 13, 2, 11], "rotation": 180, "texture": "#button"}
+			}
+		},
+		{
+			"name": "buttonX",
+			"from": [9.5, 1, 1],
+			"to": [11.5, 3, 3],
+			"rotation": {"angle": 0, "axis": "y", "origin": [1.5, 0, -2]},
+			"faces": {
+				"north": {"uv": [2, 11, 4, 13], "texture": "#button_alt"},
+				"east": {"uv": [2, 13, 4, 15], "texture": "#button_alt"},
+				"south": {"uv": [2, 11, 4, 13], "texture": "#button_alt"},
+				"west": {"uv": [2, 11, 4, 13], "texture": "#button_alt"},
+				"up": {"uv": [4, 13, 2, 11], "rotation": 180, "texture": "#button_alt"}
+			}
+		},
+		{
+			"from": [3.5, 0, 14.5],
+			"to": [12.5, 2, 15.5],
+			"rotation": {"angle": 0, "axis": "y", "origin": [3.5, 0, 0.5]},
+			"faces": {
+				"east": {"uv": [0, 14, 1, 16], "texture": "#base"},
+				"south": {"uv": [1, 12, 10, 14], "texture": "#base"},
+				"west": {"uv": [14, 14, 15, 16], "texture": "#base"},
+				"up": {"uv": [1, 1, 0, 10], "rotation": 270, "texture": "#base"},
+				"down": {"uv": [0, 1, 1, 10], "rotation": 90, "texture": "#base"}
+			}
+		},
+		{
+			"from": [11.5, 0, 10.5],
+			"to": [13.5, 2, 14.5],
+			"rotation": {"angle": 0, "axis": "y", "origin": [5.5, 0, -2.5]},
+			"faces": {
+				"north": {"uv": [3, 14, 5, 16], "texture": "#base"},
+				"east": {"uv": [1, 14, 5, 16], "texture": "#base"},
+				"south": {"uv": [9, 12, 11, 14], "texture": "#base"},
+				"up": {"uv": [1, 9, 5, 11], "rotation": 270, "texture": "#base"},
+				"down": {"uv": [1, 11, 5, 9], "rotation": 90, "texture": "#base"}
+			}
+		},
+		{
+			"from": [3.5, 0, 0.5],
+			"to": [12.5, 2, 1.5],
+			"rotation": {"angle": 0, "axis": "y", "origin": [3.5, 0, 15.5]},
+			"faces": {
+				"north": {"uv": [10, 12, 1, 14], "texture": "#base"},
+				"east": {"uv": [15, 14, 14, 16], "texture": "#base"},
+				"west": {"uv": [1, 14, 0, 16], "texture": "#base"},
+				"up": {"uv": [14, 1, 15, 10], "rotation": 270, "texture": "#base"},
+				"down": {"uv": [15, 1, 14, 10], "rotation": 90, "texture": "#base"}
+			}
+		},
+		{
+			"from": [11.5, 0, 1.5],
+			"to": [13.5, 2, 5.5],
+			"rotation": {"angle": 0, "axis": "y", "origin": [5.5, 0, 18.5]},
+			"faces": {
+				"north": {"uv": [2, 12, 0, 14], "texture": "#base"},
+				"east": {"uv": [10, 14, 14, 16], "texture": "#base"},
+				"south": {"uv": [10, 14, 12, 16], "texture": "#base"},
+				"up": {"uv": [10, 9, 14, 11], "rotation": 270, "texture": "#base"},
+				"down": {"uv": [10, 11, 14, 9], "rotation": 90, "texture": "#base"}
+			}
+		}
+	],
+	"display": {
+		"thirdperson_righthand": {
+			"rotation": [0, -90, -74],
+			"translation": [-3, 3.25, 4.5],
+			"scale": [0.7, 0.7, 0.7]
+		},
+		"thirdperson_lefthand": {
+			"rotation": [0, 90, 74],
+			"translation": [-3, 3.5, 5],
+			"scale": [0.7, 0.7, 0.7]
+		},
+		"firstperson_righthand": {
+			"rotation": [0, -90, -13],
+			"translation": [1.13, 3, 1.13],
+			"scale": [0.68, 0.68, 0.68]
+		},
+		"firstperson_lefthand": {
+			"rotation": [0, 71, 17],
+			"translation": [1.13, 3, 1.13],
+			"scale": [0.68, 0.68, 0.68]
+		},
+		"ground": {
+			"translation": [0, 3, 0],
+			"scale": [0.65, 0.65, 0.65]
+		},
+		"gui": {
+			"rotation": [30, -44, 0],
+			"translation": [0, 3.5, 0],
+			"scale": [0.76, 0.76, 0.76]
+		},
+		"head": {
+			"rotation": [0, -180, 0],
+			"translation": [0, 13, 0]
+		},
+		"fixed": {
+			"rotation": [0, 90, -90],
+			"translation": [0, 0, -8]
+		}
+	},
+	"groups": [
+		0,
+		1,
+		2,
+		3,
+		{
+			"name": "Buttons",
+			"origin": [3, 0, -2],
+			"color": 0,
+			"children": [4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17]
+		},
+		18,
+		19,
+		20,
+		21
+	]
+}

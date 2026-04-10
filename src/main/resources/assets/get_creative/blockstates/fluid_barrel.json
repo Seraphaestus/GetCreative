@@ -1,0 +1,8 @@
+{
+  "variants": {
+    "bottom=true,top=true": { "model": "get_creative:block/fluid_barrel/block_single" },
+    "bottom=true,top=false": { "model": "get_creative:block/fluid_barrel/block_bottom" },
+    "bottom=false,top=false": { "model": "get_creative:block/fluid_barrel/block_middle" },
+    "bottom=false,top=true": { "model": "get_creative:block/fluid_barrel/block_top" }
+  }
+}

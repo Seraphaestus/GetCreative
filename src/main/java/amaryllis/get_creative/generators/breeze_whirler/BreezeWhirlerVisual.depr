@@ -1,0 +1,91 @@
+package amaryllis.get_creative.generators.breeze_whirler;
+
+import com.simibubi.create.content.kinetics.base.RotatingInstance;
+import com.simibubi.create.foundation.render.AllInstanceTypes;
+import dev.engine_room.flywheel.api.instance.Instance;
+import dev.engine_room.flywheel.api.visual.DynamicVisual;
+import dev.engine_room.flywheel.api.visual.TickableVisual;
+import dev.engine_room.flywheel.api.visualization.VisualizationContext;
+import dev.engine_room.flywheel.lib.instance.InstanceTypes;
+import dev.engine_room.flywheel.lib.instance.TransformedInstance;
+import dev.engine_room.flywheel.lib.model.Models;
+import dev.engine_room.flywheel.lib.transform.Translate;
+import dev.engine_room.flywheel.lib.visual.AbstractBlockEntityVisual;
+import dev.engine_room.flywheel.lib.visual.SimpleDynamicVisual;
+import dev.engine_room.flywheel.lib.visual.SimpleTickableVisual;
+import net.createmod.catnip.animation.AnimationTickHolder;
+import net.createmod.catnip.math.AngleHelper;
+import net.minecraft.client.renderer.LightTexture;
+import org.jetbrains.annotations.Nullable;
+import org.joml.Vector3f;
+
+import java.util.function.Consumer;
+
+import static net.minecraft.world.level.block.state.properties.BlockStateProperties.FACING;
+
+public class BreezeWhirlerVisual extends AbstractBlockEntityVisual<BreezeWhirlerBlockEntity> implements SimpleDynamicVisual, SimpleTickableVisual {
+
+    private final RotatingInstance gear;
+    private final TransformedInstance breezeHead;
+    // Wind is animated by the Renderer even when Visualization is enabled, because I don't know how to do the uv scrolling otherwise
+
+    public BreezeWhirlerVisual(VisualizationContext ctx, BreezeWhirlerBlockEntity blockEntity, float partialTick) {
+        super(ctx, blockEntity, partialTick);
+
+        gear = instancerProvider().instancer(AllInstanceTypes.ROTATING, Models.partial(BreezeWhirlerBlock.GEAR_MODEL)).createInstance();
+        gear.setup(blockEntity)
+                .setPosition(getVisualPosition())
+                .rotateToFace(blockState.getValue(FACING).getAxis())
+                .setChanged();
+
+        breezeHead = instancerProvider().instancer(InstanceTypes.TRANSFORMED, Models.partial(BreezeWhirlerBlock.BREEZE_MODEL)).createInstance();
+        breezeHead.light(LightTexture.FULL_BRIGHT);
+
+        animate(partialTick);
+    }
+
+    @Override
+    public void update(float pt) {
+        gear.setup(blockEntity).setChanged();
+    }
+
+    @Override public void updateLight(float partialTick) {
+        relight(gear);
+    }
+
+    @Override
+    public void tick(TickableVisual.Context context) {
+        blockEntity.tickAnimation();
+    }
+
+    @Override
+    public void beginFrame(DynamicVisual.Context ctx) {
+        if (!isVisible(ctx.frustum()) || doDistanceLimitThisFrame(ctx)) return;
+        animate(ctx.partialTick());
+    }
+
+    private void animate(float partialTicks) {
+        final var axis = blockEntity.getBlockState().getValue(BreezeWhirlerBlock.AXIS);
+        float facingAngle = AngleHelper.rad(blockEntity.headAngle.getValue(partialTicks));
+        float time = AnimationTickHolder.getRenderTime(level);
+        Vector3f headPos = BreezeWhirlerRenderer.getHeadPos(blockEntity, axis, time);
+
+        breezeHead.setIdentityTransform()
+                .translate(getVisualPosition())
+                .translate(headPos.x, headPos.y, headPos.z)
+                .translate(Translate.CENTER)
+                .rotateY(facingAngle)
+                .translateBack(Translate.CENTER)
+                .setChanged();
+    }
+
+    @Override public void collectCrumblingInstances(Consumer<@Nullable Instance> consumer) {
+        consumer.accept(gear);
+    }
+
+    @Override
+    protected void _delete() {
+        gear.delete();
+        breezeHead.delete();
+    }
+}

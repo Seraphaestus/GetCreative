@@ -1,0 +1,78 @@
+{
+	"format_version": "1.21.6",
+	"credit": "Made with Blockbench",
+	"parent": "create:block/large_wheels",
+	"texture_size": [32, 32],
+	"textures": {
+		"main": "get_creative:block/clockwork_motor",
+        "gearbox": "create:block/gearbox",
+		"particle": "create:block/andesite_casing"
+	},
+	"elements": [
+		{
+			"name": "Bottom",
+			"from": [0, 0, 0],
+			"to": [16, 2, 16],
+			"faces": {
+				"north": {"uv": [0, 14, 16, 16], "texture": "#gearbox"},
+				"east": {"uv": [0, 7, 8, 8], "texture": "#main"},
+				"south": {"uv": [0, 14, 16, 16], "texture": "#gearbox"},
+				"west": {"uv": [0, 7, 8, 8], "texture": "#main"},
+				"up": {"uv": [0, 0, 16, 16], "texture": "#gearbox"},
+                "down": {"uv": [8, 0, 16, 8], "rotation": 90, "texture": "#main"}
+            }
+		},
+		{
+			"name": "Core",
+			"from": [1, 1, 5.95],
+			"to": [15, 15, 15.05],
+			"faces": {
+				"north": {"uv": [0.5, 8.5, 7.5, 15.5], "texture": "#main"},
+				"south": {"uv": [1, 1, 15, 15], "texture": "#gearbox"}
+			}
+		},
+		{
+			"name": "Top",
+			"from": [0, 14, 0],
+			"to": [16, 16, 16],
+			"faces": {
+				"north": {"uv": [0, 0, 16, 2], "texture": "#gearbox"},
+				"east": {"uv": [0, 0, 8, 1], "texture": "#main"},
+				"south": {"uv": [0, 0, 16, 2], "texture": "#gearbox"},
+				"west": {"uv": [0, 0, 8, 1], "texture": "#main"},
+				"up": {"uv": [8, 0, 16, 8], "rotation": 90, "texture": "#main"},
+				"down": {"uv": [0, 0, 16, 16], "texture": "#gearbox"}
+			}
+		},
+		{
+			"name": "SideWest",
+			"from": [0, 2, 0],
+			"to": [2, 14, 16],
+			"faces": {
+				"north": {"uv": [14, 2, 16, 14], "texture": "#gearbox"},
+				"east": {"uv": [0, 2, 16, 14], "texture": "#gearbox"},
+				"south": {"uv": [0, 2, 2, 14], "texture": "#gearbox"},
+				"west": {"uv": [0, 1, 8, 7], "texture": "#main"}
+			}
+		},
+		{
+			"name": "SideEast",
+			"from": [14, 2, 0],
+			"to": [16, 14, 16],
+			"faces": {
+				"north": {"uv": [0, 2, 2, 14], "texture": "#gearbox"},
+				"east": {"uv": [0, 1, 8, 7], "texture": "#main"},
+				"south": {"uv": [14, 2, 16, 14], "texture": "#gearbox"},
+				"west": {"uv": [0, 2, 16, 14], "texture": "#gearbox"}
+			}
+		}
+	],
+	"groups": [
+		{
+			"name": "Casing",
+			"origin": [0, 0, 0],
+			"color": 0,
+			"children": [0, 1, 2, 3, 4]
+		}
+	]
+}

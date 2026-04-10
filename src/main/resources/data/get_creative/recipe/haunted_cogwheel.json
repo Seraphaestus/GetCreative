@@ -1,0 +1,9 @@
+{
+  "type": "create:haunting",
+  "ingredients": [
+    { "item": "create:cogwheel" }
+  ],
+  "results": [
+    { "id": "get_creative:haunted_cogwheel" }
+  ]
+}

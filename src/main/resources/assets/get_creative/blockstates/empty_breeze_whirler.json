@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "axis=y": {
+      "model": "get_creative:block/empty_breeze_whirler"
+    },
+    "axis=x": {
+      "model": "get_creative:block/empty_breeze_whirler",
+      "x": 90,
+      "y": 90
+    },
+    "axis=z": {
+      "model": "get_creative:block/empty_breeze_whirler",
+      "x": 90
+    }
+  }
+}

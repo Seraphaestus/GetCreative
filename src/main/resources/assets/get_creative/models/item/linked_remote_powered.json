@@ -1,0 +1,110 @@
+{
+	"format_version": "1.21.6",
+	"credit": "Made with Blockbench",
+	
+	"parent": "block/block",
+	
+	"textures": {
+		"base": "create:item/linked_controller_powered",
+		"antenna": "create:block/redstone_antenna_powered",
+		"particle": "#base"
+	},
+	
+	"elements": [
+		{
+			"name": "ControllerLeft",
+			"from": [4, 0, 5.5],
+			"to": [12, 2, 7.5],
+			"rotation": {"angle": 0, "axis": "y", "origin": [0, 0, 4.5]},
+			"faces": {
+				"east": {"uv": [0, 8, 2, 10], "texture": "#base"},
+				"south": {"uv": [13, 8, 15, 0], "rotation": 90, "texture": "#base"},
+				"west": {"uv": [11, 8, 13, 10], "texture": "#base"},
+				"up": {"uv": [0, 0, 2, 8], "rotation": 270, "texture": "#base"},
+				"down": {"uv": [0, 8, 13, 0], "rotation": 90, "texture": "#base"}
+			}
+		},
+		{
+			"name": "ControllerRight",
+			"from": [4, 0, 3.5],
+			"to": [12, 2, 5.5],
+			"rotation": {"angle": 0, "axis": "y", "origin": [0, 0, 2.5]},
+			"faces": {
+				"north": {"uv": [13, 0, 15, 8], "rotation": 90, "texture": "#base"},
+				"east": {"uv": [11, 8, 13, 10], "texture": "#base"},
+				"west": {"uv": [0, 8, 2, 10], "texture": "#base"},
+				"up": {"uv": [11, 0, 13, 8], "rotation": 270, "texture": "#base"},
+				"down": {"uv": [0, 8, 13, 0], "rotation": 90, "texture": "#base"}
+			}
+		},
+		{
+			"name": "AntennaTop",
+			"from": [0, 0, 4.5],
+			"to": [1, 1, 5.5],
+			"rotation": {"angle": 0, "axis": "z", "origin": [5, 1, 14.5]},
+			"faces": {
+				"west": {"uv": [1, 1, 2, 2], "rotation": 270, "texture": "#antenna"}
+			}
+		},
+		{
+			"name": "AntennaZ",
+			"from": [-1, 0, 3.5],
+			"to": [7, 1, 6.5],
+			"rotation": {"angle": 0, "axis": "z", "origin": [5, 1, 14.5]},
+			"faces": {
+				"up": {"uv": [0, 0, 3, 8], "rotation": 270, "texture": "#antenna"},
+				"down": {"uv": [0, 0, 3, 8], "rotation": 270, "texture": "#antenna"}
+			}
+		},
+		{
+			"name": "AntennaX",
+			"from": [-1, -1, 4.5],
+			"to": [7, 2, 5.5],
+			"rotation": {"angle": 0, "axis": "z", "origin": [5, 1, 14.5]},
+			"faces": {
+				"north": {"uv": [0, 0, 3, 8], "rotation": 90, "texture": "#antenna"},
+				"east": {"uv": [0, 9, 3, 10], "rotation": 270, "texture": "#antenna"},
+				"south": {"uv": [0, 0, 3, 8], "rotation": 270, "texture": "#antenna"}
+			}
+		}
+	],
+	"display": {
+		"thirdperson_righthand": {
+			"rotation": [0, -90, -74],
+			"translation": [-3, 3.25, 4.5],
+			"scale": [0.7, 0.7, 0.7]
+		},
+		"thirdperson_lefthand": {
+			"rotation": [0, 90, 74],
+			"translation": [-3, 3.5, 5],
+			"scale": [0.7, 0.7, 0.7]
+		},
+		"firstperson_righthand": {
+			"rotation": [0, -71, -17],
+			"translation": [1.13, 2, 1.13],
+			"scale": [0.68, 0.68, 0.68]
+		},
+		"firstperson_lefthand": {
+			"rotation": [0, 71, 17],
+			"translation": [1.13, 2, 1.13],
+			"scale": [0.68, 0.68, 0.68]
+		},
+		"ground": {
+			"translation": [0, 3, 0],
+			"scale": [0.65, 0.65, 0.65]
+		},
+		"gui": {
+			"rotation": [30, -44, 0],
+			"translation": [0, 3.5, 0],
+			"scale": [0.76, 0.76, 0.76]
+		},
+		"head": {
+			"rotation": [0, -180, 0],
+			"translation": [0, 13, 0]
+		},
+		"fixed": {
+			"rotation": [0, 90, -90],
+			"translation": [0, 0, -8]
+		}
+	}
+}

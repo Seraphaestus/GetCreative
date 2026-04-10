@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "hasItem": {
+      "conditions": {
+        "items": [
+          {
+            "items": "minecraft:dark_oak_planks"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "get_creative:dark_oak_handle"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "hasItem"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "get_creative:dark_oak_handle"
+    ]
+  }
+}

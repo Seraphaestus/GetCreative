@@ -1,0 +1,50 @@
+{
+	"format_version": "1.21.6",
+	"credit": "Made with Blockbench",
+	"texture_size": [128, 16],
+	"textures": {
+		"wind": "get_creative:block/breeze_wind"
+	},
+	"elements": [
+		{
+			"name": "Wind",
+			"from": [2, 14, 1],
+			"to": [14, 14, 15],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8, 8, 9]},
+			"faces": {
+				"up": {"uv": [1.5, 0, 3, 14], "rotation": 180, "texture": "#wind"},
+				"down": {"uv": [1.5, 0, 3, 14], "rotation": 180, "texture": "#wind"}
+			}
+		},
+		{
+			"name": "Wind",
+			"from": [2, 2, 1],
+			"to": [14, 2, 15],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8, 8, 9]},
+			"faces": {
+				"up": {"uv": [5.5, 0, 4, 14], "rotation": 180, "texture": "#wind"},
+				"down": {"uv": [4, 0, 5.5, 14], "texture": "#wind"}
+			}
+		},
+		{
+			"name": "Wind",
+			"from": [14, 2, 1],
+			"to": [14, 14, 15],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8, 8, 9]},
+			"faces": {
+				"east": {"uv": [0, 0, 1.5, 14], "rotation": 270, "texture": "#wind"},
+				"west": {"uv": [1.5, 0, 0, 14], "rotation": 90, "texture": "#wind"}
+			}
+		},
+		{
+			"name": "Wind",
+			"from": [2, 2, 1],
+			"to": [2, 14, 15],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8, 8, 9]},
+			"faces": {
+				"east": {"uv": [4.5, 0, 3, 14], "rotation": 270, "texture": "#wind"},
+				"west": {"uv": [3, 0, 4.5, 14], "rotation": 90, "texture": "#wind"}
+			}
+		}
+	]
+}

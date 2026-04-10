@@ -1,0 +1,6 @@
+{
+  "parent": "create:item/linked_controller/button",
+  "textures": {
+    "redstone_bridge": "get_creative:item/linked_controller/button_alternative"
+  }
+}

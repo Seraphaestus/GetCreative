@@ -1,0 +1,17 @@
+{
+	"parent": "block/block",
+	"flip_v": true,
+	
+	"parent": "get_creative:block/breeze_whirler/cage",
+	
+	"display": {
+		"gui": {
+			"rotation": [30, 225, 0],
+			"scale": [0.7, 0.7, 0.7]
+		},
+		"fixed": {
+			"rotation": [0, 0, 0],
+			"scale": [0.5, 0.5, 0.5]
+		}
+	}
+}

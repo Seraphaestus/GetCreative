@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": { "item": "create:andesite_alloy" },
+    "S": { "item": "create:shaft" }
+  },
+  "pattern": [
+    "A A",
+    " S ",
+    " S "
+  ],
+  "result": {
+    "id": "get_creative:wind_up_key",
+    "count": 1
+  }
+}

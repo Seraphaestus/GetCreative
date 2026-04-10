@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    { "item": "create:andesite_casing" },
+    { "item": "create:cogwheel" },
+    { "item": "create:large_cogwheel" },
+    { "item": "minecraft:clock" }
+  ],
+  "result": {
+    "id": "get_creative:clockwork_motor",
+    "count": 1
+  }
+}

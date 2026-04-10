@@ -1,0 +1,5 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": { "item": "minecraft:oxidized_copper" },
+  "result": { "id": "get_creative:oxidized_copper_handle", "count": 3 }
+}

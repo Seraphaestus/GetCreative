@@ -1,0 +1,8 @@
+{
+  "parent": "create:block/bearing/item",
+  "textures": {
+    "back": "create:block/gearbox",
+    "side": "get_creative:block/hinge_bearing_side",
+    "top": "create:block/bearing_top"
+  }
+}

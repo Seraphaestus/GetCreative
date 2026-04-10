@@ -1,0 +1,7 @@
+{
+	"parent": "block/lectern",
+	
+	"textures": {
+		"front": "get_creative:block/lectern_controller_front"
+	}
+}

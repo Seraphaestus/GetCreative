@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "N": { "tag": "c:nuggets/iron" },
+    "S": { "tag": "c:plates/iron" },
+    "R": { "item": "minecraft:breeze_rod" }
+  },
+  "pattern": [
+    "NSN",
+    "SRS",
+    "NSN"
+  ],
+  "result": { "id": "get_creative:empty_breeze_whirler", "count": 1 }
+}

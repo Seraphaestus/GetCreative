@@ -1,0 +1,6 @@
+{
+  "parent": "get_creative:block/handle",
+  "textures": {
+    "all": "minecraft:block/stripped_dark_oak_log_top"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "P": { "item": "create:linked_controller" },
+    "S": { "tag": "minecraft:wooden_buttons" }
+  },
+  "pattern": [
+    "SSS",
+    "SPS",
+    "SSS"
+  ],
+  "result": {
+    "id": "get_creative:linked_macro_controller",
+    "count": 1
+  }
+}

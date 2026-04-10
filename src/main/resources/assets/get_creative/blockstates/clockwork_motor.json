@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "facing=up": { "model": "get_creative:block/clockwork_motor_vertical", "x": 270 },
+    "facing=down": { "model": "get_creative:block/clockwork_motor_vertical", "x": 90 },
+    "facing=north": { "model": "get_creative:block/clockwork_motor" },
+    "facing=east": { "model": "get_creative:block/clockwork_motor", "y": 90 },
+    "facing=south": { "model": "get_creative:block/clockwork_motor", "y": 180 },
+    "facing=west": { "model": "get_creative:block/clockwork_motor", "y": 270 }
+  }
+}

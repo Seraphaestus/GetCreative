@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "T": { "tag": "minecraft:wooden_slabs" },
+    "C": { "item": "create:andesite_casing" },
+    "S": { "item": "create:shaft" },
+    "G": { "item": "minecraft:gold_nugget" }
+  },
+  "pattern": [
+    "GTG",
+    "GCG",
+    "GSG"
+  ],
+  "result": {
+    "id": "get_creative:hinge_bearing",
+    "count": 1
+  }
+}
