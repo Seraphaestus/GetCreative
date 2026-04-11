@@ -87,6 +87,8 @@ public class GetCreativeClient {
     public static final Lazy<KeyMapping> EXTRA_3 = createKeybind("extra_3", GLFW.GLFW_KEY_Z);
     public static final Lazy<KeyMapping> EXTRA_4 = createKeybind("extra_4", GLFW.GLFW_KEY_X);
 
+    private static boolean isSetup = false;
+
     public GetCreativeClient(ModContainer container) {
         // Register Config Screen
         container.registerExtensionPoint(IConfigScreenFactory.class, ConfigurationScreen::new);
@@ -119,6 +121,8 @@ public class GetCreativeClient {
         BlockEntityRenderers.register( FluidBarrelBlockEntity.BLOCK_ENTITY.get(), FluidBarrelRenderer::new);
         CreateRegistrate.blockModel(() -> FluidBarrelModel::new).accept(FluidBarrelBlock.BLOCK.get());
         ItemBlockRenderTypes.setRenderLayer(FluidBarrelBlock.BLOCK.get(), RenderType.CUTOUT_MIPPED);
+
+        isSetup = true;
     }
 
     private static <T extends BlockEntity> void simpleVisualizer(BlockEntityType<T> blockEntity, SimpleBlockEntityVisualizer.Factory<T> visualFactory) {
@@ -136,12 +140,12 @@ public class GetCreativeClient {
 
     @SubscribeEvent
     public static void onTick(ClientTickEvent.Pre event) {
-        AllLinkedDevices.onTick();
+        if (isSetup) AllLinkedDevices.onTick();
     }
 
     @SubscribeEvent
     public static void onClickInput(InputEvent.InteractionKeyMappingTriggered event) {
-        AllLinkedDevices.onClickInput();
+        if (isSetup) AllLinkedDevices.onClickInput();
     }
 
     @SubscribeEvent
