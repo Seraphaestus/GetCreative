@@ -48,10 +48,14 @@ public class ArmAssemblyCategory extends CreateRecipeCategory<ArmAssemblyRecipe>
 
     @Override
     public void draw(ArmAssemblyRecipe recipe, IRecipeSlotsView iRecipeSlotsView, GuiGraphics graphics, double mouseX, double mouseY) {
-        AllGuiTextures.JEI_SHADOW.render(graphics, 61, 41);
-        AllGuiTextures.JEI_LONG_ARROW.render(graphics, 52, 54);
-
-        arm.draw(graphics, getBackground().getWidth() / 2 - 17, 22);
+        var matrixStack = graphics.pose();
+        matrixStack.pushPose();
+        matrixStack.translate(56, 53, 0);
+        matrixStack.scale(1.15f, 1.35f, 0);
+        AllGuiTextures.JEI_SHADOW.render(graphics, 0, 0);
+        matrixStack.popPose();
+        AllGuiTextures.JEI_DOWN_ARROW.render(graphics, 126, 29 + (recipe.getRollableResults().size() > 2 ? -19 : 0));
+        arm.draw(graphics, getBackground().getWidth() / 2 - 13, 22);
     }
 
     // Recipe Viewer for Sequenced Assembly
@@ -66,8 +70,8 @@ public class ArmAssemblyCategory extends CreateRecipeCategory<ArmAssemblyRecipe>
             PoseStack ms = graphics.pose();
             arm.offset = index;
             ms.pushPose();
-            ms.translate(-5, 64, 0);
-            ms.scale(.6f, .6f, .6f);
+            ms.translate(-7, 50, 0);
+            ms.scale(.75f, .75f, .75f);
             arm.draw(graphics, getWidth() / 2, 0);
             ms.popPose();
         }
@@ -81,20 +85,20 @@ public class ArmAssemblyCategory extends CreateRecipeCategory<ArmAssemblyRecipe>
         public void draw(GuiGraphics graphics, int xOffset, int yOffset) {
             PoseStack matrixStack = graphics.pose();
             matrixStack.pushPose();
-            matrixStack.translate(xOffset, yOffset, 200);
+            matrixStack.translate(xOffset, yOffset, 100);
             matrixStack.mulPose(Axis.XP.rotationDegrees(-15.5f));
             matrixStack.mulPose(Axis.YP.rotationDegrees(22.5f));
-            int scale = 24;
+            int scale = 20;
 
             blockElement(AllPartialModels.ARM_COG)
                     .rotateBlock(0, getCurrentAngle(), 0)
-                    .atLocal(0, 1, 0)
+                    .atLocal(0, 2, -1)
                     .scale(scale)
                     .render(graphics);
 
             blockElement(AllBlocks.MECHANICAL_ARM.getDefaultState())
                     .rotateBlock(0, 180, 0)
-                    .atLocal(0, 1, 0)
+                    .atLocal(0, 2, -1)
                     .scale(scale)
                     .render(graphics);
 
@@ -105,6 +109,12 @@ public class ArmAssemblyCategory extends CreateRecipeCategory<ArmAssemblyRecipe>
 
             blockElement(IndustrialFanBlock.MECHANICAL_ARM_MODEL)
                     .rotateBlock(0, 180 + rotation, 0)
+                    .atLocal(0, 1, -1)
+                    .scale(scale)
+                    .render(graphics);
+
+            blockElement(AllBlocks.DEPOT.getDefaultState())
+                    .atLocal(0, 2, 0)
                     .scale(scale)
                     .render(graphics);
 

@@ -20,6 +20,7 @@
     "jei.FanHauntingCategoryMixin",
 
     "precision_assembly.BeltInventoryMixin",
+    "precision_assembly.DepotBehaviourMixin",
     "precision_assembly.MechanicalArmMixin",
 
     "StationBlockMixin",

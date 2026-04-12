@@ -28,13 +28,6 @@ public class BeltInventoryMixin {
     @Overwrite
     protected BeltProcessingBehaviour getBeltProcessingAtSegment(int segment) {
         final BlockPos origin = BeltHelper.getPositionForOffset(belt, segment);
-        for (int i = 0; i < FlexibleBeltProcessingBehaviour.CHECKABLE_BELT_OFFSETS.size(); i++) {
-            Vec3i offset = FlexibleBeltProcessingBehaviour.CHECKABLE_BELT_OFFSETS.get(i);
-            var behaviour = BlockEntityBehaviour.get(belt.getLevel(), origin.offset(offset), BeltProcessingBehaviour.TYPE);
-            if (behaviour instanceof FlexibleBeltProcessingBehaviour fBehaviour) {
-                if (fBehaviour.canTargetBelt(offset)) return behaviour;
-            } else if (behaviour != null && i == 0) return behaviour;
-        }
-        return null;
+        return FlexibleBeltProcessingBehaviour.getBeltProcessingBehaviour(belt.getLevel(), origin);
     }
 }
