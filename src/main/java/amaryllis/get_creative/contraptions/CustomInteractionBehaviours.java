@@ -36,21 +36,12 @@ public class CustomInteractionBehaviours {
     public static void replaceBlock(AbstractContraptionEntity contraptionEntity, BlockPos pos, BlockState state, CompoundTag data, BlockEntity blockEntity) {
         final var contraption = contraptionEntity.getContraption();
 
-        final var prevBlockEntity = contraption.presentBlockEntities.get(pos);
-        if (prevBlockEntity != null) {
-            contraption.presentBlockEntities.remove(pos);
-            contraption.renderedBlockEntities.remove(prevBlockEntity);
-        }
         contraption.getActors().removeIf(actor -> actor.left.pos().equals(pos));
         contraption.getInteractors().remove(pos);
 
         final var info = new StructureTemplate.StructureBlockInfo(pos, state, data);
         if (!contraptionEntity.level().isClientSide()) contraptionEntity.setBlock(pos, info);
 
-        if (blockEntity != null) {
-            contraption.presentBlockEntities.put(pos, blockEntity);
-            contraption.renderedBlockEntities.add(blockEntity);
-        }
         final var actor = MovementBehaviour.REGISTRY.get(state.getBlock());
         if (actor != null) contraption.getActors().add(new MutablePair<>(info, new MovementContext(contraptionEntity.level(), info, contraption)));
         final var interactor = REGISTRY.get(state.getBlock());

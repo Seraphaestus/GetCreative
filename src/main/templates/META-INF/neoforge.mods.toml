@@ -35,7 +35,7 @@ config="${mod_id}.mixins.json"
 [[dependencies.${mod_id}]]
     modId="create"
     type="required"
-    versionRange="[6.0.6,6.1.0)"
+    versionRange="[6.0.9,6.1.0)"
     ordering="AFTER"
     side="BOTH"
 

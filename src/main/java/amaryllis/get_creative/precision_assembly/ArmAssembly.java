@@ -31,7 +31,7 @@ public class ArmAssembly {
         if (simulate) return true;
 
         final var inputStack = canProcessInBulk() ? input.stack : input.stack.copyWithCount(1);
-        results.addAll(RecipeApplier.applyRecipeOn(mechanicalArm.getLevel(), inputStack, recipe.get()));
+        results.addAll(RecipeApplier.applyRecipeOn(mechanicalArm.getLevel(), inputStack, recipe.get().value(), false));
         return true;
     }
 
