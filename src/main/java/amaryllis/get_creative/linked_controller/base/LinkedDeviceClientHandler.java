@@ -73,10 +73,10 @@ public class LinkedDeviceClientHandler {
     }
 
     public void addButton(KeyMapping key, float posX, float posY, float posZ) {
-        BUTTONS.add(new LinkedDeviceButton(key, posX, posY, posZ, LinkedDeviceButton.DEFAULT));
+        BUTTONS.add(new LinkedDeviceButton(key, posX, posY, posZ, LinkedDeviceItemRenderer.BUTTON));
     }
     public void addAlternativeButton(KeyMapping key, float posX, float posY, float posZ) {
-        BUTTONS.add(new LinkedDeviceButton(key, posX, posY, posZ, LinkedDeviceButton.ALTERNATIVE));
+        BUTTONS.add(new LinkedDeviceButton(key, posX, posY, posZ, LinkedDeviceItemRenderer.BUTTON_ALT));
     }
 
     public void toggleBindMode(BlockPos location) {

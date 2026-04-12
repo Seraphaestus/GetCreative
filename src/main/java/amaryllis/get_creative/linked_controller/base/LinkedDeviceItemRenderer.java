@@ -6,6 +6,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.simibubi.create.foundation.item.render.CustomRenderedItemModel;
 import com.simibubi.create.foundation.item.render.CustomRenderedItemModelRenderer;
 import com.simibubi.create.foundation.item.render.PartialItemModelRenderer;
+import dev.engine_room.flywheel.lib.model.baked.PartialModel;
 import dev.engine_room.flywheel.lib.transform.TransformStack;
 import net.createmod.catnip.animation.AnimationTickHolder;
 import net.createmod.catnip.animation.LerpedFloat;
@@ -29,6 +30,9 @@ import static com.simibubi.create.content.redstone.link.controller.LinkedControl
 public class LinkedDeviceItemRenderer extends CustomRenderedItemModelRenderer {
 
     public enum RenderType { NORMAL, LECTERN }
+
+    public static final PartialModel BUTTON = PartialModel.of(GetCreative.ID("create", "item/linked_controller/button"));
+    public static final PartialModel BUTTON_ALT = PartialModel.of(GetCreative.ID("item/linked_controller/button_alternative"));
 
     public static final float PIXEL = 1 / 16f,
                               BUTTON_HEIGHT = PIXEL * -.75f;
