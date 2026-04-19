@@ -1,0 +1,17 @@
+{
+  "variants": {
+    "triggered=false,facing=north": { "model": "get_creative:block/encapsulator" },
+    "triggered=false,facing=east":  { "model": "get_creative:block/encapsulator", "y": 90 },
+    "triggered=false,facing=south": { "model": "get_creative:block/encapsulator", "y": 180 },
+    "triggered=false,facing=west":  { "model": "get_creative:block/encapsulator", "y": 270 },
+    "triggered=false,facing=up":    { "model": "get_creative:block/encapsulator", "x": 270 },
+    "triggered=false,facing=down":  { "model": "get_creative:block/encapsulator", "x": 90 },
+
+    "triggered=true,facing=north":  { "model": "get_creative:block/encapsulator_on" },
+    "triggered=true,facing=east":   { "model": "get_creative:block/encapsulator_on", "y": 90 },
+    "triggered=true,facing=south":  { "model": "get_creative:block/encapsulator_on", "y": 180 },
+    "triggered=true,facing=west":   { "model": "get_creative:block/encapsulator_on", "y": 270 },
+    "triggered=true,facing=up":     { "model": "get_creative:block/encapsulator_on", "x": 270 },
+    "triggered=true,facing=down":   { "model": "get_creative:block/encapsulator_on", "x": 90 }
+  }
+}

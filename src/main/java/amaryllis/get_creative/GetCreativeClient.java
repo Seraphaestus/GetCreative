@@ -4,6 +4,8 @@ import amaryllis.get_creative.contraptions.hinge_bearing.HandleBlock;
 import amaryllis.get_creative.contraptions.hinge_bearing.HingeBearingBlockEntity;
 import amaryllis.get_creative.contraptions.hinge_bearing.HingeBearingRenderer;
 import amaryllis.get_creative.contraptions.hinge_bearing.HingeBearingVisual;
+import amaryllis.get_creative.encapsulation.GlueSpreaderBlockEntity;
+import amaryllis.get_creative.encapsulation.GlueSpreaderRenderer;
 import amaryllis.get_creative.fluid_barrel.FluidBarrelBlock;
 import amaryllis.get_creative.fluid_barrel.FluidBarrelBlockEntity;
 import amaryllis.get_creative.fluid_barrel.FluidBarrelModel;
@@ -121,6 +123,8 @@ public class GetCreativeClient {
         BlockEntityRenderers.register( FluidBarrelBlockEntity.BLOCK_ENTITY.get(), FluidBarrelRenderer::new);
         CreateRegistrate.blockModel(() -> FluidBarrelModel::new).accept(FluidBarrelBlock.BLOCK.get());
         ItemBlockRenderTypes.setRenderLayer(FluidBarrelBlock.BLOCK.get(), RenderType.CUTOUT_MIPPED);
+
+        BlockEntityRenderers.register(GlueSpreaderBlockEntity.BLOCK_ENTITY.get(), GlueSpreaderRenderer::new);
 
         BlockEntityRenderers.register( HingeBearingBlockEntity.BLOCK_ENTITY.get(), HingeBearingRenderer::new);
         simpleVisualizer( HingeBearingBlockEntity.BLOCK_ENTITY.get(), HingeBearingVisual::new);

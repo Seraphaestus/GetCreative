@@ -3,6 +3,9 @@ package amaryllis.get_creative;
 import amaryllis.get_creative.contraptions.CustomInteractionBehaviours;
 import amaryllis.get_creative.contraptions.hinge_bearing.HandleBlock;
 import amaryllis.get_creative.contraptions.hinge_bearing.HingeBearingBlock;
+import amaryllis.get_creative.encapsulation.CapsuleItem;
+import amaryllis.get_creative.encapsulation.EncapsulatorBlock;
+import amaryllis.get_creative.encapsulation.GlueSpreaderBlock;
 import amaryllis.get_creative.fluid_barrel.FluidBarrelBlock;
 import amaryllis.get_creative.fluid_barrel.FluidBarrelBlockEntity;
 import amaryllis.get_creative.generators.breeze_whirler.BreezeWhirlerBlock;
@@ -13,6 +16,7 @@ import amaryllis.get_creative.industrial_fan.IndustrialFanBlock;
 import amaryllis.get_creative.linked_controller.AllLinkedDevices;
 import amaryllis.get_creative.linked_controller.lectern.LecternDeviceBlock;
 import amaryllis.get_creative.recipes.CustomCreateRecipeTypes;
+import com.simibubi.create.Create;
 import com.simibubi.create.api.behaviour.movement.MovementBehaviour;
 import com.simibubi.create.api.contraption.BlockMovementChecks;
 import com.simibubi.create.api.stress.BlockStressValues;
@@ -54,6 +58,8 @@ public class GetCreative {
     public static final DeferredRegister.Blocks BLOCKS = DeferredRegister.createBlocks(MOD_ID);
     public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITY_TYPES = DeferredRegister.create(Registries.BLOCK_ENTITY_TYPE, MOD_ID);
 
+    public static final DeferredRegister.DataComponents DATA_COMPONENTS = DeferredRegister.createDataComponents(Registries.DATA_COMPONENT_TYPE, MOD_ID);
+
     public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, MOD_ID);
     public static final Supplier<CreativeModeTab> CREATIVE_MODE_TAB = CREATIVE_MODE_TABS.register(MOD_ID, () -> CreativeModeTab.builder()
             .title(Component.translatable("itemGroup." + MOD_ID))
@@ -73,6 +79,10 @@ public class GetCreative {
         IndustrialFanBlock.register();
         // Misc
         FluidBarrelBlock.register();
+        // Glue Spreader + Encapsulator + Capsules
+        GlueSpreaderBlock.register();
+        EncapsulatorBlock.register();
+        CapsuleItem.register();
         // Hinge Bearing + Handles
         HingeBearingBlock.register();
         HandleBlock.TYPES.forEach(HandleBlock::register);
@@ -85,6 +95,7 @@ public class GetCreative {
         ITEMS.register(modEventBus);
         BLOCKS.register(modEventBus);
         BLOCK_ENTITY_TYPES.register(modEventBus);
+        DATA_COMPONENTS.register(modEventBus);
         CREATIVE_MODE_TABS.register(modEventBus);
 
         CustomPackets.register();

@@ -1,0 +1,6 @@
+{
+	"parent": "get_creative:block/glue_spreader/base",
+	"textures": {
+		"side": "get_creative:block/glue_spreader_side_on"
+	}
+}

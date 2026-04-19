@@ -1,0 +1,6 @@
+{
+    "parent": "get_creative:block/encapsulator",
+    "textures": {
+        "front": "get_creative:block/encapsulator/front_on"
+    }
+}

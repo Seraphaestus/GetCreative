@@ -27,12 +27,15 @@
     "StationBlockMixin",
     "DeployerMixin",
 
-    "LecternControllerMixin"
+    "LecternControllerMixin",
+
+    "StructureTemplateMixin",
+    "SchematicPrinterMixin",
+    "SchematicTransformationMixin"
   ],
   "client": [
     "precision_assembly.ArmInteractionPointHandlerMixin"
   ],
-  "client": [],
   "injectors": {
     "defaultRequire": 1
   }
