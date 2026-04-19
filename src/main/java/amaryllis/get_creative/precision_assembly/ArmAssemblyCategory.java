@@ -16,7 +16,9 @@ import mezz.jei.api.gui.ingredient.IRecipeSlotsView;
 import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeIngredientRole;
 import net.createmod.catnip.animation.AnimationTickHolder;
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.network.chat.Component;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.List;
@@ -34,7 +36,9 @@ public class ArmAssemblyCategory extends CreateRecipeCategory<ArmAssemblyRecipe>
     public void setRecipe(IRecipeLayoutBuilder builder, ArmAssemblyRecipe recipe, IFocusGroup focuses) {
         builder.addSlot(RecipeIngredientRole.INPUT, 27, 51)
                .setBackground(getRenderedSlot(), -1, -1)
-               .addIngredients(recipe.getIngredients().getFirst());
+               .addIngredients(recipe.getInputItem());
+
+        setHeldItemRecipeSlot(builder, recipe, 51, 5);
 
         List<ProcessingOutput> results = recipe.getRollableResults();
         for (int i = 0; i < results.size(); i++) {
@@ -43,6 +47,21 @@ public class ArmAssemblyCategory extends CreateRecipeCategory<ArmAssemblyRecipe>
                     .setBackground(getRenderedSlot(output), -1, -1)
                     .addItemStack(output.getStack())
                     .addRichTooltipCallback(addStochasticTooltip(output));
+        }
+    }
+
+    protected static void setHeldItemRecipeSlot(IRecipeLayoutBuilder builder, ArmAssemblyRecipe recipe, int x, int y) {
+        var requiredHeldItem = recipe.getRequiredHeldItem();
+        if (requiredHeldItem.isEmpty()) return;
+
+        var heldItemSlot = builder
+                .addSlot(RecipeIngredientRole.INPUT, x, y)
+                .setBackground(CreateRecipeCategory.getRenderedSlot(), -1, -1)
+                .addIngredients(requiredHeldItem);
+
+        if (recipe.shouldKeepHeldItem()) {
+            heldItemSlot.addRichTooltipCallback((recipeSlotView, tooltip) -> tooltip.add(
+                    Component.translatable("get_creative.recipe.arm_assembly.not_consumed").withStyle(ChatFormatting.GOLD)));
         }
     }
 
@@ -64,6 +83,12 @@ public class ArmAssemblyCategory extends CreateRecipeCategory<ArmAssemblyRecipe>
         AnimatedMechanicalArm arm = new AnimatedMechanicalArm();
 
         public RecipeViewerCategory() { super(25); }
+
+        @Override
+        public void setRecipe(IRecipeLayoutBuilder builder, SequencedRecipe<?> recipe, IFocusGroup focuses, int x) {
+            if (recipe.getAsAssemblyRecipe() instanceof ArmAssemblyRecipe armAssemblyRecipe)
+                setHeldItemRecipeSlot(builder, armAssemblyRecipe, x + 4, 15);
+        }
 
         @Override
         public void draw(SequencedRecipe<?> recipe, GuiGraphics graphics, double mouseX, double mouseY, int index) {

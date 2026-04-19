@@ -55,6 +55,11 @@ public enum CustomCreateRecipeTypes implements IRecipeTypeInfo, StringRepresenta
         isProcessingRecipe = true;
     }
 
+    CustomCreateRecipeTypes(ProcessingRecipe.Factory<ArmAssemblyRecipe.Params, ? extends ArmAssemblyRecipe> armAssemblyFactory) {
+        this(() -> new ArmAssemblyRecipe.Serializer<>(armAssemblyFactory));
+        isProcessingRecipe = true;
+    }
+
     public static void register(IEventBus modEventBus) {
         ShapedRecipePattern.setCraftingSize(9, 9);
         Registers.SERIALIZER_REGISTER.register(modEventBus);

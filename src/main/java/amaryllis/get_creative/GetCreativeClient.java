@@ -27,6 +27,7 @@ import amaryllis.get_creative.linked_controller.base.LinkedDeviceClientHandler;
 import amaryllis.get_creative.linked_controller.base.LinkedKeyContext;
 import amaryllis.get_creative.linked_controller.lectern.LecternDeviceBlockEntity;
 import amaryllis.get_creative.linked_controller.lectern.LecternDeviceRenderer;
+import amaryllis.get_creative.ponder.GetCreativePonderPlugin;
 import com.mojang.blaze3d.platform.InputConstants;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
 import com.simibubi.create.content.kinetics.base.OrientedRotatingVisual;
@@ -38,6 +39,7 @@ import dev.engine_room.flywheel.lib.model.Models;
 import dev.engine_room.flywheel.lib.model.baked.PartialModel;
 import dev.engine_room.flywheel.lib.visualization.SimpleBlockEntityVisualizer;
 import net.createmod.catnip.lang.FontHelper;
+import net.createmod.ponder.foundation.PonderIndex;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
@@ -96,6 +98,10 @@ public class GetCreativeClient {
 
     @SubscribeEvent
     public static void clientSetup(FMLClientSetupEvent event) {
+        // Register Ponders
+        PonderIndex.addPlugin(new GetCreativePonderPlugin());
+
+        // Register block-specific Renderers/Visuals/etc.
         BlockEntityRenderers.register( HauntedCogwheelBlockEntity.BLOCK_ENTITY.get(), HauntedCogwheelRenderer::new);
         simpleVisualizer( HauntedCogwheelBlockEntity.BLOCK_ENTITY.get(), simpleVisual(HauntedCogwheelBlock.MODEL));
 
@@ -109,18 +115,18 @@ public class GetCreativeClient {
         // Note: the Visual had major issues so we just use the Renderer
         //simpleVisualizer( BreezeWhirlerBlockEntity.BLOCK_ENTITY.get(), BreezeWhirlerVisual::new);
 
-        BlockEntityRenderers.register( HingeBearingBlockEntity.BLOCK_ENTITY.get(), HingeBearingRenderer::new);
-        simpleVisualizer( HingeBearingBlockEntity.BLOCK_ENTITY.get(), HingeBearingVisual::new);
-
-        BlockEntityRenderers.register( LecternDeviceBlockEntity.BLOCK_ENTITY.get(), LecternDeviceRenderer::new);
-        AllLinkedDevices.registerClient();
-
         BlockEntityRenderers.register( IndustrialFanBlockEntity.BLOCK_ENTITY.get(), IndustrialFanRenderer::new);
         simpleVisualizer( IndustrialFanBlockEntity.BLOCK_ENTITY.get(), IndustrialFanVisual::new);
 
         BlockEntityRenderers.register( FluidBarrelBlockEntity.BLOCK_ENTITY.get(), FluidBarrelRenderer::new);
         CreateRegistrate.blockModel(() -> FluidBarrelModel::new).accept(FluidBarrelBlock.BLOCK.get());
         ItemBlockRenderTypes.setRenderLayer(FluidBarrelBlock.BLOCK.get(), RenderType.CUTOUT_MIPPED);
+
+        BlockEntityRenderers.register( HingeBearingBlockEntity.BLOCK_ENTITY.get(), HingeBearingRenderer::new);
+        simpleVisualizer( HingeBearingBlockEntity.BLOCK_ENTITY.get(), HingeBearingVisual::new);
+
+        BlockEntityRenderers.register( LecternDeviceBlockEntity.BLOCK_ENTITY.get(), LecternDeviceRenderer::new);
+        AllLinkedDevices.registerClient();
 
         isSetup = true;
     }

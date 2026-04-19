@@ -20,7 +20,7 @@ public class BeltArmAssemblyCallbacks {
         if (!ArmAssembly.trySimulate(behaviour.mechanicalArm, transported))
             return ProcessingResult.PASS;
 
-        behaviour.start();
+        behaviour.start(handler.blockEntity.getBlockPos());
         return ProcessingResult.HOLD;
     }
 

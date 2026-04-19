@@ -3,7 +3,7 @@
   "ingredient": { "tag": "c:plates/gold" },
   "transitional_item": { "id": "create:incomplete_precision_mechanism" },
   "results": [
-    { "id": "create:precision_mechanism", "chance": 30.0 },
+    { "id": "create:precision_mechanism", "chance": 120.0 },
     { "id": "create:golden_sheet", "chance": 8.0 },
     { "id": "create:andesite_alloy", "chance": 8.0 },
     { "id": "create:cogwheel", "chance": 5.0 },
@@ -16,11 +16,6 @@
   "sequence": [
     {
       "type": "get_creative:arm_assembly",
-      "ingredients": [ { "item": "create:incomplete_precision_mechanism" } ],
-      "results": [ { "id": "create:incomplete_precision_mechanism" } ]
-    },
-    {
-      "type": "create:deploying",
       "ingredients": [
         { "item": "create:incomplete_precision_mechanism" },
         { "item": "create:cogwheel" }
@@ -28,7 +23,7 @@
       "results": [ { "id": "create:incomplete_precision_mechanism" } ]
     },
     {
-      "type": "create:deploying",
+      "type": "get_creative:arm_assembly",
       "ingredients": [
         { "item": "create:incomplete_precision_mechanism" },
         { "item": "create:large_cogwheel" }
@@ -36,7 +31,16 @@
       "results": [ { "id": "create:incomplete_precision_mechanism" } ]
     },
     {
-      "type": "create:deploying",
+      "type": "get_creative:arm_assembly",
+      "ingredients": [
+        { "item": "create:incomplete_precision_mechanism" },
+        { "item": "create:wrench" }
+      ],
+      "keep_held_item": true,
+      "results": [ { "id": "create:incomplete_precision_mechanism" } ]
+    },
+    {
+      "type": "get_creative:arm_assembly",
       "ingredients": [
         { "item": "create:incomplete_precision_mechanism" },
         { "tag": "c:nuggets/iron" }
@@ -49,5 +53,5 @@
       "results": [ { "id": "create:incomplete_precision_mechanism" } ]
     }
   ],
-  "loops": 2
+  "loops": 3
 }

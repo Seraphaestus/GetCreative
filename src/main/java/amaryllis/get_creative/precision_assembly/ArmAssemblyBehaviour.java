@@ -30,7 +30,7 @@ public class ArmAssemblyBehaviour extends FlexibleBeltProcessingBehaviour {
     public boolean canTargetBelt(Vec3i offsetFromBelt) {
         if (!ADJACENT_OFFSETS.contains(offsetFromBelt)) return false;
         final BlockPos beltPos = mechanicalArm.getBlockPos().offset(Vec3i.ZERO.subtract(offsetFromBelt));
-        return ((IArmAssembler)mechanicalArm).canProcessArmAssembly(beltPos);
+        return ((IMechanicalArm)mechanicalArm).canProcessArmAssembly(beltPos);
     }
 
     @Override
@@ -49,12 +49,12 @@ public class ArmAssemblyBehaviour extends FlexibleBeltProcessingBehaviour {
         super.write(compound, registries, clientPacket);
     }
 
-    public void start() {
+    public void start(BlockPos beltPos) {
         running = true;
         prevRunningTicks = 0;
         runningTicks = 0;
         blockEntity.sendData();
-        ((IArmAssembler)mechanicalArm).startArmAssembly();
+        ((IMechanicalArm)mechanicalArm).startArmAssembly(beltPos);
     }
 
     @Override
@@ -80,7 +80,7 @@ public class ArmAssemblyBehaviour extends FlexibleBeltProcessingBehaviour {
             finished = true;
             running = false;
             blockEntity.sendData();
-            ((IArmAssembler)mechanicalArm).completeArmAssembly();
+            ((IMechanicalArm)mechanicalArm).completeArmAssembly();
             return;
         }
 
@@ -98,12 +98,6 @@ public class ArmAssemblyBehaviour extends FlexibleBeltProcessingBehaviour {
         float speed = mechanicalArm.getSpeed();
         if (speed == 0) return 0;
         return (int) Mth.lerp(Mth.clamp(Math.abs(speed) / 512f, 0, 1), 1, 60);
-    }
-
-    public interface IArmAssembler {
-        boolean canProcessArmAssembly(BlockPos beltPos);
-        void startArmAssembly();
-        void completeArmAssembly();
     }
 
 }

@@ -1,5 +1,0 @@
-{
-  "type": "get_creative:arm_assembly",
-  "ingredients": [ { "item": "minecraft:clock" } ],
-  "results": [ { "id": "create:golden_sheet" } ]
-}

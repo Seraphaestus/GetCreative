@@ -22,11 +22,15 @@
     "precision_assembly.BeltInventoryMixin",
     "precision_assembly.DepotBehaviourMixin",
     "precision_assembly.MechanicalArmMixin",
+    "precision_assembly.ArmInteractionPointMixin",
 
     "StationBlockMixin",
     "DeployerMixin",
 
     "LecternControllerMixin"
+  ],
+  "client": [
+    "precision_assembly.ArmInteractionPointHandlerMixin"
   ],
   "client": [],
   "injectors": {
