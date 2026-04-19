@@ -8,6 +8,7 @@ import com.simibubi.create.content.kinetics.crank.HandCrankBlockEntity;
 import com.simibubi.create.content.kinetics.transmission.sequencer.SequencedGearshiftBlockEntity;
 import com.simibubi.create.content.kinetics.transmission.sequencer.SequencerInstructions;
 import com.simibubi.create.foundation.utility.CreateLang;
+import com.simibubi.create.infrastructure.config.AllConfigs;
 import net.createmod.catnip.math.AngleHelper;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
@@ -112,23 +113,37 @@ public class WindUpKeyBlockEntity extends HandCrankBlockEntity {
     // Prevent interaction with sequenced gearshifts
     @Override protected void copySequenceContextFrom(KineticBlockEntity sourceBE) {}
 
+    public ClockworkMotorBlockEntity getTargetedClockworkMotor() {
+        final Direction targetDir = getBlockState().getValue(WindUpKeyBlock.FACING).getOpposite();
+        final BlockEntity target = level.getBlockEntity(getBlockPos().offset(targetDir.getNormal()));
+        return (target instanceof ClockworkMotorBlockEntity clockworkMotor) ? clockworkMotor : null;
+    }
+
     @Override
     public boolean addToGoggleTooltip(List<Component> tooltip, boolean isPlayerSneaking) {
         boolean added = super.addToGoggleTooltip(tooltip, isPlayerSneaking);
         if (level == null) return added;
 
-        final Direction targetDir = getBlockState().getValue(WindUpKeyBlock.FACING).getOpposite();
-        final BlockEntity target = level.getBlockEntity(getBlockPos().offset(targetDir.getNormal()));
-        if (!(target instanceof ClockworkMotorBlockEntity clockworkMotor)) return added;
-        if (!clockworkMotor.showGoggleTooltip()) return added;
+        final var clockworkMotor = getTargetedClockworkMotor();
+        if (clockworkMotor == null || !clockworkMotor.showGoggleTooltip()) return added;
 
         CreateLang.builder()
                 .add(Component.translatable("tooltip.get_creative.adjacent",
                      Component.translatable("block.get_creative.clockwork_motor")))
-                .style(ChatFormatting.GRAY)
+                .style(ChatFormatting.WHITE)
                 .forGoggles(tooltip, 0);
 
         clockworkMotor.addGoggleTooltipBody(tooltip, isPlayerSneaking);
         return true;
+    }
+
+    // Hide overstressed warning if winding up
+    @Override
+    public boolean addToTooltip(List<Component> tooltip, boolean isPlayerSneaking) {
+        final boolean isOverstressed = overStressed && AllConfigs.client().enableOverstressedTooltip.get();
+        final var clockworkMotor = getTargetedClockworkMotor();
+        if (isOverstressed && clockworkMotor != null && clockworkMotor.isWindingUp()) return false;
+
+        return super.addToTooltip(tooltip, isPlayerSneaking);
     }
 }

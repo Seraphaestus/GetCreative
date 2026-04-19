@@ -32,7 +32,7 @@ public class ClockworkMotorVisual extends KineticBlockEntityVisual<ClockworkMoto
     public ClockworkMotorVisual(VisualizationContext context, ClockworkMotorBlockEntity blockEntity, float partialTick) {
         super(context, blockEntity, partialTick);
 
-        final Direction direction = blockState.getValue(FACING);
+        final Direction direction = ClockworkMotorBlock.getInputDirection(blockState);
         final Direction.Axis axis = direction.getAxis();
 
         mechanism = instancerProvider().instancer(InstanceTypes.TRANSFORMED, Models.partial(ClockworkMotorBlock.MODEL)).createInstance();

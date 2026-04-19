@@ -41,6 +41,9 @@ public class Config {
     public static final ModConfigSpec.BooleanValue HAUNTED_COGWHEEL_REQUIRES_UNIQUITY;
 
     public static final ModConfigSpec.DoubleValue CLOCKWORK_MOTOR_STRESS_CAPACITY;
+    public static final ModConfigSpec.DoubleValue CLOCKWORK_MOTOR_CHARGE_CAPACITY;
+    public static final ModConfigSpec.IntValue CLOCKWORK_MOTOR_EVEN_POINT;
+    public static final ModConfigSpec.DoubleValue CLOCKWORK_MOTOR_EFFICIENCY;
     public static final ModConfigSpec.DoubleValue WIND_UP_KEY_STRESS_CAPACITY;
 
     public static final ModConfigSpec.DoubleValue BREEZE_WHIRLER_STRESS_CAPACITY;
@@ -163,8 +166,22 @@ public class Config {
         CLOCKWORK_MOTOR_STRESS_CAPACITY = BUILDER
                 .defineInRange("clockwork_motor_stress_capacity", 32d, 0d, 16384d);
         WIND_UP_KEY_STRESS_CAPACITY = BUILDER
-                .comment("")
                 .defineInRange("wind_up_key_stress_capacity", 8d, 0d, 16384d);
+        CLOCKWORK_MOTOR_CHARGE_CAPACITY = BUILDER
+                .comment("")
+                .comment(" A relative multiplier on the maximum charge the motor can be wound up to")
+                .defineInRange("clockwork_motor_charge_capacity", 1, 0d, 1024d);
+        CLOCKWORK_MOTOR_EVEN_POINT = BUILDER
+                .comment("")
+                .comment(" By default, the ratio of wind-down output time to wind-up input time follows the following pattern:")
+                .comment(" 16 RPM -> 3:1, 32 RPM -> 2:1, 64 RPM -> 1:1, 128 RPM -> 1:2, 256 RPM -> 1:3")
+                .comment("")
+                .comment(" This determines the power of 2 at which the motor has a 1:1 ratio. The default 6 -> 2^6 = 64 RPM")
+                .defineInRange("clockwork_motor_event_point", 6, 1, 8);
+        CLOCKWORK_MOTOR_EFFICIENCY = BUILDER
+                .comment("")
+                .comment(" The baseline wind-down duration is then multiplied by this value")
+                .defineInRange("clockwork_motor_efficiency", 1.5d, 0d, 16384d);
         BUILDER.pop();
 
         BUILDER.push("Breeze Whirler");

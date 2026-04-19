@@ -51,7 +51,6 @@ public class HingeBearingBlockEntity extends KineticBlockEntity
     protected AssemblyException lastException;
 
     protected BoundedScrollValueBehaviour openSpeed;
-    protected static final int MIN_SPEED = 1;
     protected static final int MAX_SPEED = 32;
     protected static final int DEFAULT_SPEED = 16;
 
@@ -110,7 +109,7 @@ public class HingeBearingBlockEntity extends KineticBlockEntity
     public void addBehaviours(List<BlockEntityBehaviour> behaviours) {
         super.addBehaviours(behaviours);
 
-        openSpeed = new BoundedScrollValueBehaviour("Speed", MIN_SPEED, DEFAULT_SPEED, MAX_SPEED,
+        openSpeed = new BoundedScrollValueBehaviour("Speed", DEFAULT_SPEED, MAX_SPEED,
                 Component.translatable("get_creative.hinge_bearing.opening_speed"),
                 this, getMovementModeSlot());
         behaviours.add(openSpeed);

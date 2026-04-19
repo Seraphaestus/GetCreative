@@ -27,7 +27,7 @@ public class ClockworkMotorRenderer extends KineticBlockEntityRenderer<Clockwork
     protected void renderSafe(ClockworkMotorBlockEntity be, float partialTicks, PoseStack ms, MultiBufferSource buffer, int light, int overlay) {
         if (VisualizationManager.supportsVisualization(be.getLevel())) return;
 
-        Direction direction = be.getBlockState().getValue(FACING);
+        Direction direction = ClockworkMotorBlock.getInputDirection(be.getBlockState());
         VertexConsumer vb = buffer.getBuffer(RenderType.cutoutMipped());
 
         SuperByteBuffer mechanism = CachedBuffers.partialFacingVertical(ClockworkMotorBlock.MODEL, be.getBlockState(), direction);

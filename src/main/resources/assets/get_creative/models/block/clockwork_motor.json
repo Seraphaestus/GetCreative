@@ -5,7 +5,7 @@
 	"texture_size": [32, 32],
 	"textures": {
 		"main": "get_creative:block/clockwork_motor",
-        "gearbox": "create:block/gearbox",
+		"gearbox": "create:block/gearbox",
 		"particle": "create:block/andesite_casing"
 	},
 	"elements": [
@@ -19,8 +19,8 @@
 				"south": {"uv": [0, 14, 16, 16], "texture": "#gearbox"},
 				"west": {"uv": [0, 7, 8, 8], "texture": "#main"},
 				"up": {"uv": [0, 0, 16, 16], "texture": "#gearbox"},
-                "down": {"uv": [8, 0, 16, 8], "rotation": 90, "texture": "#main"}
-            }
+				"down": {"uv": [8, 0, 16, 8], "rotation": 90, "texture": "#main"}
+			}
 		},
 		{
 			"name": "Core",
@@ -71,6 +71,7 @@
 		{
 			"name": "Casing",
 			"origin": [0, 0, 0],
+			"scope": 0,
 			"color": 0,
 			"children": [0, 1, 2, 3, 4]
 		}

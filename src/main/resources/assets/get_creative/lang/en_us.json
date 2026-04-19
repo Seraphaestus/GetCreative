@@ -46,7 +46,8 @@
   "block.get_creative.clockwork_motor.tooltip.summary": "Wind it up with a _Wind-Up Key_ or _Hand Crank_ and it will generate _Rotational Force_ as it winds down",
   "get_creative.clockwork_motor.configured_speed": "Release Speed in RPM",
   "tooltip.get_creative.clockwork_motor": "Clockwork Motor:",
-  "tooltip.get_creative.clockwork_charge": "%s on release",
+  "tooltip.get_creative.clockwork_charge.winding": "%s on release",
+  "tooltip.get_creative.clockwork_charge.releasing": "%s remaining",
   "tooltip.get_creative.clockwork_charge.info": "%s of %s",
 
   "block.get_creative.empty_breeze_whirler": "Empty Breeze Whirler",

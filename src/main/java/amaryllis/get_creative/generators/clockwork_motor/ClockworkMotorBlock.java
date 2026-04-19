@@ -44,24 +44,17 @@ public class ClockworkMotorBlock extends DirectionalKineticBlock implements IBE<
     @Override
     public Direction.Axis getRotationAxis(BlockState state) { return state.getValue(FACING).getAxis(); }
 
+    public static Direction getInputDirection(BlockState state) { return state.getValue(FACING); }
+    public static Direction getOutputDirection(BlockState state) { return state.getValue(FACING).getOpposite(); }
+
     @Override
     public boolean hasShaftTowards(LevelReader world, BlockPos pos, BlockState state, Direction face) {
-        return face == state.getValue(FACING) || face == state.getValue(FACING).getOpposite();
+        return face == getInputDirection(state) || face == getOutputDirection(state);
     }
 
     @Override
     public Direction getPreferredFacing(BlockPlaceContext context) {
-        Direction output = null;
-        for (Direction side: Iterate.directions) {
-            BlockPos adjPos = context.getClickedPos().relative(side);
-            BlockState adjState = context.getLevel().getBlockState(adjPos);
-            if (!(adjState.getBlock() instanceof IRotate adjBlock)) continue;
-            if (!adjBlock.hasShaftTowards(context.getLevel(), adjPos, adjState, side.getOpposite())) continue;
-
-            if (output != null) return null; // If there are multiple options, don't alter
-            output = side.getOpposite();
-        }
-        return output;
+        return null;
     }
 
     @Override
