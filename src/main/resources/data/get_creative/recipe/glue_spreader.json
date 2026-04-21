@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "G": { "item": "create:super_glue" },
+    "C": { "item": "create:brass_casing" },
+    "S": { "item": "create:sticker" }
+  },
+  "pattern": [
+    "G",
+    "C",
+    "S"
+  ],
+  "result": {
+    "id": "get_creative:glue_spreader",
+    "count": 1
+  }
+}

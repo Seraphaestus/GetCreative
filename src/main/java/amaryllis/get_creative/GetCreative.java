@@ -124,6 +124,7 @@ public class GetCreative {
             BlockStressValues.CAPACITIES.register(BreezeWhirlerBlock.BLOCK.get(), Config.BREEZE_WHIRLER_STRESS_CAPACITY::get);
 
             MysteriousItemConversionCategory.RECIPES.add(ConversionRecipe.create(BreezeWhirlerBlock.EMPTY_ITEM.toStack(), BreezeWhirlerBlock.ITEM.toStack()));
+            MysteriousItemConversionCategory.RECIPES.add(ConversionRecipe.create(EncapsulatorBlock.ITEM.toStack(), CapsuleItem.ITEM.toStack()));
         });
     }
 

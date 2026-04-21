@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "S": { "item": "create:empty_schematic" },
+    "O": { "item": "create:content_observer" }
+  },
+  "pattern": [
+    "S",
+    "O"
+  ],
+  "result": {
+    "id": "get_creative:encapsulator",
+    "count": 1
+  }
+}
