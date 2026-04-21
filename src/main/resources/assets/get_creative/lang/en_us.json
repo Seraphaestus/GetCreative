@@ -43,9 +43,11 @@
   "block.get_creative.encapsulator": "Encapsulator",
   "block.get_creative.encapsulator.tooltip.summary": "When _powered by redstone_, connected blocks in front of the _Encapsulator_ are stored into a placeable _Capsule_ item. (as if assembling a contraption)",
   "tooltip.get_creative.encapsulator": "Encapsulating as \"%s\"",
+  "get_creative.subtitle.encapsulator.activate": "Encapsulator activates",
   "item.get_creative.structure_capsule": "Capsule",
   "tooltip.get_creative.structure_capsule": "Contains Structure",
   "tooltip.get_creative.structure_capsule.named": "Contains %s",
+  "tooltip.get_creative.structure_capsule.invalid": "No valid structure",
 
   "block.get_creative.hinge_bearing": "Hinge Bearing",
   "get_creative.hinge_bearing.opening_speed": "Opening Speed in RPM",
@@ -53,6 +55,7 @@
 
   "block.get_creative.haunted_cogwheel": "Haunted Cogwheel",
   "block.get_creative.haunted_cogwheel.tooltip.summary": "_Haunted_ by a temperamental soul which spins the wheel. _Doesn't like not being in control!_",
+  "get_creative.subtitle.haunted_cogwheel.refresh": "Haunted Cogwheel refreshes",
 
   "block.get_creative.wind_up_key": "Wind-Up Key",
   "tooltip.get_creative.adjacent": "Adjacent %s:",

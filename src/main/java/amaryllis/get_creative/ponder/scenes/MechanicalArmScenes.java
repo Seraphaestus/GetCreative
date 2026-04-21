@@ -26,7 +26,7 @@ public class MechanicalArmScenes {
         CreateSceneBuilder scene = new CreateSceneBuilder(builder);
         scene.title("mechanical_arm_processing", "Processing Items using Mechanical Arms");
         scene.configureBasePlate(0, 0, 5);
-        scene.world().showSection(util.select().layer(0), Direction.UP);
+        scene.showBasePlate();
         scene.idle(5);
 
         Selection depotSelection = util.select().position(2, 1, 2);
@@ -102,16 +102,15 @@ public class MechanicalArmScenes {
                 .text("Once placed, the Arm will try to process items on adjacent selected Assembly targets.")
                 .pointAt(armTop)
                 .placeNearTarget();
-        scene.idle(160);
+        scene.idle(80);
 
         scene.effects().indicateSuccess(armPosition);
-        scene.world().showSection(util.select().fromTo(2, 1, 4,  2, 1, 5), Direction.DOWN);
-        scene.world().showSection(util.select().position(2, 0, 5), Direction.DOWN);
+        scene.world().showSection(util.select().fromTo(2, 1, 4,  2, 1, 5).add(util.select().position(2, 0, 5)), Direction.DOWN);
         scene.world().createItemOnBeltLike(depotPosition, Direction.SOUTH, AllItems.GOLDEN_SHEET.asStack());
         scene.idle(10);
 
         scene.world().setKineticSpeed(armSelection, -48);
-        scene.idle(20);
+        scene.idle(10);
         startArmProcessing(scene, armPosition, depotPosition);
         scene.idle(24);
 

@@ -7,20 +7,26 @@ import com.simibubi.create.content.contraptions.IDisplayAssemblyExceptions;
 import com.simibubi.create.foundation.blockEntity.SmartBlockEntity;
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
 import com.simibubi.create.foundation.utility.CreateLang;
+import net.createmod.catnip.math.VecHelper;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.Vec3i;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.Vec3;
 
+import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 import java.util.function.Supplier;
 
 public class EncapsulatorBlockEntity extends SmartBlockEntity implements IHaveHoveringInformation, IDisplayAssemblyExceptions {
@@ -65,7 +71,7 @@ public class EncapsulatorBlockEntity extends SmartBlockEntity implements IHaveHo
         return customName;
     }
 
-    public void activate(Level level, BlockPos pos, Direction facing) {
+    public void activate(ServerLevel level, BlockPos pos, Direction facing) {
         HelperContraption contraption = new HelperContraption(facing);
         try {
             if (!contraption.assemble(level, pos)) return;
@@ -77,8 +83,9 @@ public class EncapsulatorBlockEntity extends SmartBlockEntity implements IHaveHo
         }
         if (contraption.getBlocks().size() < 2) return;
 
+        Set<BlockPos> blocks = contraption.getBlocks().keySet();
         ArbitraryStructureTemplate structure = new ArbitraryStructureTemplate();
-        structure.fillFromBlocks(level, pos.relative(facing), contraption.getBlocks().keySet(), false);
+        structure.fillFromBlocks(level, pos.relative(facing), blocks, false);
 
         CompoundTag data = structure.saveAndTrim(level);
 
@@ -87,6 +94,22 @@ public class EncapsulatorBlockEntity extends SmartBlockEntity implements IHaveHo
         Vec3i size = ((IStructureTemplate)structure).getCreative$getSize();
         ItemStack capsule = CapsuleItem.create(data, facing.get2DDataValue(), size, customName);
         Block.popResourceFromFace(level, pos, facing, capsule);
+
+        spawnParticles(level, blocks, contraption.anchor);
+        playSound(level);
+    }
+
+    protected void spawnParticles(ServerLevel level, Collection<BlockPos> blocks, Vec3i anchor) {
+        for (BlockPos blockPos: blocks) {
+            Vec3 center = blockPos.offset(anchor).getCenter();
+            center = VecHelper.offsetRandomly(center, level.random, .125f);
+            Vec3 motion = VecHelper.offsetRandomly(Vec3.ZERO, level.random, .125f);
+
+            level.sendParticles(ParticleTypes.CLOUD, center.x, center.y, center.z, 1, motion.x, motion.y, motion.z, 0);
+        }
+    }
+    protected void playSound(ServerLevel level) {
+        level.playSound(null, getBlockPos(), EncapsulatorBlock.ACTIVATE_SOUND.get(), SoundSource.BLOCKS);
     }
 
 

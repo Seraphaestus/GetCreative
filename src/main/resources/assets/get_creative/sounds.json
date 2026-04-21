@@ -1,0 +1,10 @@
+{
+  "haunted_cogwheel_refresh": {
+    "subtitle": "get_creative.subtitle.haunted_cogwheel.refresh",
+    "sounds": [{ "type": "event", "name": "create:haunted_bell_convert" }]
+  },
+  "encapsulator_activates": {
+    "subtitle": "get_creative.subtitle.encapsulator.activate",
+    "sounds": [{ "type": "event", "name": "minecraft:item.bottle.fill_dragonbreath" }]
+  }
+}

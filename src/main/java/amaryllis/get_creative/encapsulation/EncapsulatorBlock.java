@@ -6,6 +6,7 @@ import com.simibubi.create.foundation.block.WrenchableDirectionalBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.ItemInteractionResult;
@@ -23,6 +24,7 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.phys.BlockHitResult;
 import net.neoforged.neoforge.registries.DeferredBlock;
+import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredItem;
 import org.jetbrains.annotations.NotNull;
 
@@ -32,6 +34,7 @@ public class EncapsulatorBlock extends WrenchableDirectionalBlock implements IBE
 
     public static DeferredBlock<Block> BLOCK;
     public static DeferredItem<BlockItem> ITEM;
+    public static DeferredHolder<SoundEvent, SoundEvent> ACTIVATE_SOUND;
 
     public static void register() {
         BLOCK = GetCreative.BLOCKS.registerBlock(
@@ -39,6 +42,8 @@ public class EncapsulatorBlock extends WrenchableDirectionalBlock implements IBE
                 Properties.of().explosionResistance(6).destroyTime(1.5f).mapColor(MapColor.GOLD));
         ITEM = GetCreative.ITEMS.registerSimpleBlockItem(BLOCK);
         EncapsulatorBlockEntity.register();
+
+        ACTIVATE_SOUND = GetCreative.registerSound("encapsulator_activates");
     }
 
     public EncapsulatorBlock(Properties properties) {
@@ -79,7 +84,7 @@ public class EncapsulatorBlock extends WrenchableDirectionalBlock implements IBE
         boolean hasSignal = level.hasNeighborSignal(pos) || level.hasNeighborSignal(pos.above());
         boolean isTriggered = state.getValue(TRIGGERED);
         if (hasSignal && !isTriggered) {
-            if (!level.isClientSide) level.scheduleTick(pos, this, 4);
+            level.scheduleTick(pos, this, 4);
             level.setBlock(pos, state.setValue(TRIGGERED, true), 2);
         }
         else if (!hasSignal && isTriggered) {

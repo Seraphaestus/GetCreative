@@ -2,7 +2,6 @@ package amaryllis.get_creative.generators.haunted_cogwheel;
 
 import amaryllis.get_creative.Config;
 import amaryllis.get_creative.GetCreative;
-import com.simibubi.create.AllSoundEvents;
 import com.simibubi.create.content.kinetics.base.GeneratingKineticBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
@@ -111,7 +110,7 @@ public class HauntedCogwheelBlockEntity extends GeneratingKineticBlockEntity {
 
     protected void playConvertSound(RandomSource random) {
         float pitch = 0.75f + random.nextFloat() * 0.5f;
-        level.playSound(null, worldPosition, AllSoundEvents.HAUNTED_BELL_CONVERT.getMainEvent(), SoundSource.BLOCKS, 0.1f, pitch);
+        level.playSound(null, worldPosition, HauntedCogwheelBlock.REFRESH_SOUND.get(), SoundSource.BLOCKS, 0.1f, pitch);
     }
 
 }

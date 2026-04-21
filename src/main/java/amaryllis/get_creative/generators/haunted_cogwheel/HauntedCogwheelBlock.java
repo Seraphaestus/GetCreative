@@ -12,6 +12,7 @@ import dev.engine_room.flywheel.lib.model.baked.PartialModel;
 import net.createmod.catnip.math.VoxelShaper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
@@ -30,6 +31,7 @@ import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.neoforged.neoforge.registries.DeferredBlock;
+import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredItem;
 
 public class HauntedCogwheelBlock extends DirectionalKineticBlock implements IBE<HauntedCogwheelBlockEntity>, ICogWheel, ProperWaterloggedBlock {
@@ -42,6 +44,7 @@ public class HauntedCogwheelBlock extends DirectionalKineticBlock implements IBE
 
     public static DeferredBlock<Block> BLOCK;
     public static DeferredItem<BlockItem> ITEM;
+    public static DeferredHolder<SoundEvent, SoundEvent> REFRESH_SOUND;
 
     public static void register() {
         BLOCK = GetCreative.BLOCKS.registerBlock(
@@ -50,6 +53,8 @@ public class HauntedCogwheelBlock extends DirectionalKineticBlock implements IBE
         );
         ITEM = GetCreative.ITEMS.registerSimpleBlockItem(BLOCK);
         HauntedCogwheelBlockEntity.register();
+
+        REFRESH_SOUND = GetCreative.registerSound("haunted_cogwheel_refresh");
     }
 
 
