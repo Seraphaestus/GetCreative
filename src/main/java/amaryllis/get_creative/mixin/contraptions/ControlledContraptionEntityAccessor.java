@@ -13,9 +13,8 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 
 @Mixin(ControlledContraptionEntity.class)
-public class ControlledContraptionEntityAccessor extends AbstractContraptionEntity
-    implements IControlledContraptionEntityAccessor
-{
+public class ControlledContraptionEntityAccessor extends AbstractContraptionEntity implements IControlledContraptionEntityAccessor {
+
     @Shadow protected BlockPos controllerPos;
 
     public ControlledContraptionEntityAccessor(EntityType<?> type, Level level) {

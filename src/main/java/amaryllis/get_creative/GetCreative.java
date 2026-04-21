@@ -16,17 +16,18 @@ import amaryllis.get_creative.industrial_fan.IndustrialFanBlock;
 import amaryllis.get_creative.linked_controller.AllLinkedDevices;
 import amaryllis.get_creative.linked_controller.lectern.LecternDeviceBlock;
 import amaryllis.get_creative.recipes.CustomCreateRecipeTypes;
-import com.simibubi.create.Create;
 import com.simibubi.create.api.behaviour.movement.MovementBehaviour;
 import com.simibubi.create.api.contraption.BlockMovementChecks;
 import com.simibubi.create.api.stress.BlockStressValues;
 import com.simibubi.create.compat.jei.ConversionRecipe;
 import com.simibubi.create.compat.jei.category.MysteriousItemConversionCategory;
+import com.simibubi.create.content.contraptions.behaviour.MovementContext;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.phys.Vec3;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.registries.DeferredRegister;
@@ -134,9 +135,16 @@ public class GetCreative {
         return ResourceLocation.fromNamespaceAndPath(namespace, path);
     }
 
-    public static void tryRegisterActor(Block block, MovementBehaviour behaviour) {
+    public static boolean shouldRegisterActor(Block block, MovementBehaviour behaviour) {
         final String blockID = BuiltInRegistries.BLOCK.getKey(block).toString();
-        final boolean shouldRegisterActor = !Config.ACTOR_BLACKLIST.get().contains(blockID);
-        if (shouldRegisterActor) MovementBehaviour.REGISTRY.register(block, behaviour);
+        return !Config.ACTOR_BLACKLIST.get().contains(blockID) || Config.GRAVITY_ONLY_ACTORS.get().contains(blockID);
+    }
+    public static boolean shouldDisableActor(Block block, MovementContext context) {
+        boolean isFalling = context.motion.normalize().dot( new Vec3(0, -1, 0)) > 0.7;
+        if (isFalling) return false;
+
+        final String blockID = BuiltInRegistries.BLOCK.getKey(block).toString();
+        return Config.GRAVITY_ONLY_ACTORS.get().contains(blockID);
+    }
     }
 }

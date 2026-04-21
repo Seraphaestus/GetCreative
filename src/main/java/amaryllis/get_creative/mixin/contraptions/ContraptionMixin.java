@@ -1,10 +1,8 @@
 package amaryllis.get_creative.mixin.contraptions;
 
-import amaryllis.get_creative.GetCreative;
 import amaryllis.get_creative.contraptions.hinge_bearing.HingeBearingBlockEntity;
 import amaryllis.get_creative.contraptions.hinge_bearing.HingeBearingInteractPacket;
 import amaryllis.get_creative.contraptions.hinge_bearing.IControlledContraptionEntityAccessor;
-import amaryllis.get_creative.linked_controller.packets.LinkedDeviceInputPacket;
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import com.simibubi.create.content.contraptions.AbstractContraptionEntity;
 import com.simibubi.create.content.contraptions.ControlledContraptionEntity;

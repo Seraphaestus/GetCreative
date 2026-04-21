@@ -14,6 +14,7 @@ public class Config {
     static final ModConfigSpec SPEC;
 
     public static final ModConfigSpec.ConfigValue<List<? extends String>> ACTOR_BLACKLIST;
+    public static final ModConfigSpec.ConfigValue<List<? extends String>> GRAVITY_ONLY_ACTORS;
 
     public static final ModConfigSpec.BooleanValue SAW_CAN_MUTLIBREAK;
     public static final ModConfigSpec.BooleanValue SAW_CAN_BREAK_ALL_BLOCKS;
@@ -68,6 +69,10 @@ public class Config {
                 .comment("")
                 .comment(" A list of blocks to remove from being registered as contraption actors.")
                 .defineListAllowEmpty("actor_blacklist", List.of(), () -> "", (id) -> true);
+        GRAVITY_ONLY_ACTORS = BUILDER
+                .comment(" A list of blocks whose contraption actors should only be allowed to work while they are facing and moving downwards")
+                .comment(" Note that the actor will still visually spin/animate regardless of context, except for the Mechanical Drill which has special handling")
+                .defineListAllowEmpty("gravity_only_actors", List.of(), () -> "", (id) -> true);
 
         BUILDER.push("Mechanical Saw");
         SAW_CAN_MUTLIBREAK = BUILDER

@@ -5,14 +5,15 @@
   "plugin": "amaryllis.get_creative.GetCreativeMixinPlugin",
   "mixins": [
     "contraptions.ContraptionMixin",
-    "contraptions.ActorMixin",
-    "contraptions.ActorsMixin",
     "contraptions.ControlledContraptionEntityAccessor",
+    "contraptions.SimpleRegistryMixin",
+    "contraptions.MovementBehaviourMixin",
 
     "block_breaking.SawMixin",
     "block_breaking.SawActorMixin",
     "block_breaking.KineticBlockBreakerMixin",
     "block_breaking.KineticBlockBreakerActorMixin",
+    "block_breaking.DrillActorVisualMixin",
 
     "jei.FanWashingCategoryMixin",
     "jei.FanBlastingCategoryMixin",
