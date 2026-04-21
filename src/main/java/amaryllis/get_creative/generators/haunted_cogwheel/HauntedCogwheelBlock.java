@@ -36,7 +36,7 @@ import net.neoforged.neoforge.registries.DeferredItem;
 
 public class HauntedCogwheelBlock extends DirectionalKineticBlock implements IBE<HauntedCogwheelBlockEntity>, ICogWheel, ProperWaterloggedBlock {
 
-    public static final PartialModel MODEL = PartialModel.of(GetCreative.ID("item/haunted_cogwheel"));
+    public static final PartialModel MODEL = PartialModel.of(GetCreative.ID("block/haunted_cogwheel_visual"));
 
     protected static final VoxelShape GEAR_SHAPE = Block.box(2, 6, 2, 14, 10, 14);
     protected static final VoxelShaper HALF_SHAFT_SHAPE = new AllShapes.Builder(Block.box(5, 0, 5, 11, 8, 11)).forDirectional();

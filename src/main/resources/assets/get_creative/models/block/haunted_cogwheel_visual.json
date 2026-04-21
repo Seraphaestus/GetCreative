@@ -6,8 +6,6 @@
 		"shaft": "create:block/cogwheel_axis",
 		"shaft_top": "create:block/axis_top",
 		"cog": "get_creative:block/haunted_cogwheel",
-		"soul_particle": "get_creative:item/soul_animated",
-		"soul_particle_alt": "get_creative:item/soul_animated_offset",
 		"particle": "block/stripped_spruce_log_top"
 	},
 	"elements": [
@@ -107,28 +105,6 @@
 				"west": {"uv": [0, 4, 4, 6], "rotation": 180, "texture": "#cog"},
 				"up": {"uv": [0, 0, 4, 4], "texture": "#cog"},
 				"down": {"uv": [0, 0, 4, 4], "texture": "#cog"}
-			}
-		},
-		{
-			"name": "Particle",
-			"from": [5, 15, -5],
-			"to": [5, 25, 5],
-			"shade": false,
-			"rotation": {"angle": 45, "axis": "y", "origin": [9, 17, 0]},
-			"faces": {
-				"east": {"uv": [0, 0, 16, 16], "texture": "#soul_particle"},
-				"west": {"uv": [0, 0, 16, 16], "texture": "#soul_particle"}
-			}
-		},
-		{
-			"name": "Particle2",
-			"from": [10, 10, 5],
-			"to": [10, 20, 15],
-			"shade": false,
-			"rotation": {"angle": 45, "axis": "y", "origin": [15, 13, 11]},
-			"faces": {
-				"east": {"uv": [0, 0, 16, 16], "texture": "#soul_particle_alt"},
-				"west": {"uv": [0, 0, 16, 16], "texture": "#soul_particle_alt"}
 			}
 		}
 	],
