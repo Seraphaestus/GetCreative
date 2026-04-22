@@ -41,7 +41,7 @@
   "block.get_creative.glue_spreader": "Glue Spreader",
   "block.get_creative.glue_spreader.tooltip.summary": "When _powered by redstone_, blocks in front of _adjacent Glue Spreaders_ are glued together.",
   "block.get_creative.encapsulator": "Encapsulator",
-  "block.get_creative.encapsulator.tooltip.summary": "When _powered by redstone_, connected blocks in front of the _Encapsulator_ are stored into a placeable _Capsule_ item. (as if assembling a contraption)",
+  "block.get_creative.encapsulator.tooltip.summary": "When _powered by redstone_, connected blocks in front of the _Encapsulator_ are stored into a placeable _Capsule_ item.",
   "tooltip.get_creative.encapsulator": "Encapsulating as \"%s\"",
   "get_creative.subtitle.encapsulator.activate": "Encapsulator activates",
   "item.get_creative.structure_capsule": "Capsule",
@@ -139,5 +139,18 @@
   "get_creative.ponder.mechanical_arm_processing.text_1": "Mechanical Arms can process items on directly adjacent belts or Depots.",
   "get_creative.ponder.mechanical_arm_processing.text_2": "First, before it's placed, the Mechanical Arm must be assigned its targets.",
   "get_creative.ponder.mechanical_arm_processing.text_3": "Right-Click to cycle between Input (Blue), Output (Yellow), and Assembly (Purple)",
-  "get_creative.ponder.mechanical_arm_processing.text_4": "Once placed, the Arm will try to process items on adjacent selected Assembly targets."
+  "get_creative.ponder.mechanical_arm_processing.text_4": "Once placed, the Arm will try to process items on adjacent selected Assembly targets.",
+  "get_creative.ponder.mechanical_arm_processing.text_5": "If multiple blocks have the same processing target, they will interfere and may not function correctly.",
+
+  "get_creative.ponder.glue_spreader.header": "Joining Blocks with the Glue Spreader",
+  "get_creative.ponder.glue_spreader.text_1": "Adjacent Glue Spreaders can glue together the blocks in front of them",
+  "get_creative.ponder.glue_spreader.text_2": "When each Glue Spreader is powered, it takes the blocks in front of adjacent Glue Spreaders and glues them to its own block",
+  "get_creative.ponder.glue_spreader.text_3": "The blocks are now glued together into a moveable contraption",
+
+  "get_creative.ponder.encapsulator.header": "Bottling Structures with the Encapsulator",
+  "get_creative.ponder.encapsulator.text_1": "The Encapsulator can store blocks in front of it into a placeable Capsule",
+  "get_creative.ponder.encapsulator.text_2": "Blocks must be connected as if assembling a contraption",
+  "get_creative.ponder.encapsulator.text_3": "Capsules can be then be placed down in one click, consuming the Capsule.",
+  "get_creative.ponder.encapsulator.text_4": "Capsules are oriented relative to the perspective of the Encapsulator; if you want to place it on the ground, the Encapsulator must be on the ground level.",
+  "get_creative.ponder.encapsulator.text_5": "The Encapsulator can also be named in order to label created Capsules."
 }

@@ -121,6 +121,19 @@ public class MechanicalArmScenes {
         scene.idle(10);
         scene.world().instructArm(armPosition, ArmBlockEntity.Phase.SEARCH_INPUTS, ItemStack.EMPTY, -1);
         scene.overlay().showControls(new Vec3(2.5, 1.5, 2.5), Pointing.UP, 50).withItem(output);
+        scene.idle(80);
+
+        Selection secondArmSelection = util.select().fromTo(3, 1, 2,  3, 1, 3);
+        scene.world().showSection(secondArmSelection, Direction.DOWN);
+        scene.idle(10);
+        scene.addKeyframe();
+        scene.effects().indicateRedstone(depotPosition);
+        scene.overlay().showText(70)
+                .colored(PonderPalette.RED)
+                .text("If multiple blocks have the same processing target, they will interfere and may not function correctly.")
+                .pointAt(util.vector().blockSurface(depotPosition, Direction.WEST))
+                .placeNearTarget();
+        scene.idle(80);
     }
 
     protected static void chaseBoundingBoxOutline(PonderSceneBuilder builder, int color, Object slot, AABB boundingBox, int duration) {

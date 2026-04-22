@@ -1,13 +1,15 @@
 package amaryllis.get_creative.ponder;
 
 import amaryllis.get_creative.GetCreative;
+import amaryllis.get_creative.encapsulation.EncapsulatorBlock;
+import amaryllis.get_creative.encapsulation.GlueSpreaderBlock;
+import amaryllis.get_creative.ponder.scenes.EncapsulationScenes;
 import amaryllis.get_creative.ponder.scenes.MechanicalArmScenes;
 import com.simibubi.create.AllBlocks;
-import com.simibubi.create.infrastructure.ponder.scenes.ArmScenes;
-import com.tterrag.registrate.util.entry.ItemProviderEntry;
-import com.tterrag.registrate.util.entry.RegistryEntry;
+import com.simibubi.create.infrastructure.ponder.AllCreatePonderTags;
 import net.createmod.ponder.api.registration.PonderPlugin;
 import net.createmod.ponder.api.registration.PonderSceneRegistrationHelper;
+import net.createmod.ponder.api.registration.PonderTagRegistrationHelper;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 
@@ -20,19 +22,20 @@ public class GetCreativePonderPlugin implements PonderPlugin {
 
     @Override
     public void registerScenes(@NotNull PonderSceneRegistrationHelper<ResourceLocation> helper) {
-        PonderSceneRegistrationHelper<ItemProviderEntry<?, ?>> HELPER = helper.withKeyFunction(RegistryEntry::getId);
-
-        HELPER.forComponents(AllBlocks.MECHANICAL_ARM)
+        helper.forComponents(AllBlocks.MECHANICAL_ARM.getId())
                 .addStoryBoard("mechanical_arm/processing", MechanicalArmScenes::processing);
+
+        helper.forComponents(GlueSpreaderBlock.BLOCK.getId())
+                .addStoryBoard("glue_spreader", EncapsulationScenes::glue_spreader);
+
+        helper.forComponents(EncapsulatorBlock.BLOCK.getId())
+                .addStoryBoard("encapsulator", EncapsulationScenes::encapsulator);
     }
 
-    /*
-    // Example of registering a new ponder to a block which doesn't have any ponders
     @Override
     public void registerTags(PonderTagRegistrationHelper<ResourceLocation> helper) {
-        PonderTagRegistrationHelper<RegistryEntry<?, ?>> HELPER = helper.withKeyFunction(RegistryEntry::getId);
-
-        HELPER.addToTag(AllCreatePonderTags.DISPLAY_SOURCES)
-                .add(AllBlocks.TRACK_SIGNAL)
-    }*/
+        helper.addToTag(AllCreatePonderTags.CONTRAPTION_ASSEMBLY)
+                .add(GlueSpreaderBlock.BLOCK.getId())
+                .add(EncapsulatorBlock.BLOCK.getId());
+    }
 }
