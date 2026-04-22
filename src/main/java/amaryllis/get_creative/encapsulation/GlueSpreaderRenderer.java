@@ -21,8 +21,8 @@ public class GlueSpreaderRenderer extends SafeBlockEntityRenderer<GlueSpreaderBl
 
     protected static final Direction[] STARTING_SIDE = new Direction[]{
         Direction.SOUTH, Direction.NORTH, // Down/Up
-        Direction.DOWN,  Direction.UP,    // North/South
-        Direction.NORTH, Direction.NORTH  // West/East
+        Direction.UP,  Direction.UP,    // North/South
+        Direction.UP, Direction.UP  // West/East
     };
 
     public GlueSpreaderRenderer(BlockEntityRendererProvider.Context context) {}

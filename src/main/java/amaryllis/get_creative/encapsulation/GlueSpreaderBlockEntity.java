@@ -81,8 +81,11 @@ public class GlueSpreaderBlockEntity extends SmartBlockEntity {
         if (!isConnectedToSpreader(to)) return false;
         if (SuperGlueEntity.isGlued(level, from, to, null)) return false;
 
-        SuperGlueEntity entity = new SuperGlueEntity(level, SuperGlueEntity.span(from, from.relative(to)));
-        if (!SuperGlueEntity.isValidFace(level, from, to)) return false;
+        BlockPos toPos = from.relative(to);
+        if (!SuperGlueEntity.isValidFace(level, from, to) ||
+            !SuperGlueEntity.isValidFace(level, toPos, to.getOpposite())) return false;
+
+        SuperGlueEntity entity = new SuperGlueEntity(level, SuperGlueEntity.span(from, toPos));
 
         if (!level.isClientSide) {
             level.addFreshEntity(entity);
