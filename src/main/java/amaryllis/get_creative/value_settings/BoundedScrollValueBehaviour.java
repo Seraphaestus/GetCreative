@@ -47,10 +47,18 @@ public class BoundedScrollValueBehaviour extends ScrollValueBehaviour {
     @Override
     public ValueSettingsBoard createBoard(Player player, BlockHitResult hitResult) {
         final int range = maxValue - minValue;
-        final int milestoneInterval = Math.max(range / 8, 1);
+        int milestoneInterval = getMilestoneInterval(range);
         return new ValueSettingsBoard(label, range, milestoneInterval,
                 ImmutableList.of(Component.literal("Select")),
                 new ValueSettingsFormatter(this::formatSettings));
+    }
+
+    public static int getMilestoneInterval(int range) {
+        int milestoneInterval = 1;
+        if (range % 8 == 0) milestoneInterval = range / 8;
+        else if (range % 12 == 0) milestoneInterval = range / 12;
+        else milestoneInterval = range / 4;
+        return Math.max(milestoneInterval, 1);
     }
 
     public int fixValue(int value) {

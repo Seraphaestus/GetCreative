@@ -1,0 +1,6 @@
+{
+  "parent": "get_creative:block/full_bearing_base",
+  "textures": {
+    "side": "get_creative:block/hinge_bearing_side_3"
+  }
+}

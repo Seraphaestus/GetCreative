@@ -1,10 +1,15 @@
 package amaryllis.get_creative.contraptions.hinge_bearing;
 
 import amaryllis.get_creative.GetCreative;
+import amaryllis.get_creative.value_settings.ToggleSwitchHandler;
 import com.simibubi.create.content.contraptions.bearing.BearingBlock;
 import com.simibubi.create.foundation.block.IBE;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -16,6 +21,8 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.phys.BlockHitResult;
 import net.neoforged.neoforge.registries.DeferredBlock;
@@ -23,6 +30,8 @@ import net.neoforged.neoforge.registries.DeferredItem;
 import org.jetbrains.annotations.NotNull;
 
 public class HingeBearingBlock extends BearingBlock implements IBE<HingeBearingBlockEntity> {
+
+    public static final IntegerProperty SELECTED_VALUE_PANEL = IntegerProperty.create("selected_value_panel", 0, 2);
 
     public static DeferredBlock<Block> BLOCK;
     public static DeferredItem<BlockItem> ITEM;
@@ -37,6 +46,13 @@ public class HingeBearingBlock extends BearingBlock implements IBE<HingeBearingB
 
     public HingeBearingBlock(Properties properties) {
         super(properties);
+        registerDefaultState(super.defaultBlockState().setValue(SELECTED_VALUE_PANEL, 0));
+    }
+
+    @Override
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+        builder.add(SELECTED_VALUE_PANEL);
+        super.createBlockStateDefinition(builder);
     }
 
     @Override
@@ -50,12 +66,31 @@ public class HingeBearingBlock extends BearingBlock implements IBE<HingeBearingB
         if (stack.isEmpty()) {
             if (level.isClientSide) return ItemInteractionResult.SUCCESS;
             withBlockEntityDo(level, pos, blockEntity -> {
-                if (blockEntity.running) blockEntity.disassemble();
+
+                if (ToggleSwitchHandler.isHovered(blockEntity, hitResult.getLocation(), hitResult.getDirection(), 3)) {
+                    // Immediately clear the active value panel, set the next one after a delay
+                    // This accounts for Create being slow to clean up its rendering, so the new panel doesn't overlap the old
+                    int nextIndex = blockEntity.swappableScrollValues.clearIndex();
+                    level.scheduleTick(pos, this, 6);
+
+                    BlockState newState = state.setValue(SELECTED_VALUE_PANEL, nextIndex);
+                    level.setBlock(pos, newState, Block.UPDATE_CLIENTS);
+                    level.playSound(null, pos, SoundEvents.UI_BUTTON_CLICK.value(), SoundSource.BLOCKS);
+                }
+                else if (blockEntity.running) blockEntity.disassemble();
                 else blockEntity.assembleNextTick = true;
+
             });
             return ItemInteractionResult.SUCCESS;
         }
         return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+    }
+
+    @Override
+    protected void tick(@NotNull BlockState state, @NotNull ServerLevel level, @NotNull BlockPos pos, @NotNull RandomSource random) {
+        if (level.getBlockEntity(pos) instanceof HingeBearingBlockEntity hingeBearing) {
+            hingeBearing.swappableScrollValues.setIndex(state.getValue(SELECTED_VALUE_PANEL));
+        }
     }
 
     @Override

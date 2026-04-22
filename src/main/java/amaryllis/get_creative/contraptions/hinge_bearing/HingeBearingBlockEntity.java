@@ -3,6 +3,8 @@ package amaryllis.get_creative.contraptions.hinge_bearing;
 import amaryllis.get_creative.GetCreative;
 import amaryllis.get_creative.contraptions.hinge_bearing.HandleBlock.Material;
 import amaryllis.get_creative.value_settings.BoundedScrollValueBehaviour;
+import amaryllis.get_creative.value_settings.SwappableScrollValues;
+import amaryllis.get_creative.value_settings.ToggleSwitchRenderer;
 import com.simibubi.create.AllSoundEvents;
 import com.simibubi.create.content.contraptions.*;
 import com.simibubi.create.content.contraptions.bearing.BearingBlock;
@@ -10,7 +12,11 @@ import com.simibubi.create.content.contraptions.bearing.BearingContraption;
 import com.simibubi.create.content.contraptions.bearing.IBearingBlockEntity;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
 import com.simibubi.create.foundation.advancement.AllAdvancements;
+import com.simibubi.create.foundation.blockEntity.behaviour.BehaviourType;
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
+import com.simibubi.create.foundation.blockEntity.behaviour.scrollValue.INamedIconOptions;
+import com.simibubi.create.foundation.blockEntity.behaviour.scrollValue.ScrollOptionBehaviour;
+import com.simibubi.create.foundation.gui.AllIcons;
 import com.simibubi.create.foundation.item.TooltipHelper;
 import com.simibubi.create.foundation.utility.ServerSpeedProvider;
 import net.createmod.catnip.math.AngleHelper;
@@ -30,6 +36,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import org.joml.Vector3f;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.function.Supplier;
 
@@ -50,13 +57,43 @@ public class HingeBearingBlockEntity extends KineticBlockEntity
     protected boolean assembleNextTick;
     protected AssemblyException lastException;
 
+    protected SwappableScrollValues swappableScrollValues;
+
     protected BoundedScrollValueBehaviour openSpeed;
     protected static final int MAX_SPEED = 32;
     protected static final int DEFAULT_SPEED = 16;
 
+    protected BoundedScrollValueBehaviour maxAngle;
+    protected static final int MAX_ANGLE = 180;
+    protected static final int DEFAULT_ANGLE = 90;
+
+    protected ScrollOptionBehaviour<OpenMode> openMode;
+    protected enum OpenMode implements INamedIconOptions {
+        UNRESTRICTED,
+        CLOCKWISE_ONLY,
+        COUNTERCLOCKWISE_ONLY;
+
+        @Override
+        public AllIcons getIcon() {
+            return switch (this) {
+                case UNRESTRICTED -> AllIcons.I_CONFIG_UNLOCKED;
+                case CLOCKWISE_ONLY -> AllIcons.I_REFRESH;
+                case COUNTERCLOCKWISE_ONLY -> AllIcons.I_ROTATE_CCW;
+            };
+        }
+
+        @Override
+        public String getTranslationKey() {
+            return switch (this) {
+                case UNRESTRICTED -> "get_creative.hinge_bearing.mode.unrestricted";
+                case CLOCKWISE_ONLY -> "get_creative.hinge_bearing.mode.clockwise_only";
+                case COUNTERCLOCKWISE_ONLY -> "get_creative.hinge_bearing.mode.counterclockwise_only";
+            };
+        }
+    }
+
     public enum OpenState { NEUTRAL, OPEN_CW, OPEN_CCW }
     protected OpenState targetState = OpenState.NEUTRAL;
-    protected double openAngle = 90;
     protected final static double epsilon = 1;
 
     protected float angle;
@@ -109,12 +146,27 @@ public class HingeBearingBlockEntity extends KineticBlockEntity
     public void addBehaviours(List<BlockEntityBehaviour> behaviours) {
         super.addBehaviours(behaviours);
 
-        openSpeed = new BoundedScrollValueBehaviour("Speed", DEFAULT_SPEED, MAX_SPEED,
-                Component.translatable("get_creative.hinge_bearing.opening_speed"),
-                this, getMovementModeSlot());
-        behaviours.add(openSpeed);
+        var movementModeSlot = getMovementModeSlot();
+        swappableScrollValues = new SwappableScrollValues(this, List.of(
+            openSpeed = new BoundedScrollValueBehaviour("Speed", DEFAULT_SPEED, MAX_SPEED,
+                    Component.translatable("get_creative.hinge_bearing.opening_speed"), this, movementModeSlot),
+            maxAngle = new BoundedScrollValueBehaviour("Angle", DEFAULT_ANGLE, MAX_ANGLE,
+                    Component.translatable("get_creative.hinge_bearing.max_angle"), this, movementModeSlot),
+            openMode = new ScrollOptionBehaviour<>(OpenMode.class,
+                    Component.translatable("get_creative.hinge_bearing.mode"), this, movementModeSlot)
+        ));
 
         registerAwardables(behaviours, AllAdvancements.CONTRAPTION_ACTORS);
+        super.getAllBehaviours();
+    }
+
+    @Override
+    public <T extends BlockEntityBehaviour> T getBehaviour(BehaviourType<T> type) {
+        return swappableScrollValues.getBehaviour(type, () -> super.getBehaviour(type));
+    }
+    @Override
+    public Collection<BlockEntityBehaviour> getAllBehaviours() {
+        return swappableScrollValues.getAllBehaviours(super.getAllBehaviours());
     }
 
     @Override
@@ -129,6 +181,7 @@ public class HingeBearingBlockEntity extends KineticBlockEntity
         compound.putFloat("Angle", angle);
         if (targetState != OpenState.NEUTRAL) compound.putBoolean("TargetState", targetState == OpenState.OPEN_CW);
         AssemblyException.write(compound, registries, lastException);
+        swappableScrollValues.write(compound);
         super.write(compound, registries, clientPacket);
     }
 
@@ -145,6 +198,7 @@ public class HingeBearingBlockEntity extends KineticBlockEntity
         targetState = !compound.contains("TargetState") ? OpenState.NEUTRAL
             : (compound.getBoolean("TargetState") ? OpenState.OPEN_CW : OpenState.OPEN_CCW);
         lastException = AssemblyException.read(compound, registries);
+        swappableScrollValues.read(compound);
         super.read(compound, registries, clientPacket);
 
         if (!clientPacket) return;
@@ -167,8 +221,8 @@ public class HingeBearingBlockEntity extends KineticBlockEntity
     public double getTargetAngle() {
         return switch(targetState) {
             case OpenState.NEUTRAL -> 0;
-            case OpenState.OPEN_CW -> openAngle;
-            case OpenState.OPEN_CCW -> -openAngle;
+            case OpenState.OPEN_CW -> maxAngle.get();
+            case OpenState.OPEN_CCW -> -maxAngle.get();
         };
     }
 
@@ -190,7 +244,7 @@ public class HingeBearingBlockEntity extends KineticBlockEntity
             if (newAngle > angle && newAngle > 0 ||
                 newAngle < angle && newAngle < 0) newAngle = 0;
         }
-        newAngle = (float)Mth.clamp(newAngle, -openAngle, openAngle);
+        newAngle = (float)Mth.clamp(newAngle, -maxAngle.get(), maxAngle.get());
         if (Math.abs(getTargetAngle() - newAngle) < epsilon) newAngle = (float)getTargetAngle();
         return newAngle;
     }
@@ -313,11 +367,16 @@ public class HingeBearingBlockEntity extends KineticBlockEntity
         }
 
         Vector3f pivot = getBlockPosition().getCenter().toVector3f();
-        Vector3f playerPos = player.position().toVector3f();
+        Vector3f playerPos = player.position().toVector3f().add(0, player.getBbHeight() * 0.5f, 0);
         Vector3f interactPos = contraption.toGlobalVector(localInteractPos.getCenter(), 1).toVector3f();
 
-        boolean turnClockwise = shouldOpenClockwise(playerPos, interactPos, pivot);
-        if (openTowardsPlayer) turnClockwise = !turnClockwise;
+        boolean turnClockwise;
+        if (openMode.get() == OpenMode.CLOCKWISE_ONLY) turnClockwise = false;
+        else if (openMode.get() == OpenMode.COUNTERCLOCKWISE_ONLY) turnClockwise = true;
+        else {
+            turnClockwise = shouldOpenClockwise(playerPos, interactPos, pivot);
+            if (openTowardsPlayer) turnClockwise = !turnClockwise;
+        }
         openDoor(turnClockwise);
     }
     public void openDoor(boolean clockwise) {
@@ -346,6 +405,8 @@ public class HingeBearingBlockEntity extends KineticBlockEntity
         level.playSound(null, getBlockPos(), sound, SoundSource.BLOCKS, 1.0F, level.getRandom().nextFloat() * 0.1F + 0.9F);
     }
 
+    public static Supplier<Boolean> isToggleSwitchHovered;
+
     @Override
     public boolean addToTooltip(List<Component> tooltip, boolean isPlayerSneaking) {
         if (super.addToTooltip(tooltip, isPlayerSneaking)) return true;
@@ -356,6 +417,9 @@ public class HingeBearingBlockEntity extends KineticBlockEntity
 
         BlockState attachedState = level.getBlockState(worldPosition.relative(state.getValue(BearingBlock.FACING)));
         if (attachedState.canBeReplaced()) return false;
+
+        //if (isToggleSwitchHovered != null && isToggleSwitchHovered.get()) return false;
+        if (ToggleSwitchRenderer.isSwitchHovered()) return false;
 
         TooltipHelper.addHint(tooltip, "hint.empty_bearing");
         return true;
