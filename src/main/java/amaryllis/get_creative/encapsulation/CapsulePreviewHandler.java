@@ -47,7 +47,7 @@ public class CapsulePreviewHandler {
     protected ItemStack capsuleStack;
 
     protected CompoundTag structureData;
-    protected BlockPos prevAnchor;
+    protected BlockPos prevPosition;
     protected Rotation prevRotation;
 
     private AABB bounds;
@@ -115,8 +115,8 @@ public class CapsulePreviewHandler {
         ms.popPose();
     }
 
-    public void updateRenderer() {
-        if (renderer != null) renderer.update();
+    public static void invalidateRenderer() {
+        if (INSTANCE.renderer != null) INSTANCE.renderer.update();
     }
 
     protected boolean reloadStructure(LocalPlayer player) {
@@ -155,11 +155,12 @@ public class CapsulePreviewHandler {
         if (hitResult == null || hitResult.getType() != HitResult.Type.BLOCK) return false;
         BlockHitResult blockHit = (BlockHitResult)hitResult;
 
-        Rotation rotation = CapsuleItem.getStructureRotation(capsuleStack, player.getDirection());
+        final Rotation rotation = CapsuleItem.getStructureRotation(capsuleStack, player.getDirection());
         BlockPos offset = CapsuleItem.getOffset(capsuleStack);
-        BlockPos anchor = blockHit.getBlockPos().relative(blockHit.getDirection()).offset(offset.rotate(rotation));
+        final BlockPos hitPos = blockHit.getBlockPos().relative(blockHit.getDirection());
+        final BlockPos anchor = hitPos.offset(offset.rotate(rotation));
 
-        if (!reinitialize && anchor.equals(prevAnchor) && rotation.equals(prevRotation)) return true;
+        if (!reinitialize && hitPos.equals(prevPosition) && rotation.equals(prevRotation)) return true;
 
         if (reinitialize) {
             transformation = new SchematicTransformation();
@@ -170,8 +171,12 @@ public class CapsulePreviewHandler {
                     .lineWidth(1 / 16f);
             transformation.init(anchor, new StructurePlaceSettings().setRotation(rotation), bounds);
         } else {
-            ((ISchematicTransformation)transformation).getCreative$update(anchor, rotation);
+            ((ISchematicTransformation)transformation).getCreative$update(
+                    anchor, offset, !hitPos.equals(prevPosition),
+                    rotation, prevRotation);
         }
+        prevPosition = hitPos;
+        prevRotation = rotation;
         return true;
     }
 

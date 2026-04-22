@@ -62,13 +62,12 @@ public class ArbitraryStructureTemplate extends StructureTemplate {
     }
 
 
-    public CompoundTag saveAndTrim(Level level) {
+    public CompoundTag saveAndTrim(Level level, boolean hasSuperGlue) {
         Vec3i size = ((IStructureTemplate)this).getCreative$getSize();
-        BlockPos bounds = new BlockPos(size);
 
         CompoundTag data = save(new CompoundTag());
         SchematicAndQuillItem.replaceStructureVoidWithAir(data);
-        SchematicAndQuillItem.clampGlueBoxes(level, new AABB(Vec3.atLowerCornerOf(minPos), Vec3.atLowerCornerOf(minPos.offset(bounds))), data);
+        if (hasSuperGlue) SchematicAndQuillItem.clampGlueBoxes(level, new AABB(Vec3.atLowerCornerOf(minPos), Vec3.atLowerCornerOf(minPos.offset(size))), data);
 
         data.put("Offset", NbtUtils.writeBlockPos(offset));
         return data;

@@ -87,7 +87,7 @@ public class EncapsulatorBlockEntity extends SmartBlockEntity implements IHaveHo
         ArbitraryStructureTemplate structure = new ArbitraryStructureTemplate();
         structure.fillFromBlocks(level, pos.relative(facing), blocks, false);
 
-        CompoundTag data = structure.saveAndTrim(level);
+        CompoundTag data = structure.saveAndTrim(level, false);
 
         contraption.removeBlocksFromWorld(level, BlockPos.ZERO);
 

@@ -1,4 +1,4 @@
-package amaryllis.get_creative.mixin;
+package amaryllis.get_creative.mixin.encapsulation;
 
 import amaryllis.get_creative.encapsulation.ArbitraryStructureTemplate;
 import amaryllis.get_creative.encapsulation.IStructureTemplate;

@@ -1,22 +1,18 @@
-package amaryllis.get_creative.mixin;
+package amaryllis.get_creative.mixin.encapsulation;
 
 import amaryllis.get_creative.GetCreative;
 import amaryllis.get_creative.encapsulation.ISchematicPrinter;
-import com.simibubi.create.AllDataComponents;
-import com.simibubi.create.Create;
 import com.simibubi.create.content.contraptions.StructureTransform;
-import com.simibubi.create.content.schematics.SchematicItem;
 import com.simibubi.create.content.schematics.SchematicPrinter;
 import com.simibubi.create.content.schematics.SchematicProcessor;
 import net.createmod.catnip.levelWrappers.SchematicLevel;
 import net.createmod.catnip.math.BBHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Mirror;
 import net.minecraft.world.level.block.Rotation;
+import net.minecraft.world.level.block.entity.BarrelBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;

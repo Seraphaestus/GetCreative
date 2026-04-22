@@ -25,14 +25,15 @@
     "precision_assembly.MechanicalArmMixin",
     "precision_assembly.ArmInteractionPointMixin",
 
+    "encapsulation.StructureTemplateMixin",
+    "encapsulation.SchematicPrinterMixin",
+    "encapsulation.SchematicTransformationMixin",
+    "encapsulation.CreateClientMixin",
+
     "StationBlockMixin",
     "DeployerMixin",
 
-    "LecternControllerMixin",
-
-    "StructureTemplateMixin",
-    "SchematicPrinterMixin",
-    "SchematicTransformationMixin"
+    "LecternControllerMixin"
   ],
   "client": [
     "precision_assembly.ArmInteractionPointHandlerMixin"

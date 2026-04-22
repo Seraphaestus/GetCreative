@@ -24,7 +24,6 @@ import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Rotation;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 import net.neoforged.api.distmarker.Dist;
@@ -90,18 +89,21 @@ public class CapsuleItem extends Item {
         Level level = context.getLevel();
         if (level.isClientSide) return InteractionResult.SUCCESS;
 
-        SchematicPrinter printer = new SchematicPrinter();
-        CompoundTag data = stack.get(STORED_STRUCTURE_DATA);
-        BlockPos offset = data.contains("Offset") ? NbtUtils.readBlockPos(data, "Offset").orElse(BlockPos.ZERO) : BlockPos.ZERO;
+        Rotation rotation = getStructureRotation(stack, context.getHorizontalDirection());
+        BlockPos anchor = context.getClickedPos().relative(context.getClickedFace())
+                .offset(getOffset(stack).rotate(rotation));
 
         StructureTemplate structure = getStructure(level, stack);
-        Rotation rotation = getStructureRotation(stack, context.getHorizontalDirection());
-        BlockPos anchor = context.getClickedPos().relative(context.getClickedFace()).offset(offset.rotate(rotation));
-
-        ((ISchematicPrinter)printer).getCreative$loadStructure(structure, level, anchor, rotation, true);
-        if (!printer.isLoaded() || printer.isErrored()) return InteractionResult.SUCCESS;
+        if (!printStructure(level, structure, anchor, rotation)) return InteractionResult.SUCCESS;
 
         stack.consume(stack.getCount(), context.getPlayer());
+        return InteractionResult.CONSUME;
+    }
+
+    protected static boolean printStructure(Level level, StructureTemplate structure, BlockPos anchor, Rotation rotation) {
+        SchematicPrinter printer = new SchematicPrinter();
+        ((ISchematicPrinter)printer).getCreative$loadStructure(structure, level, anchor, rotation, true);
+        if (!printer.isLoaded() || printer.isErrored()) return false;
 
         while (printer.advanceCurrentPos()) {
             if (!printer.shouldPlaceCurrent(level)) continue;
@@ -115,11 +117,11 @@ public class CapsuleItem extends Item {
                     return;
                 }
 
-                CompoundTag beData = BlockHelper.prepareBlockEntityData(level, state, blockEntity);
+                CompoundTag beData = (blockEntity != null) ? blockEntity.saveWithoutMetadata(level.registryAccess()) : null;
                 BlockHelper.placeSchematicBlock(level, state, pos, null, beData);
             },(pos, entity) -> {});
         }
-        return InteractionResult.CONSUME;
+        return true;
     }
 
     public static @Nullable StructureTemplate getStructure(Level anyLevel, ItemStack capsuleItem) {
@@ -139,11 +141,15 @@ public class CapsuleItem extends Item {
     public static @NotNull BlockPos getOffset(ItemStack capsuleItem) {
         if (!capsuleItem.has(STORED_STRUCTURE_DATA)) return BlockPos.ZERO;
         CompoundTag data = capsuleItem.get(STORED_STRUCTURE_DATA);
-        return data.contains("Offset") ? NbtUtils.readBlockPos(data, "Offset").orElse(BlockPos.ZERO) : BlockPos.ZERO;
-    }
+        if (!data.contains("Offset")) return BlockPos.ZERO;
 
-    protected static boolean canReplaceBlock(BlockPos pos, BlockState state, BlockEntity blockEntity, BlockState toReplace, BlockState toReplace_otherHalf, boolean isNormalCube) {
-        return toReplace.is(BlockTags.REPLACEABLE) && (toReplace_otherHalf == null || toReplace_otherHalf.is(BlockTags.REPLACEABLE));
+        Tag tag = data.get("Offset");
+        if (tag instanceof ListTag iList) {
+            return new BlockPos(iList.getInt(0), iList.getInt(1), iList.getInt(2));
+        } else if (tag instanceof IntArrayTag iArr) {
+            return new BlockPos(iArr.get(0).getAsInt(), iArr.get(1).getAsInt(), iArr.get(2).getAsInt());
+        }
+        return BlockPos.ZERO;
     }
 
     @Override
@@ -153,7 +159,7 @@ public class CapsuleItem extends Item {
         Component contentsName = stack.has(CONTENTS_NAME) ? stack.get(CONTENTS_NAME) : null;
 
         if (data == null) {
-            tooltip.add(Component.literal("Invalid data!").withStyle(ChatFormatting.RED));
+            tooltip.add(Component.translatable("tooltip.get_creative.structure_capsule.invalid").withStyle(ChatFormatting.GRAY));
         } else {
             if (contentsName != null) {
                 var nameComponent = contentsName.copy();
@@ -179,7 +185,7 @@ public class CapsuleItem extends Item {
                 for (String key: parent.getAllKeys()) {
                     switch (parent.getTagType(key)) {
                         case Tag.TAG_COMPOUND, Tag.TAG_LIST:
-                            toCheck.add(parent.get(key));
+                            if (!key.equals("nbt")) toCheck.add(parent.get(key));
                             break;
                         case Tag.TAG_INT_ARRAY:
                             IntArrayTag iArr = (IntArrayTag) parent.get(key);

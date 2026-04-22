@@ -1,7 +1,6 @@
 package amaryllis.get_creative.encapsulation;
 
 import amaryllis.get_creative.GetCreative;
-import com.simibubi.create.AllBlocks;
 import com.simibubi.create.foundation.block.IBE;
 import com.simibubi.create.foundation.block.WrenchableDirectionalBlock;
 import dev.engine_room.flywheel.lib.model.baked.PartialModel;
