@@ -20,31 +20,30 @@ public class AreaAirCurrent extends AirCurrent {
 
     @Override
     public void tick() {
-        if (direction == null) rebuild();
+        super.tick();
+
         Level world = source.getAirCurrentWorld();
+        if (world == null || !world.isClientSide) return;
 
-        if (world != null && world.isClientSide) {
-            float offset = pushing ? 0.5f : maxDistance + .5f;
-            for (int u = -radius; u <= radius; u++) {
-                for (int v = -radius; v <= radius; v++) {
-                    Vec3 areaOffset = switch (direction) {
-                        case Direction.EAST, Direction.WEST -> new Vec3(0, u, v);
-                        case Direction.NORTH, Direction.SOUTH -> new Vec3(u, v, 0);
-                        default -> new Vec3(u, 0, v);
-                    };
+        float offset = pushing ? 0.5f : maxDistance + .5f;
+        for (int u = -radius; u <= radius; u++) {
+            for (int v = -radius; v <= radius; v++) {
+                if (u == 0 && v == 0) continue;
 
-                    Vec3 pos = VecHelper.getCenterOf(source.getAirCurrentPos())
-                            .add(Vec3.atLowerCornerOf(direction.getNormal())
-                            .add(areaOffset)
-                            .scale(offset));
-                    if (world.random.nextFloat() < AllConfigs.client().fanParticleDensity.get() / (radius * 2 + 1))
-                        world.addParticle(new AirFlowParticleData(source.getAirCurrentPos()), pos.x, pos.y, pos.z, 0, 0, 0);
-                }
+                Vec3 areaOffset = switch (direction) {
+                    case Direction.EAST, Direction.WEST -> new Vec3(0, u, v);
+                    case Direction.NORTH, Direction.SOUTH -> new Vec3(u, v, 0);
+                    default -> new Vec3(u, 0, v);
+                };
+
+                Vec3 pos = VecHelper.getCenterOf(source.getAirCurrentPos())
+                        .add(Vec3.atLowerCornerOf(direction.getNormal())
+                        .add(areaOffset)
+                        .scale(offset));
+                if (world.random.nextFloat() < AllConfigs.client().fanParticleDensity.get() / (radius * 2 + 1))
+                    world.addParticle(new AirFlowParticleData(source.getAirCurrentPos()), pos.x, pos.y, pos.z, 0, 0, 0);
             }
         }
-
-        tickAffectedEntities(world);
-        tickAffectedHandlers();
     }
 
     @Override

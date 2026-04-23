@@ -124,8 +124,6 @@ dependencies {
 
     compileOnly("mezz.jei:jei-${minecraft_version}-neoforge-api:${jei_version}")
     runtimeOnly("mezz.jei:jei-${minecraft_version}-neoforge:${jei_version}")
-
-    runtimeOnly("curse.maven:create-aeronautics-676721:7964998")
 }
 
 // This block of code expands all declared replace properties in the specified resource targets.
