@@ -19,8 +19,6 @@ import amaryllis.get_creative.recipes.CustomCreateRecipeTypes;
 import com.simibubi.create.api.behaviour.movement.MovementBehaviour;
 import com.simibubi.create.api.contraption.BlockMovementChecks;
 import com.simibubi.create.api.stress.BlockStressValues;
-import com.simibubi.create.compat.jei.ConversionRecipe;
-import com.simibubi.create.compat.jei.category.MysteriousItemConversionCategory;
 import com.simibubi.create.content.contraptions.behaviour.MovementContext;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -122,9 +120,6 @@ public class GetCreative {
             BlockStressValues.CAPACITIES.register(WindUpKeyBlock.BLOCK.get(), Config.WIND_UP_KEY_STRESS_CAPACITY::get);
             BlockStressValues.CAPACITIES.register(ClockworkMotorBlock.BLOCK.get(), Config.CLOCKWORK_MOTOR_STRESS_CAPACITY::get);
             BlockStressValues.CAPACITIES.register(BreezeWhirlerBlock.BLOCK.get(), Config.BREEZE_WHIRLER_STRESS_CAPACITY::get);
-
-            MysteriousItemConversionCategory.RECIPES.add(ConversionRecipe.create(BreezeWhirlerBlock.EMPTY_ITEM.toStack(), BreezeWhirlerBlock.ITEM.toStack()));
-            MysteriousItemConversionCategory.RECIPES.add(ConversionRecipe.create(EncapsulatorBlock.ITEM.toStack(), CapsuleItem.ITEM.toStack()));
         });
     }
 

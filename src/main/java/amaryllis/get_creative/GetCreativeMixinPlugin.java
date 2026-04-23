@@ -12,8 +12,13 @@ public class GetCreativeMixinPlugin implements IMixinConfigPlugin {
 
     @Override
     public boolean shouldApplyMixin(String targetClassName, String mixinClassName) {
+        // Only port Steam n Rails station assembly if the mod is not loaded
         if (mixinClassName.equals("amaryllis.get_creative.mixin.StationBlockMixin"))
-            return !isModLoaded("railways"); // aka Create: Steam 'n' Rails
+            return !isModLoaded("railways");
+
+        // Only mixin recipe viewer categories if JEI or a JEI compat mod is loaded
+        if (mixinClassName.startsWith("amaryllis.get_creative.mixin.jei"))
+            return isModLoaded("jei") || isModLoaded("toomanyrecipeviewers") || isModLoaded("roughlyenoughitems");
 
         return true;
     }

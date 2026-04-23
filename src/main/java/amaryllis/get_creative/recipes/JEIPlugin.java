@@ -48,6 +48,7 @@ public class JEIPlugin implements IModPlugin {
     @Override
     public void registerRecipes(IRecipeRegistration registration) {
         categories.forEach(category -> category.registerRecipes(registration));
+        MysteriousConversionRecipes.register();
     }
 
     @Override
