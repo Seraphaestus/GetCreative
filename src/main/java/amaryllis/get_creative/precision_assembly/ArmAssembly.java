@@ -98,12 +98,16 @@ public class ArmAssembly {
                 return "interference";
         }
 
-        BlockEntity targetBE = level.getBlockEntity(targetPos);
-        if (targetBE instanceof BeltBlockEntity) return null;
+        return isValidTargetBlock(level, targetPos) ? null : "invalid_block";
+    }
+
+    public static boolean isValidTargetBlock(Level level, BlockPos pos) {
+        BlockEntity targetBE = level.getBlockEntity(pos);
+        if (targetBE instanceof BeltBlockEntity) return true;
 
         if (targetBE instanceof SmartBlockEntity targetSmartBE) {
-            if (targetSmartBE.getBehaviour(DepotBehaviour.TYPE) != null) return null;
+            if (targetSmartBE.getBehaviour(DepotBehaviour.TYPE) != null) return true;
         }
-        return "invalid_block";
+        return false;
     }
 }
