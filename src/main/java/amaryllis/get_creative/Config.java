@@ -182,7 +182,7 @@ public class Config {
                 .comment(" 16 RPM -> 3:1, 32 RPM -> 2:1, 64 RPM -> 1:1, 128 RPM -> 1:2, 256 RPM -> 1:3")
                 .comment("")
                 .comment(" This determines the power of 2 at which the motor has a 1:1 ratio. The default 6 -> 2^6 = 64 RPM")
-                .defineInRange("clockwork_motor_event_point", 6, 1, 8);
+                .defineInRange("clockwork_motor_even_point", 6, 1, 8);
         CLOCKWORK_MOTOR_EFFICIENCY = BUILDER
                 .comment("")
                 .comment(" The baseline wind-down duration is then multiplied by this value")
