@@ -1,6 +1,5 @@
 package amaryllis.get_creative.mixin.precision_assembly;
 
-import amaryllis.get_creative.GetCreative;
 import amaryllis.get_creative.precision_assembly.ArmAssembly;
 import amaryllis.get_creative.precision_assembly.IArmInteractionPoint;
 import com.simibubi.create.content.kinetics.mechanicalArm.ArmInteractionPoint;
