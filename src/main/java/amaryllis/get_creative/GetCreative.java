@@ -136,6 +136,11 @@ public class GetCreative {
     }
 
     public static boolean shouldRegisterActor(Block block, MovementBehaviour behaviour) {
+        if (!Config.SPEC.isLoaded()) {
+            LOGGER.warn("Could not check to disable actor {} because config isn't loaded yet", block);
+            return true;
+        }
+
         final String blockID = BuiltInRegistries.BLOCK.getKey(block).toString();
         return !Config.ACTOR_BLACKLIST.get().contains(blockID) || Config.GRAVITY_ONLY_ACTORS.get().contains(blockID);
     }

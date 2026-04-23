@@ -39,6 +39,16 @@ config="${mod_id}.mixins.json"
     ordering="AFTER"
     side="BOTH"
 
+# Manually force loading before these mods so the config can load to disable their actors
+[[dependencies.${mod_id}]]
+    modId="powergrid"
+    type="optional"
+    ordering="BEFORE"
+[[dependencies.${mod_id}]]
+    modId="cbbees"
+    type="optional"
+    ordering="BEFORE"
+
 # Features are specific properties of the game environment, that you may want to declare you require. This example declares
 # that your mod requires GL version 3.2 or higher. Other features will be added. They are side aware so declaring this won't
 # stop your mod loading on the server for example.
