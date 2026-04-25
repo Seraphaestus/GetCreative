@@ -2,11 +2,16 @@ package amaryllis.get_creative;
 
 import java.util.List;
 
+import amaryllis.get_creative.encapsulation.CapsuleItem;
+import amaryllis.get_creative.encapsulation.EncapsulatorBlock;
+import amaryllis.get_creative.generators.breeze_whirler.BreezeWhirlerBlock;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.common.ModConfigSpec;
+
+import static com.simibubi.create.compat.jei.category.MysteriousItemConversionCategory.RECIPES;
 
 public class Config {
 
@@ -29,6 +34,7 @@ public class Config {
     public static final ModConfigSpec.ConfigValue<String> JEI_FAN_BLASTING_CATALYST;
     public static final ModConfigSpec.ConfigValue<String> JEI_FAN_SMOKING_CATALYST;
     public static final ModConfigSpec.ConfigValue<String> JEI_FAN_HAUNTING_CATALYST;
+    public static final ModConfigSpec.ConfigValue<List<? extends String>> MYSTERIOUS_CONVERSIONS;
 
     public static final ModConfigSpec.BooleanValue PRECISION_ASSEMBLY_BULK_PROCESSING;
 
@@ -109,7 +115,7 @@ public class Config {
                 .define("can_give_wrench_to_deployer", true);
         BUILDER.pop();
 
-        BUILDER.push("Displayed Fan Catalysts in Recipe Viewers");
+        BUILDER.push("Recipe Viewers");
         JEI_FAN_WASHING_CATALYST = BUILDER
                 .comment(" Block ID for overriding the Fan Washing catalyst in Recipe Viewers. Defaults to 'minecraft:water'")
                 .define("jei_fan_washing_catalyst", "");
@@ -125,6 +131,13 @@ public class Config {
                 .comment("")
                 .comment(" Block ID for overriding the Fan Haunting catalyst in Recipe Viewers. Defaults to 'minecraft:soul_fire'")
                 .define("jei_fan_haunting_catalyst", "");
+        MYSTERIOUS_CONVERSIONS = BUILDER
+                .comment("")
+                .comment(" A list of mysterious conversions to add to the Recipe Viewer category, e.g. 'create:empty_blaze_burner -> create:blaze_burner'")
+                .defineListAllowEmpty("mysterious_conversions", List.of(
+                    "get_creative:empty_breeze_whirler -> get_creative:breeze_whirler",
+                    "get_creative:encapsulator -> get_creative:structure_capsule"
+                ), () -> "", (id) -> true);
         BUILDER.pop();
 
         BUILDER.push("Precision Assembly");

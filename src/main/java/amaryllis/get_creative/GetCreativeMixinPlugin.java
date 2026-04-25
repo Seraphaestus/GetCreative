@@ -1,6 +1,5 @@
 package amaryllis.get_creative;
 
-import net.neoforged.fml.loading.LoadingModList;
 import org.objectweb.asm.tree.ClassNode;
 import org.spongepowered.asm.mixin.extensibility.IMixinConfigPlugin;
 import org.spongepowered.asm.mixin.extensibility.IMixinInfo;
@@ -14,17 +13,13 @@ public class GetCreativeMixinPlugin implements IMixinConfigPlugin {
     public boolean shouldApplyMixin(String targetClassName, String mixinClassName) {
         // Only port Steam n Rails station assembly if the mod is not loaded
         if (mixinClassName.equals("amaryllis.get_creative.mixin.StationBlockMixin"))
-            return !isModLoaded("railways");
+            return !CompatHelper.isModLoaded("railways");
 
         // Only mixin recipe viewer categories if JEI or a JEI compat mod is loaded
         if (mixinClassName.startsWith("amaryllis.get_creative.mixin.jei"))
-            return isModLoaded("jei") || isModLoaded("toomanyrecipeviewers") || isModLoaded("roughlyenoughitems");
+            return CompatHelper.isJEILoaded();
 
         return true;
-    }
-
-    private boolean isModLoaded(String modID) {
-        return LoadingModList.get().getModFileById(modID) != null;
     }
 
 

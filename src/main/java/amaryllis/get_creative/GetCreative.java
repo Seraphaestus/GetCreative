@@ -16,6 +16,7 @@ import amaryllis.get_creative.industrial_fan.IndustrialFanBlock;
 import amaryllis.get_creative.linked_controller.AllLinkedDevices;
 import amaryllis.get_creative.linked_controller.lectern.LecternDeviceBlock;
 import amaryllis.get_creative.recipes.CustomCreateRecipeTypes;
+import amaryllis.get_creative.recipes.MysteriousConversionRecipes;
 import com.simibubi.create.api.behaviour.movement.MovementBehaviour;
 import com.simibubi.create.api.contraption.BlockMovementChecks;
 import com.simibubi.create.api.stress.BlockStressValues;
@@ -120,6 +121,8 @@ public class GetCreative {
             BlockStressValues.CAPACITIES.register(WindUpKeyBlock.BLOCK.get(), Config.WIND_UP_KEY_STRESS_CAPACITY::get);
             BlockStressValues.CAPACITIES.register(ClockworkMotorBlock.BLOCK.get(), Config.CLOCKWORK_MOTOR_STRESS_CAPACITY::get);
             BlockStressValues.CAPACITIES.register(BreezeWhirlerBlock.BLOCK.get(), Config.BREEZE_WHIRLER_STRESS_CAPACITY::get);
+
+            CompatHelper.safeRunIf(CompatHelper.isJEILoaded(), () -> MysteriousConversionRecipes::register);
         });
     }
 
