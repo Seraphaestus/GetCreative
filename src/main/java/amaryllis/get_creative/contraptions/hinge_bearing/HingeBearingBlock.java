@@ -6,6 +6,7 @@ import com.simibubi.create.content.contraptions.bearing.BearingBlock;
 import com.simibubi.create.foundation.block.IBE;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -77,7 +78,10 @@ public class HingeBearingBlock extends BearingBlock implements IBE<HingeBearingB
                     level.setBlock(pos, newState, Block.UPDATE_CLIENTS);
                     level.playSound(null, pos, SoundEvents.UI_BUTTON_CLICK.value(), SoundSource.BLOCKS);
                 }
-                else if (blockEntity.running) blockEntity.disassemble();
+                else if (blockEntity.running) {
+                    if (!blockEntity.tryDisassemble())
+                        player.displayClientMessage(Component.translatable("get_creative.hinge_bearing.cannot_disassemble", Component.translatable("block.get_creative.hinge_bearing")), true);
+                }
                 else blockEntity.assembleNextTick = true;
 
             });

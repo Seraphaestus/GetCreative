@@ -98,6 +98,7 @@
 
   "block.get_creative.hinge_bearing": "Hinge Bearing",
   "block.get_creative.hinge_bearing.tooltip.summary": "Allows its _contraption_ to be manually _interacted_ with to push it _open_ and pull it _shut_.",
+  "get_creative.hinge_bearing.cannot_disassemble": "Won't disassemble %s while opened",
   "get_creative.hinge_bearing.opening_speed": "Opening Speed in RPM",
   "get_creative.hinge_bearing.max_angle": "Open Angle",
   "get_creative.hinge_bearing.mode": "Opening Restrictions",

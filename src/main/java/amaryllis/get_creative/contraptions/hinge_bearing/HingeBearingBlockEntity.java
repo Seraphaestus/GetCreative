@@ -294,6 +294,12 @@ public class HingeBearingBlockEntity extends KineticBlockEntity
         sendData();
     }
 
+    public boolean tryDisassemble() {
+        boolean isClosed = (targetState == OpenState.NEUTRAL) && (Math.abs(getTargetAngle() - angle) < epsilon);
+        if (isClosed) disassemble();
+        return isClosed;
+    }
+
     @Override
     public void tick() {
         super.tick();
