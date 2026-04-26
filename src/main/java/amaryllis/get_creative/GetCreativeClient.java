@@ -4,6 +4,8 @@ import amaryllis.get_creative.contraptions.hinge_bearing.HandleBlock;
 import amaryllis.get_creative.contraptions.hinge_bearing.HingeBearingBlockEntity;
 import amaryllis.get_creative.contraptions.hinge_bearing.HingeBearingRenderer;
 import amaryllis.get_creative.contraptions.hinge_bearing.HingeBearingVisual;
+import amaryllis.get_creative.control_seat.ControlSeatBlock;
+import amaryllis.get_creative.control_seat.ControlSeatEntity;
 import amaryllis.get_creative.encapsulation.GlueSpreaderBlockEntity;
 import amaryllis.get_creative.encapsulation.GlueSpreaderRenderer;
 import amaryllis.get_creative.fluid_barrel.FluidBarrelBlock;
@@ -48,6 +50,7 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -62,10 +65,7 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.jarjar.nio.util.Lazy;
-import net.neoforged.neoforge.client.event.ClientTickEvent;
-import net.neoforged.neoforge.client.event.InputEvent;
-import net.neoforged.neoforge.client.event.RegisterGuiLayersEvent;
-import net.neoforged.neoforge.client.event.RegisterKeyMappingsEvent;
+import net.neoforged.neoforge.client.event.*;
 import net.neoforged.neoforge.client.gui.ConfigurationScreen;
 import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
 import net.neoforged.neoforge.client.gui.VanillaGuiLayers;
@@ -159,6 +159,11 @@ public class GetCreativeClient {
     }
 
     @SubscribeEvent
+    public static void registerEntityRenderers(EntityRenderersEvent.RegisterRenderers event) {
+        event.registerEntityRenderer((EntityType<ControlSeatEntity>) ControlSeatEntity.ENTITY_TYPE.get(), ControlSeatEntity.Render::new);
+    }
+
+    @SubscribeEvent
     public static void registerGuiOverlays(RegisterGuiLayersEvent event) {
         event.registerAbove(VanillaGuiLayers.HOTBAR, GetCreative.ID("linked_device"), LinkedDeviceClientHandler.OVERLAY);
     }
@@ -200,6 +205,9 @@ public class GetCreativeClient {
         // Overrides -> multiple items can share the same tooltip
         if (block instanceof HandleBlock) {
             item = BuiltInRegistries.ITEM.get(GetCreative.ID("oak_handle"));
+        }
+        else if (block instanceof ControlSeatBlock) {
+            item = BuiltInRegistries.ITEM.get(GetCreative.ID("red_control_seat"));
         }
 
         // Data-driven Create tooltips

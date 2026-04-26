@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "hasItem": {
+      "conditions": {
+        "items": [
+          {
+            "items": "create:black_seat"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "get_creative:black_control_seat"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "hasItem"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "get_creative:black_control_seat"
+    ]
+  }
+}

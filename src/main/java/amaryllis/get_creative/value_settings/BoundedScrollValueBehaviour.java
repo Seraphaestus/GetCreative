@@ -53,12 +53,12 @@ public class BoundedScrollValueBehaviour extends ScrollValueBehaviour {
                 new ValueSettingsFormatter(this::formatSettings));
     }
 
+    protected static final int[] intervalPriority = new int[] { 8, 12, 6, 9, 10, 5, 4, 3, 2 };
     public static int getMilestoneInterval(int range) {
-        int milestoneInterval = 1;
-        if (range % 8 == 0) milestoneInterval = range / 8;
-        else if (range % 12 == 0) milestoneInterval = range / 12;
-        else milestoneInterval = range / 4;
-        return Math.max(milestoneInterval, 1);
+        for (int division: intervalPriority) {
+            if (range % division == 0) return Math.max(range / division, 1);
+        }
+        return Math.max(range, 1);
     }
 
     public int fixValue(int value) {

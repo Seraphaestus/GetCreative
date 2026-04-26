@@ -3,6 +3,7 @@ package amaryllis.get_creative;
 import amaryllis.get_creative.block_breaking.KineticBlockBreaking;
 import amaryllis.get_creative.contraptions.hinge_bearing.HandleBlock;
 import amaryllis.get_creative.contraptions.hinge_bearing.HingeBearingBlock;
+import amaryllis.get_creative.control_seat.ControlSeatBlock;
 import amaryllis.get_creative.encapsulation.EncapsulatorBlock;
 import amaryllis.get_creative.encapsulation.GlueSpreaderBlock;
 import amaryllis.get_creative.fluid_barrel.FluidBarrelBlock;
@@ -20,15 +21,14 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.loot.BlockLootSubProvider;
 import net.minecraft.data.loot.LootTableProvider;
-import net.minecraft.data.recipes.RecipeCategory;
-import net.minecraft.data.recipes.RecipeOutput;
-import net.minecraft.data.recipes.RecipeProvider;
-import net.minecraft.data.recipes.ShapedRecipeBuilder;
+import net.minecraft.data.recipes.*;
 import net.minecraft.data.tags.EntityTypeTagsProvider;
+import net.minecraft.data.tags.ItemTagsProvider;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.flag.FeatureFlags;
+import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -62,7 +62,9 @@ public class GetCreativeDataGeneration {
         // Data
         generator.addProvider(event.includeServer(), new LootTableProvider(packOutput, Collections.emptySet(),
                 List.of(new LootTableProvider.SubProviderEntry(ModLootTableProvider::new, LootContextParamSets.BLOCK)), lookupProvider));
-        generator.addProvider(event.includeServer(), new ModBlockTagProvider(packOutput, lookupProvider, fileHelper));
+        var blockTagProvider = new ModBlockTagProvider(packOutput, lookupProvider, fileHelper);
+        generator.addProvider(event.includeServer(), blockTagProvider);
+        generator.addProvider(event.includeServer(), new ModItemTagProvider(packOutput, lookupProvider, blockTagProvider.contentsGetter(), fileHelper));
         generator.addProvider(event.includeServer(), new ModEntityTagProvider(packOutput, lookupProvider, fileHelper));
         generator.addProvider(event.includeServer(), new ModRecipeProvider(packOutput, lookupProvider));
 
@@ -90,6 +92,7 @@ public class GetCreativeDataGeneration {
             dropSelf(FluidBarrelBlock.BLOCK.get());
             dropSelf(GlueSpreaderBlock.BLOCK.get());
             dropSelf(EncapsulatorBlock.BLOCK.get());
+            for (DyeColor color: DyeColor.values()) dropSelf(ControlSeatBlock.BLOCKS.get(color).get());
 
             dropOther(LecternDeviceBlock.BLOCK.get(), Blocks.LECTERN);
         }
@@ -98,6 +101,27 @@ public class GetCreativeDataGeneration {
             return GetCreative.BLOCKS.getEntries().stream().map(Holder::value)::iterator;
         }
     }
+
+    // Item Tags
+    private static class ModItemTagProvider extends ItemTagsProvider {
+        public ModItemTagProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider, CompletableFuture<TagLookup<Block>> blockTagLookup, @Nullable ExistingFileHelper existingFileHelper) {
+            super(output, lookupProvider, blockTagLookup, GetCreative.MOD_ID, existingFileHelper);
+        }
+
+        @Override protected void addTags(HolderLookup.Provider provider) {
+            tag(ControlSeatBlock.TAG)
+                    .add(getControlSeats());
+        }
+
+        protected Item[] getControlSeats() {
+            Item[] output = new Item[16];
+            for (int i = 0; i < 16; i++) {
+                output[i] = ControlSeatBlock.ITEMS.get(DyeColor.values()[i]).get();
+            }
+            return output;
+        }
+    }
+
 
     // Block Tags
     private static class ModBlockTagProvider extends BlockTagsProvider {
@@ -132,7 +156,8 @@ public class GetCreativeDataGeneration {
                     .add(LecternDeviceBlock.BLOCK.get())
                     .add(ClockworkMotorBlock.BLOCK.get())
                     .add(getWoodenHandles())
-                    .add(FluidBarrelBlock.BLOCK.get());
+                    .add(FluidBarrelBlock.BLOCK.get())
+                    .add(getControlSeats());
 
             tag(AllTags.AllBlockTags.WRENCH_PICKUP.tag)
                     .add(HingeBearingBlock.BLOCK.get())
@@ -169,6 +194,13 @@ public class GetCreativeDataGeneration {
                     HandleBlock.BLOCKS.get("brass_handle").get(),
             };
         }
+        protected Block[] getControlSeats() {
+            Block[] output = new Block[16];
+            for (int i = 0; i < 16; i++) {
+                output[i] = ControlSeatBlock.BLOCKS.get(DyeColor.values()[i]).get();
+            }
+            return output;
+        }
     }
 
     // Entity Tags
@@ -198,18 +230,46 @@ public class GetCreativeDataGeneration {
             handleRecipe("bamboo", "bamboo_planks").save(output);
             handleRecipe("iron", "iron_ingot").save(output);
             handleRecipe("brass", "create", "brass_ingot").save(output);
+
+            for (DyeColor color: DyeColor.values()) {
+                controlSeatRecipe(color).save(output);
+                controlSeatDyeingRecipe(color).save(output, color.getSerializedName() + "_control_seat_from_dye");
+            }
+        }
+
+        private Item getItem(String namespace, String path) {
+            return BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath(namespace, path));
         }
 
         private ShapedRecipeBuilder handleRecipe(String type, String inputPath) {
             return handleRecipe(type, "minecraft", inputPath);
         }
         private ShapedRecipeBuilder handleRecipe(String type, String inputNamespace, String inputPath) {
-            final Item input = BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath(inputNamespace, inputPath));
+            final Item input = getItem(inputNamespace, inputPath);
             final Item handle = HandleBlock.ITEMS.get(type + "_handle").get();
             return new ShapedRecipeBuilder(RecipeCategory.REDSTONE, handle, 3)
                     .pattern("###").pattern("###").pattern(" # ")
                     .define('#', input)
                     .unlockedBy("hasItem", has(input));
+        }
+
+        private ShapedRecipeBuilder controlSeatRecipe(DyeColor color) {
+            final Item seat = getItem("create", color.getSerializedName() + "_seat");
+            final Item controlSeat = ControlSeatBlock.ITEMS.get(color).get();
+            return new ShapedRecipeBuilder(RecipeCategory.REDSTONE, controlSeat, 1)
+                    .pattern("LSL").pattern("RPR")
+                    .define('S', seat)
+                    .define('L', getItem("create", "analog_lever"))
+                    .define('P', getItem("create", "precision_mechanism"))
+                    .define('R', getItem("minecraft", "redstone"))
+                    .unlockedBy("hasItem", has(seat));
+        }
+        private ShapelessRecipeBuilder controlSeatDyeingRecipe(DyeColor color) {
+            final Item controlSeat = ControlSeatBlock.ITEMS.get(color).get();
+            return new ShapelessRecipeBuilder(RecipeCategory.REDSTONE, controlSeat, 1)
+                    .requires(color.getTag())
+                    .requires(ControlSeatBlock.TAG)
+                    .unlockedBy("hasItem", has(AllTags.AllItemTags.SEATS.tag));
         }
     }
 
@@ -232,12 +292,24 @@ public class GetCreativeDataGeneration {
             handleModel("exposed_copper_handle", modLoc("block/handle/copper_exposed"));
             handleModel("weathered_copper_handle", modLoc("block/handle/copper_weathered"));
             handleModel("oxidized_copper_handle", modLoc("block/handle/copper_oxidized"));
+
+            for (DyeColor color: DyeColor.values())
+                controlSeatModel(color);
         }
 
         protected void handleModel(String ID, ResourceLocation texture) {
             directionalBlock(HandleBlock.BLOCKS.get(ID).get(), models()
                     .withExistingParent(ID, GetCreative.ID("block/handle"))
                     .texture("all", texture));
+        }
+
+        protected void controlSeatModel(DyeColor color) {
+            String color_name = color.getSerializedName();
+            String ID = color_name + "_control_seat";
+            horizontalBlock(ControlSeatBlock.BLOCKS.get(color).get(), models()
+                    .withExistingParent(ID, GetCreative.ID("block/control_seat"))
+                    .texture("seat_top", GetCreative.ID("create", "block/seat/top_" + color_name))
+                    .texture("seat_side", GetCreative.ID("create", "block/seat/side_" + color_name)));
         }
     }
 
@@ -251,6 +323,11 @@ public class GetCreativeDataGeneration {
         protected void registerModels() {
             HandleBlock.TYPES.keySet().forEach(type ->
                     withExistingParent(type + "_handle", modLoc("block/" + type + "_handle")));
+
+            for (DyeColor color: DyeColor.values()) {
+                String ID = color.getSerializedName() + "_control_seat";
+                withExistingParent(ID, modLoc("block/" + ID));
+            }
         }
     }
 }

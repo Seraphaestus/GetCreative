@@ -30,9 +30,13 @@ public class SwappableScrollValues {
         return nextIndex;
     }
     public void setIndex(int nextIndex) {
+        if (currentIndex == nextIndex) return;
         currentIndex = nextIndex;
         blockEntity.setChanged();
         blockEntity.sendData();
+    }
+    public int getIndex() {
+        return currentIndex;
     }
 
     public <T extends BlockEntityBehaviour> T getBehaviour(BehaviourType<T> type, Supplier<T> defaultBehaviour) {

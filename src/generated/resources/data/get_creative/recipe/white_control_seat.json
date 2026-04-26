@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "key": {
+    "L": {
+      "item": "create:analog_lever"
+    },
+    "P": {
+      "item": "create:precision_mechanism"
+    },
+    "R": {
+      "item": "minecraft:redstone"
+    },
+    "S": {
+      "item": "create:white_seat"
+    }
+  },
+  "pattern": [
+    "LSL",
+    "RPR"
+  ],
+  "result": {
+    "count": 1,
+    "id": "get_creative:white_control_seat"
+  }
+}

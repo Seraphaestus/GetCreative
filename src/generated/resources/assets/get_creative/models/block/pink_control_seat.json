@@ -1,0 +1,7 @@
+{
+  "parent": "get_creative:block/control_seat",
+  "textures": {
+    "seat_side": "create:block/seat/side_pink",
+    "seat_top": "create:block/seat/top_pink"
+  }
+}

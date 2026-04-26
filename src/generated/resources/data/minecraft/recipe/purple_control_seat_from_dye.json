@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "redstone",
+  "ingredients": [
+    {
+      "tag": "c:dyes/purple"
+    },
+    {
+      "tag": "get_creative:control_seats"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "get_creative:purple_control_seat"
+  }
+}
