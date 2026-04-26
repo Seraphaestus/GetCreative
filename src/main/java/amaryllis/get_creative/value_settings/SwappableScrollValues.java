@@ -4,7 +4,10 @@ import com.simibubi.create.foundation.blockEntity.SmartBlockEntity;
 import com.simibubi.create.foundation.blockEntity.behaviour.BehaviourType;
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
 import com.simibubi.create.foundation.blockEntity.behaviour.scrollValue.ScrollValueBehaviour;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.Tag;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -48,10 +51,26 @@ public class SwappableScrollValues {
         return output;
     }
 
-    public void write(CompoundTag tag) {
+    public void write(CompoundTag tag, HolderLookup.Provider registries, boolean clientPacket) {
         tag.putInt("SelectedValuePanel", currentIndex);
+
+        ListTag panelsData = new ListTag();
+        for (ScrollValueBehaviour behaviour: behaviours) {
+            CompoundTag panelData = new CompoundTag();
+            behaviour.write(panelData, registries, clientPacket);
+            panelsData.add(panelData);
+        }
+        tag.put("ValuePanelData", panelsData);
     }
-    public void read(CompoundTag tag) {
+
+    public void read(CompoundTag tag, HolderLookup.Provider registries, boolean clientPacket) {
         currentIndex = tag.getInt("SelectedValuePanel");
+
+        if (tag.contains("ValuePanelData")) {
+            ListTag panelsData = tag.getList("ValuePanelData", Tag.TAG_COMPOUND);
+            for (int i = 0; i < Math.min(panelsData.size(), behaviours.size()); i++) {
+                behaviours.get(i).read(panelsData.getCompound(i), registries, clientPacket);
+            }
+        }
     }
 }

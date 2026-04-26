@@ -1,19 +1,18 @@
 package amaryllis.get_creative.control_seat;
 
 import amaryllis.get_creative.GetCreative;
-import com.simibubi.create.AllBlocks;
 import com.simibubi.create.content.contraptions.actors.seat.SeatBlock;
+import com.simibubi.create.content.contraptions.actors.seat.SeatEntity;
 import com.simibubi.create.foundation.block.IBE;
 import com.simibubi.create.foundation.utility.BlockHelper;
+import dev.engine_room.flywheel.lib.model.baked.PartialModel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.TamableAnimal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.DyeColor;
@@ -33,7 +32,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
-import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
 import net.neoforged.neoforge.common.util.FakePlayer;
@@ -51,19 +49,22 @@ public class ControlSeatBlock extends SeatBlock implements IBE<ControlSeatBlockE
 
     public static TagKey<Item> TAG = ItemTags.create(GetCreative.ID("control_seats"));
 
+    public static final Map<DyeColor, PartialModel> MODELS = new HashMap<>();
+
     public static Map<DyeColor, DeferredBlock<ControlSeatBlock>> BLOCKS = new HashMap<>();
     public static Map<DyeColor, DeferredItem<BlockItem>> ITEMS = new HashMap<>();
 
     public static void register() {
         for (DyeColor color: DyeColor.values()) {
+            String colorName = color.getSerializedName();
             var block = GetCreative.BLOCKS.registerBlock(
-                    color.getSerializedName() + "_control_seat", p -> new ControlSeatBlock(p, color),
+                    colorName + "_control_seat", p -> new ControlSeatBlock(p, color),
                     Properties.ofFullCopy(Blocks.STRIPPED_SPRUCE_WOOD).mapColor(color));
             BLOCKS.put(color, block);
             ITEMS.put(color, GetCreative.ITEMS.registerSimpleBlockItem(block));
+            MODELS.put(color, PartialModel.of(GetCreative.ID("block/control_seat/" + colorName + "_control_seat")));
         }
         ControlSeatBlockEntity.register();
-        ControlSeatEntity.register();
     }
 
     public ControlSeatBlock(Properties properties, DyeColor color) {
@@ -110,13 +111,6 @@ public class ControlSeatBlock extends SeatBlock implements IBE<ControlSeatBlockE
         return getSignalForSide(controlSeatBE, passenger, relativeDirection, facing);
     }
 
-    public Entity getPassenger(EntityGetter entityGetter, BlockPos pos) {
-        ControlSeatEntity controlSeatBE = getEntity(entityGetter, pos);
-        if (controlSeatBE == null) return null;
-        List<Entity> passengers = controlSeatBE.getPassengers();
-        return !passengers.isEmpty() ? passengers.getFirst() : null;
-    }
-
     protected Direction getRelativeDirection(Direction direction, Direction facing) {
         return switch (direction.get2DDataValue() - facing.get2DDataValue()) {
             case 0 -> Direction.UP;
@@ -160,12 +154,12 @@ public class ControlSeatBlock extends SeatBlock implements IBE<ControlSeatBlockE
         DyeColor color = DyeColor.getColor(stack);
         if (color != null && color != this.color) {
             if (level.isClientSide) return ItemInteractionResult.SUCCESS;
-            BlockState newState = BlockHelper.copyProperties(state, AllBlocks.SEATS.get(color).getDefaultState());
+            BlockState newState = BlockHelper.copyProperties(state, BLOCKS.get(color).get().defaultBlockState());
             level.setBlockAndUpdate(pos, newState);
             return ItemInteractionResult.SUCCESS;
         }
 
-        ControlSeatEntity seatEntity = getEntity(level, pos);
+        SeatEntity seatEntity = getEntity(level, pos);
         if (seatEntity != null) {
             List<Entity> passengers = seatEntity.getPassengers();
             if (!passengers.isEmpty() && passengers.getFirst() instanceof Player)
@@ -184,19 +178,16 @@ public class ControlSeatBlock extends SeatBlock implements IBE<ControlSeatBlockE
         return ItemInteractionResult.SUCCESS;
     }
 
-    protected ControlSeatEntity getEntity(EntityGetter level, BlockPos pos) {
-        List<ControlSeatEntity> seats = level.getEntitiesOfClass(ControlSeatEntity.class, new AABB(pos));
-        return !seats.isEmpty() ? seats.getFirst() : null;
+    public Entity getPassenger(EntityGetter entityGetter, BlockPos pos) {
+        SeatEntity seatEntity = getEntity(entityGetter, pos);
+        if (seatEntity == null) return null;
+        List<Entity> passengers = seatEntity.getPassengers();
+        return !passengers.isEmpty() ? passengers.getFirst() : null;
     }
 
-    public static void sitDown(Level level, BlockPos pos, Entity entity) {
-        if (level.isClientSide) return;
-
-        ControlSeatEntity seat = new ControlSeatEntity(level);
-        seat.setPos(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5);
-        level.addFreshEntity(seat);
-        entity.startRiding(seat, true);
-        if (entity instanceof TamableAnimal pet) pet.setInSittingPose(true);
+    protected SeatEntity getEntity(EntityGetter level, BlockPos pos) {
+        List<SeatEntity> seats = level.getEntitiesOfClass(SeatEntity.class, new AABB(pos));
+        return !seats.isEmpty() ? seats.getFirst() : null;
     }
 
     @Override

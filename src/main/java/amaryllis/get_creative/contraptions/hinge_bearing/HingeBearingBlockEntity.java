@@ -177,8 +177,8 @@ public class HingeBearingBlockEntity extends KineticBlockEntity
         compound.putFloat("Angle", angle);
         if (targetState != OpenState.NEUTRAL) compound.putBoolean("TargetState", targetState == OpenState.OPEN_CW);
         AssemblyException.write(compound, registries, lastException);
-        swappableScrollValues.write(compound);
         super.write(compound, registries, clientPacket);
+        swappableScrollValues.write(compound, registries, clientPacket);
     }
 
     @Override
@@ -194,8 +194,8 @@ public class HingeBearingBlockEntity extends KineticBlockEntity
         targetState = !compound.contains("TargetState") ? OpenState.NEUTRAL
             : (compound.getBoolean("TargetState") ? OpenState.OPEN_CW : OpenState.OPEN_CCW);
         lastException = AssemblyException.read(compound, registries);
-        swappableScrollValues.read(compound);
         super.read(compound, registries, clientPacket);
+        swappableScrollValues.read(compound, registries, clientPacket);
 
         if (!clientPacket) return;
 

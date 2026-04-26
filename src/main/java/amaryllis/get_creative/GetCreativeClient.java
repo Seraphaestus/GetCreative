@@ -5,7 +5,6 @@ import amaryllis.get_creative.contraptions.hinge_bearing.HingeBearingBlockEntity
 import amaryllis.get_creative.contraptions.hinge_bearing.HingeBearingRenderer;
 import amaryllis.get_creative.contraptions.hinge_bearing.HingeBearingVisual;
 import amaryllis.get_creative.control_seat.ControlSeatBlock;
-import amaryllis.get_creative.control_seat.ControlSeatEntity;
 import amaryllis.get_creative.encapsulation.GlueSpreaderBlockEntity;
 import amaryllis.get_creative.encapsulation.GlueSpreaderRenderer;
 import amaryllis.get_creative.fluid_barrel.FluidBarrelBlock;
@@ -50,7 +49,6 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -156,11 +154,6 @@ public class GetCreativeClient {
     @SubscribeEvent
     public static void onClickInput(InputEvent.InteractionKeyMappingTriggered event) {
         if (isSetup) AllLinkedDevices.onClickInput();
-    }
-
-    @SubscribeEvent
-    public static void registerEntityRenderers(EntityRenderersEvent.RegisterRenderers event) {
-        event.registerEntityRenderer((EntityType<ControlSeatEntity>) ControlSeatEntity.ENTITY_TYPE.get(), ControlSeatEntity.Render::new);
     }
 
     @SubscribeEvent
