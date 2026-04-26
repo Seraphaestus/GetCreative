@@ -6,6 +6,8 @@
     "get_creative:wind_up_key",
     "get_creative:clockwork_motor",
     "get_creative:breeze_whirler",
-    "get_creative:empty_breeze_whirler"
+    "get_creative:empty_breeze_whirler",
+    "get_creative:glue_spreader",
+    "get_creative:encapsulator"
   ]
 }

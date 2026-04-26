@@ -3,6 +3,8 @@ package amaryllis.get_creative;
 import amaryllis.get_creative.block_breaking.KineticBlockBreaking;
 import amaryllis.get_creative.contraptions.hinge_bearing.HandleBlock;
 import amaryllis.get_creative.contraptions.hinge_bearing.HingeBearingBlock;
+import amaryllis.get_creative.encapsulation.EncapsulatorBlock;
+import amaryllis.get_creative.encapsulation.GlueSpreaderBlock;
 import amaryllis.get_creative.fluid_barrel.FluidBarrelBlock;
 import amaryllis.get_creative.generators.EntityCaptureItem;
 import amaryllis.get_creative.generators.breeze_whirler.BreezeWhirlerBlock;
@@ -86,6 +88,8 @@ public class GetCreativeDataGeneration {
             dropSelf(HingeBearingBlock.BLOCK.get());
             HandleBlock.BLOCKS.values().forEach(block -> dropSelf(block.get()));
             dropSelf(FluidBarrelBlock.BLOCK.get());
+            dropSelf(GlueSpreaderBlock.BLOCK.get());
+            dropSelf(EncapsulatorBlock.BLOCK.get());
 
             dropOther(LecternDeviceBlock.BLOCK.get(), Blocks.LECTERN);
         }
@@ -118,7 +122,9 @@ public class GetCreativeDataGeneration {
                     .add(ClockworkMotorBlock.BLOCK.get())
                     .add(BreezeWhirlerBlock.BLOCK.get())
                     .add(BreezeWhirlerBlock.EMPTY_BLOCK.get())
-                    .add(getMetalHandles());
+                    .add(getMetalHandles())
+                    .add(GlueSpreaderBlock.BLOCK.get())
+                    .add(EncapsulatorBlock.BLOCK.get());
 
             tag(BlockTags.MINEABLE_WITH_AXE)
                     .add(HingeBearingBlock.BLOCK.get())
@@ -135,7 +141,9 @@ public class GetCreativeDataGeneration {
                     .add(WindUpKeyBlock.BLOCK.get())
                     .add(ClockworkMotorBlock.BLOCK.get())
                     .add(BreezeWhirlerBlock.BLOCK.get())
-                    .add(BreezeWhirlerBlock.EMPTY_BLOCK.get());
+                    .add(BreezeWhirlerBlock.EMPTY_BLOCK.get())
+                    .add(GlueSpreaderBlock.BLOCK.get())
+                    .add(EncapsulatorBlock.BLOCK.get());
 
             tag(AllTags.AllBlockTags.SAFE_NBT.tag)
                     .add(HingeBearingBlock.BLOCK.get());
