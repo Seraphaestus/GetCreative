@@ -118,7 +118,7 @@
   "tooltip.get_creative.time_in_seconds": "%ss",
   "tooltip.get_creative.speed_in_rpm": "%s RPM",
   "block.get_creative.clockwork_motor": "Clockwork Motor",
-  "block.get_creative.clockwork_motor.tooltip.summary": "Wind it up with a _Wind-Up Key_ or _Hand Crank_ and it will generate _Rotational Force_ as it winds down",
+  "block.get_creative.clockwork_motor.tooltip.summary": "Wind it up with a _Wind-Up Key_ or _Hand Crank_ and it will generate _Rotational Force_ as it winds down.",
   "get_creative.clockwork_motor.configured_speed": "Release Speed in RPM",
   "tooltip.get_creative.clockwork_motor": "Clockwork Motor:",
   "tooltip.get_creative.clockwork_charge.winding": "%s on release",
@@ -127,7 +127,7 @@
 
   "block.get_creative.empty_breeze_whirler": "Empty Breeze Whirler",
   "block.get_creative.breeze_whirler": "Breeze Whirler",
-  "block.get_creative.breeze_whirler.tooltip.summary": "Generates _Rotational Force_ from the power of a captured _Breeze_",
+  "block.get_creative.breeze_whirler.tooltip.summary": "Generates _Rotational Force_ from the power of a captured _Breeze_.",
 
   "block.create.lectern_controller": "Lectern with Linked Controller",
   "block.get_creative.lectern_device": "Lectern with Linked Controller",
