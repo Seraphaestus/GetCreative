@@ -27,8 +27,9 @@ public class HandleMovingInteraction extends MovingInteractionBehaviour {
 
             final var handleInfo = contraption.getContraption().getBlocks().get(pos);
             final Block block = (handleInfo != null) ? handleInfo.state().getBlock() : null;
-            final var material = (block instanceof HandleBlock handleBlock) ? handleBlock.material : HandleBlock.Material.WOODEN;
-            hingeBearing.playSound(material);
+            if (block instanceof HandleBlock handle) {
+                handle.playSound(hingeBearing.getLevel(), hingeBearing.getBlockPos(), hingeBearing.isOpening());
+            }
         }
 
         return true;

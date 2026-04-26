@@ -4,6 +4,11 @@ import amaryllis.get_creative.GetCreative;
 import com.simibubi.create.foundation.block.WrenchableDirectionalBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
@@ -13,6 +18,8 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.neoforged.neoforge.registries.DeferredBlock;
@@ -23,6 +30,8 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+
+import static net.minecraft.world.level.block.state.properties.BlockStateProperties.POWERED;
 
 public class HandleBlock extends WrenchableDirectionalBlock {
 
@@ -65,7 +74,13 @@ public class HandleBlock extends WrenchableDirectionalBlock {
     public HandleBlock(Properties properties, Material material) {
         super(properties);
         this.material = material;
-        registerDefaultState(stateDefinition.any().setValue(FACING, Direction.UP));
+        registerDefaultState(stateDefinition.any().setValue(FACING, Direction.UP).setValue(POWERED, false));
+    }
+
+    @Override
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+        super.createBlockStateDefinition(builder);
+        builder.add(POWERED);
     }
 
     @Override
@@ -88,11 +103,34 @@ public class HandleBlock extends WrenchableDirectionalBlock {
     public void neighborChanged(BlockState state, Level level, BlockPos pos, Block block, BlockPos fromPos, boolean isMoving) {
         if (level.isClientSide) return;
 
+        // Play sound from redstone signal
+        int neighborSignal = level.getBestNeighborSignal(pos);
+        boolean hasNeighborSignal = neighborSignal > 0;
+        if (hasNeighborSignal != state.getValue(POWERED)) {
+            if (hasNeighborSignal) playSound(level, pos, neighborSignal > 7);
+            level.setBlock(pos, state.setValue(POWERED, hasNeighborSignal), Block.UPDATE_ALL);
+        }
+
         Direction blockFacing = state.getValue(FACING);
-        if (fromPos.equals(pos.relative(blockFacing.getOpposite())) &&
-            !canSurvive(state, level, pos)) {
-                level.destroyBlock(pos, true);
+        if (fromPos.equals(pos.relative(blockFacing.getOpposite())) && !canSurvive(state, level, pos)) {
+            level.destroyBlock(pos, true);
         }
     }
 
+    // Place sound from interact
+    @Override
+    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
+        if (!level.isClientSide) playSound(level, pos, !player.isShiftKeyDown());
+        return InteractionResult.sidedSuccess(level.isClientSide);
+    }
+
+    public void playSound(Level level, BlockPos pos, boolean isOpening) {
+        if (level == null) return;
+        SoundEvent sound = switch (material) {
+            case Material.WOODEN -> isOpening ? SoundEvents.WOODEN_DOOR_OPEN : SoundEvents.WOODEN_DOOR_CLOSE;
+            case Material.COPPER -> isOpening ? SoundEvents.COPPER_DOOR_OPEN : SoundEvents.COPPER_DOOR_CLOSE;
+            case Material.IRON ->   isOpening ? SoundEvents.IRON_DOOR_OPEN   : SoundEvents.IRON_DOOR_CLOSE;
+        };
+        level.playSound(null, pos, sound, SoundSource.BLOCKS, 1.0F, level.getRandom().nextFloat() * 0.1F + 0.9F);
+    }
 }

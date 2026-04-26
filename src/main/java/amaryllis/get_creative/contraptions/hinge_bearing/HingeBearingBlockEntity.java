@@ -1,7 +1,6 @@
 package amaryllis.get_creative.contraptions.hinge_bearing;
 
 import amaryllis.get_creative.GetCreative;
-import amaryllis.get_creative.contraptions.hinge_bearing.HandleBlock.Material;
 import amaryllis.get_creative.value_settings.BoundedScrollValueBehaviour;
 import amaryllis.get_creative.value_settings.SwappableScrollValues;
 import amaryllis.get_creative.value_settings.ToggleSwitchRenderer;
@@ -26,9 +25,6 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.core.Vec3i;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.sounds.SoundEvent;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -300,6 +296,10 @@ public class HingeBearingBlockEntity extends KineticBlockEntity
         return isClosed;
     }
 
+    public boolean isOpening() {
+        return targetState != HingeBearingBlockEntity.OpenState.NEUTRAL;
+    }
+
     @Override
     public void tick() {
         super.tick();
@@ -398,17 +398,6 @@ public class HingeBearingBlockEntity extends KineticBlockEntity
         final var handlePos_CCW = new Vector3f(handlePos).sub(pivot).rotateAxis(-epsilon, axis.getX(), axis.getY(), axis.getZ()).add(pivot);
 
         return handlePos_CW.distanceSquared(playerPos) > handlePos_CCW.distanceSquared(playerPos);
-    }
-
-    public void playSound(Material isWooden) {
-        if (level == null) return;
-        final boolean isOpening = (targetState != OpenState.NEUTRAL);
-        SoundEvent sound = switch (isWooden) {
-            case Material.WOODEN -> isOpening ? SoundEvents.WOODEN_DOOR_OPEN : SoundEvents.WOODEN_DOOR_CLOSE;
-            case Material.COPPER -> isOpening ? SoundEvents.COPPER_DOOR_OPEN : SoundEvents.COPPER_DOOR_CLOSE;
-            case Material.IRON ->   isOpening ? SoundEvents.IRON_DOOR_OPEN   : SoundEvents.IRON_DOOR_CLOSE;
-        };
-        level.playSound(null, getBlockPos(), sound, SoundSource.BLOCKS, 1.0F, level.getRandom().nextFloat() * 0.1F + 0.9F);
     }
 
     public static Supplier<Boolean> isToggleSwitchHovered;
