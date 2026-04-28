@@ -3,7 +3,9 @@ package amaryllis.get_creative.ponder;
 import amaryllis.get_creative.GetCreative;
 import amaryllis.get_creative.encapsulation.EncapsulatorBlock;
 import amaryllis.get_creative.encapsulation.GlueSpreaderBlock;
+import amaryllis.get_creative.industrial_fan.IndustrialFanBlock;
 import amaryllis.get_creative.ponder.scenes.EncapsulationScenes;
+import amaryllis.get_creative.ponder.scenes.IndustrialFanScenes;
 import amaryllis.get_creative.ponder.scenes.MechanicalArmScenes;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.infrastructure.ponder.AllCreatePonderTags;
@@ -30,6 +32,10 @@ public class GetCreativePonderPlugin implements PonderPlugin {
 
         helper.forComponents(EncapsulatorBlock.BLOCK.getId())
                 .addStoryBoard("encapsulator", EncapsulationScenes::encapsulator);
+
+        helper.forComponents(IndustrialFanBlock.BLOCK.getId())
+                .addStoryBoard("industrial_fan/direction", IndustrialFanScenes::direction, AllCreatePonderTags.KINETIC_APPLIANCES)
+                .addStoryBoard("industrial_fan/processing", IndustrialFanScenes::processing);
     }
 
     @Override

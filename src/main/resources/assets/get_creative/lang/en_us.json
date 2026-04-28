@@ -81,6 +81,10 @@
   "block.get_creative.industrial_fan": "Industrial Fan",
   "death.attack.get_creative.industrial_fan": "%s was sliced up by a spinning fan",
   "block.get_creative.industrial_fan.tooltip.summary": "A larger version of an _Encased Fan_, without the casing.",
+  "get_creative.recipe.fan_blasting.industrial_fan": "Industrial Fan behind Lava",
+  "get_creative.recipe.fan_haunting.industrial_fan": "Industrial Fan behind Soul Fire",
+  "get_creative.recipe.fan_smoking.industrial_fan": "Industrial Fan behind Fire",
+  "get_creative.recipe.fan_washing.industrial_fan": "Industrial Fan behind Flowing Water",
 
   "block.get_creative.fluid_barrel": "Fluid Barrel",
   "block.get_creative.fluid_barrel.tooltip.summary": "A _lower-capacity_ variant of _Fluid Tank_ which can be _manually_ filled or drained with a _Bucket_.",
@@ -220,5 +224,18 @@
   "get_creative.ponder.encapsulator.text_2": "Blocks must be connected as if assembling a contraption",
   "get_creative.ponder.encapsulator.text_3": "Capsules can be then be placed down in one click, consuming the Capsule.",
   "get_creative.ponder.encapsulator.text_4": "Capsules are oriented relative to the perspective of the Encapsulator; if you want to place it on the ground, the Encapsulator must be on the ground level.",
-  "get_creative.ponder.encapsulator.text_5": "The Encapsulator can also be named in order to label created Capsules."
+  "get_creative.ponder.encapsulator.text_5": "The Encapsulator can also be named in order to label created Capsules.",
+
+  "get_creative.ponder.industrial_fan_direction.header": "Air flow of Industrial Fans",
+  "get_creative.ponder.industrial_fan_direction.text_1": "Industrial Fans use Rotational Force to create a large Air Current",
+  "get_creative.ponder.industrial_fan_direction.text_2": "Strength and Direction of Flow depends on the Rotational Input",
+  "get_creative.ponder.industrial_fan_processing.header": "Processing Items using Industrial Fans",
+  "get_creative.ponder.industrial_fan_processing.text_1": "When the center of the Air Flow passes through lava, it becomes Heated",
+  "get_creative.ponder.industrial_fan_processing.text_2": "Items caught in the area will be smelted",
+  "get_creative.ponder.industrial_fan_processing.text_3": "Food items thrown here would be incinerated",
+  "get_creative.ponder.industrial_fan_processing.text_4": "Instead, a setup for Smoking using Fire should be used for them",
+  "get_creative.ponder.industrial_fan_processing.text_5": "Air Flows whose center passes through water create a Washing Setup",
+  "get_creative.ponder.industrial_fan_processing.text_6": "Some interesting new processing can be done with it",
+  "get_creative.ponder.industrial_fan_processing.text_7": "The Speed of the Fan does NOT affect the processing speed, only its range",
+  "get_creative.ponder.industrial_fan_processing.text_8": "Fan Processing can also be applied to Items on Depots and Belts"
 }

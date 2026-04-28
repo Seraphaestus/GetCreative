@@ -1,19 +1,25 @@
 package amaryllis.get_creative.recipes;
 
 import amaryllis.get_creative.GetCreative;
+import amaryllis.get_creative.industrial_fan.IndustrialFanBlock;
 import amaryllis.get_creative.precision_assembly.ArmAssemblyCategory;
 import amaryllis.get_creative.precision_assembly.ArmAssemblyRecipe;
 import com.google.common.base.Preconditions;
 import com.simibubi.create.AllBlocks;
+import com.simibubi.create.Create;
 import com.simibubi.create.compat.jei.category.CreateRecipeCategory;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
+import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.recipe.category.IRecipeCategory;
 import mezz.jei.api.registration.IRecipeCatalystRegistration;
 import mezz.jei.api.registration.IRecipeCategoryRegistration;
 import mezz.jei.api.registration.IRecipeRegistration;
 import net.minecraft.client.Minecraft;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeManager;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.fml.loading.FMLLoader;
@@ -53,6 +59,12 @@ public class JEIPlugin implements IModPlugin {
     @Override
     public void registerRecipeCatalysts(IRecipeCatalystRegistration registration) {
         categories.forEach(category -> category.registerCatalysts(registration));
+
+        for (String fan_category: new String[]{ "fan_blasting", "fan_haunting", "fan_smoking", "fan_washing" }) {
+            ItemStack catalyst = IndustrialFanBlock.ITEM.toStack();
+            catalyst.set(DataComponents.CUSTOM_NAME, Component.translatable("get_creative.recipe." + fan_category + ".industrial_fan").withStyle(style -> style.withItalic(false)));
+            registration.addRecipeCatalyst(catalyst, RecipeType.createRecipeHolderType(Create.asResource(fan_category)));
+        }
     }
 
     @ApiStatus.Internal
