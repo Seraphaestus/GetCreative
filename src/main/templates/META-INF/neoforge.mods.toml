@@ -39,6 +39,12 @@ config="${mod_id}.mixins.json"
     ordering="AFTER"
     side="BOTH"
 
+# Sable mixin compat requires we're loaded after it
+[[dependencies.${mod_id}]]
+modId="sable"
+type="optional"
+ordering="AFTER"
+
 # Manually force loading before these mods so the config can load to disable their actors
 [[dependencies.${mod_id}]]
     modId="powergrid"

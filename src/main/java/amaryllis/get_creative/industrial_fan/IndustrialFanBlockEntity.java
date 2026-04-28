@@ -50,6 +50,18 @@ public class IndustrialFanBlockEntity extends EncasedFanBlockEntity {
         });
     }
 
+    public Iterable<BlockPos> getFacingBlocks() {
+        Direction facing = getBlockState().getValue(EncasedFanBlock.FACING);
+        BlockPos origin = getBlockPos().relative(facing);
+        int x = (facing.getAxis() == Direction.Axis.X) ? 0 : 1;
+        int y = (facing.getAxis() == Direction.Axis.Y) ? 0 : 1;
+        int z = (facing.getAxis() == Direction.Axis.Z) ? 0 : 1;
+        return BlockPos.MutableBlockPos.betweenClosed(
+                origin.getX() - x, origin.getY() - y, origin.getZ() - z,
+                origin.getX() + x, origin.getY() + y, origin.getZ() + z
+        );
+    }
+
     protected AABB getDamageArea() {
         final Direction facing = this.getBlockState().getValue(EncasedFanBlock.FACING);
         AABB collision = switch (facing) {

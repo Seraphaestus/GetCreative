@@ -1,0 +1,15 @@
+{
+  "values": [
+    "get_creative:oak_handle",
+    "get_creative:spruce_handle",
+    "get_creative:birch_handle",
+    "get_creative:jungle_handle",
+    "get_creative:acacia_handle",
+    "get_creative:dark_oak_handle",
+    "get_creative:mangrove_handle",
+    "get_creative:cherry_handle",
+    "get_creative:crimson_handle",
+    "get_creative:warped_handle",
+    "get_creative:bamboo_handle"
+  ]
+}
