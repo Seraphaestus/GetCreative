@@ -30,6 +30,8 @@
     "encapsulation.SchematicTransformationMixin",
     "encapsulation.CreateClientMixin",
 
+    "compat.sable.LecternDevicePatch",
+
     "StationBlockMixin",
     "DeployerMixin",
 

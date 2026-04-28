@@ -12,12 +12,11 @@ import net.minecraft.world.item.component.ItemContainerContents;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.phys.Vec3;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.List;
@@ -35,10 +34,9 @@ public class LecternControllerMixin extends SmartBlockEntity implements LecternC
         controllerData = LecternControllerHandler.NULL_DATA;
     }
 
-    @Overwrite
-    public static boolean playerInRange(Player player, Level world, BlockPos pos) {
-        double reach = Config.LECTERN_CONTROLLER_REACH.get() * player.getAttributeValue(Attributes.BLOCK_INTERACTION_RANGE);
-        return player.distanceToSqr(Vec3.atCenterOf(pos)) < reach * reach;
+    @ModifyVariable(method = "playerInRange", at = @At("STORE"))
+    private static double modifyReach(double reach, Player player, Level world, BlockPos pos) {
+        return Config.LECTERN_CONTROLLER_REACH.get() * player.getAttributeValue(Attributes.BLOCK_INTERACTION_RANGE);
     }
 
     @Inject(method = "dropController", at = @At("HEAD"), cancellable = true)

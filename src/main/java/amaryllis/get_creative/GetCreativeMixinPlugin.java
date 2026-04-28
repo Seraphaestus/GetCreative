@@ -19,6 +19,9 @@ public class GetCreativeMixinPlugin implements IMixinConfigPlugin {
         if (mixinClassName.startsWith("amaryllis.get_creative.mixin.jei"))
             return CompatHelper.isJEILoaded();
 
+        if (mixinClassName.startsWith("amaryllis.get_creative.mixin.compat.sable"))
+            return CompatHelper.isModLoaded("sable");
+
         return true;
     }
 
