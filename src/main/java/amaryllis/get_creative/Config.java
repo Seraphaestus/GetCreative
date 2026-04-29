@@ -2,16 +2,11 @@ package amaryllis.get_creative;
 
 import java.util.List;
 
-import amaryllis.get_creative.encapsulation.CapsuleItem;
-import amaryllis.get_creative.encapsulation.EncapsulatorBlock;
-import amaryllis.get_creative.generators.breeze_whirler.BreezeWhirlerBlock;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.common.ModConfigSpec;
-
-import static com.simibubi.create.compat.jei.category.MysteriousItemConversionCategory.RECIPES;
 
 public class Config {
 
@@ -39,6 +34,7 @@ public class Config {
     public static final ModConfigSpec.BooleanValue PRECISION_ASSEMBLY_BULK_PROCESSING;
 
     public static final ModConfigSpec.DoubleValue INDUSTRIAL_FAN_STRESS_IMPACT;
+    public static final ModConfigSpec.DoubleValue INDUSTRIAL_FAN_PROPELLER_THRUST;
 
     public static final ModConfigSpec.DoubleValue HAUNTED_COGWHEEL_MIN_ROTATION;
     public static final ModConfigSpec.DoubleValue HAUNTED_COGWHEEL_MAX_ROTATION;
@@ -150,6 +146,10 @@ public class Config {
 
         INDUSTRIAL_FAN_STRESS_IMPACT = BUILDER
                 .defineInRange("industrial_fan_stress_impact", 8d, 0d, 16384d);
+        INDUSTRIAL_FAN_PROPELLER_THRUST = BUILDER
+                .comment("")
+                .comment(" When used with Sable, determines how much thrust an unblocked Industrial Fan provides, as a multiplier to that of the Encased Fan")
+                .defineInRange("industrial_fan_propeller_thrust", 3d, 0d, 16394d);
 
         BUILDER.pop();
         //endregion
@@ -162,15 +162,15 @@ public class Config {
                 .defineInRange("haunted_cogwheel_min_rotation_speed", 4d, 0d, 256d);
         HAUNTED_COGWHEEL_MAX_ROTATION = BUILDER
                 .comment("")
-                .defineInRange("haunted_cogwheel_max_rotation_speed", 48d, 0d, 256d);
+                .defineInRange("haunted_cogwheel_max_rotation_speed", 32d, 0d, 256d);
         HAUNTED_COGWHEEL_DISTRIBUTION_FACTOR = BUILDER
                 .comment("")
                 .comment(" When a new speed is chosen, a value in [0, 1] will be raised to this power before interpolating [min_rotation, max_rotation]")
-                .defineInRange("haunted_cogwheel_distribution_factor", 2d, 0d, 256d);
+                .defineInRange("haunted_cogwheel_distribution_factor", 3d, 0d, 256d);
         HAUNTED_COGWHEEL_VOLATILITY = BUILDER
                 .comment("")
                 .comment(" Chance each tick that the Haunted Cogwheel changes to a new speed")
-                .defineInRange("haunted_cogwheel_volatility", 0.005d, 0d, 1d);
+                .defineInRange("haunted_cogwheel_volatility", 0.0025d, 0d, 1d);
         HAUNTED_COGWHEEL_STRESS_CAPACITY = BUILDER
                 .comment("")
                 .defineInRange("haunted_cogwheel_stress_capacity", 8d, 0d, 16384d);

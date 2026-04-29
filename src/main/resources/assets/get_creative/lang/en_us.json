@@ -26,6 +26,7 @@
   "get_creative.configuration.precision_assembly_bulk_processing": "Can process in bulk",
   "get_creative.configuration.Appliances": "Appliances",
   "get_creative.configuration.industrial_fan_stress_impact": "Industrial Fan stress impact",
+  "get_creative.configuration.industrial_fan_propeller_thrust": "Industrial Fan propeller thrust",
   "get_creative.configuration.Generators": "Generators",
   "get_creative.configuration.Haunted Cogwheel": "Haunted Cogwheel",
   "get_creative.configuration.haunted_cogwheel_min_rotation_speed": "Min rotation speed",

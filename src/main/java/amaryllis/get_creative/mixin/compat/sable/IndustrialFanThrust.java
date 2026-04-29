@@ -1,5 +1,6 @@
 package amaryllis.get_creative.mixin.compat.sable;
 
+import amaryllis.get_creative.Config;
 import amaryllis.get_creative.industrial_fan.IndustrialFanBlockEntity;
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
@@ -43,7 +44,7 @@ public class IndustrialFanThrust extends KineticBlockEntity {
     private float modifyThrust(float original) {
         if (!((Object)this instanceof IndustrialFanBlockEntity)) return original;
 
-        return original * (9 - getCreative$blockedCount) / 3f;
+        return original * (float)Config.INDUSTRIAL_FAN_PROPELLER_THRUST.getAsDouble() * (9 - getCreative$blockedCount) / 9f;
     }
 
 }
