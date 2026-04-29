@@ -1,13 +1,19 @@
 package amaryllis.get_creative.industrial_fan;
 
+import com.simibubi.create.content.kinetics.belt.behaviour.TransportedItemStackHandlerBehaviour;
 import com.simibubi.create.content.kinetics.fan.AirCurrent;
 import com.simibubi.create.content.kinetics.fan.AirFlowParticleData;
 import com.simibubi.create.content.kinetics.fan.IAirCurrentSource;
+import com.simibubi.create.content.kinetics.fan.processing.FanProcessingType;
+import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
 import com.simibubi.create.infrastructure.config.AllConfigs;
 import net.createmod.catnip.math.VecHelper;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.util.Mth;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
+import org.apache.commons.lang3.tuple.Pair;
 
 public class AreaAirCurrent extends AirCurrent {
 
@@ -53,6 +59,24 @@ public class AreaAirCurrent extends AirCurrent {
             bounds = IndustrialFanBlock.expandAABB(bounds, direction, radius);
         }
 
-        super.findAffectedHandlers();
+
+        Level level = source.getAirCurrentWorld();
+        affectedItemHandlers.clear();
+        int range = Mth.ceil(maxDistance);
+
+        boolean includeExtraBottomRow = direction.getAxis().isHorizontal();
+        BlockPos origin = source.getAirCurrentPos().relative(direction.getOpposite());
+        IndustrialFanBlockEntity.getFacingBlocks(origin, direction, includeExtraBottomRow).forEach(start -> {
+            for (int i = 1; i <= range; i++) {
+                FanProcessingType segmentType = getTypeAt(i - 1);
+                BlockPos pos = start.relative(direction, i);
+                var behaviour = BlockEntityBehaviour.get(level, pos, TransportedItemStackHandlerBehaviour.TYPE);
+                if (behaviour != null) {
+                    FanProcessingType type = FanProcessingType.getAt(level, pos);
+                    if (type == null) type = segmentType;
+                    affectedItemHandlers.add(Pair.of(behaviour, type));
+                }
+            }
+        });
     }
 }

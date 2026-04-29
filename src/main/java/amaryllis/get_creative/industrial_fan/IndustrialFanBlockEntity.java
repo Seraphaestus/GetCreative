@@ -1,7 +1,6 @@
 package amaryllis.get_creative.industrial_fan;
 
 import amaryllis.get_creative.GetCreative;
-import com.simibubi.create.content.kinetics.fan.EncasedFanBlock;
 import com.simibubi.create.content.kinetics.fan.EncasedFanBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -51,19 +50,22 @@ public class IndustrialFanBlockEntity extends EncasedFanBlockEntity {
     }
 
     public Iterable<BlockPos> getFacingBlocks() {
-        Direction facing = getBlockState().getValue(EncasedFanBlock.FACING);
-        BlockPos origin = getBlockPos().relative(facing);
+        return getFacingBlocks(getBlockPos(), getBlockState().getValue(IndustrialFanBlock.FACING), false);
+    }
+    public static Iterable<BlockPos> getFacingBlocks(BlockPos pos, Direction facing, boolean includeExtraBottomRow) {
+        BlockPos origin = pos.relative(facing);
         int x = (facing.getAxis() == Direction.Axis.X) ? 0 : 1;
         int y = (facing.getAxis() == Direction.Axis.Y) ? 0 : 1;
         int z = (facing.getAxis() == Direction.Axis.Z) ? 0 : 1;
+        int minY = origin.getY() - y - (includeExtraBottomRow ? 1 : 0);
         return BlockPos.MutableBlockPos.betweenClosed(
-                origin.getX() - x, origin.getY() - y, origin.getZ() - z,
+                origin.getX() - x, minY, origin.getZ() - z,
                 origin.getX() + x, origin.getY() + y, origin.getZ() + z
         );
     }
 
     protected AABB getDamageArea() {
-        final Direction facing = this.getBlockState().getValue(EncasedFanBlock.FACING);
+        final Direction facing = this.getBlockState().getValue(IndustrialFanBlock.FACING);
         AABB collision = switch (facing) {
             case Direction.EAST, Direction.WEST ->
                     new AABB(worldPosition.getX() + 0.375, worldPosition.getY(), worldPosition.getZ(),
