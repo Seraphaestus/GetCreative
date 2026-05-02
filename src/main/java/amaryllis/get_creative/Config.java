@@ -15,6 +15,7 @@ public class Config {
 
     public static final ModConfigSpec.ConfigValue<List<? extends String>> ACTOR_BLACKLIST;
     public static final ModConfigSpec.ConfigValue<List<? extends String>> GRAVITY_ONLY_ACTORS;
+    public static final ModConfigSpec.BooleanValue SHOW_TOOLTIP_FOR_BLACKLISTED_ACTORS;
 
     public static final ModConfigSpec.BooleanValue SAW_CAN_MUTLIBREAK;
     public static final ModConfigSpec.BooleanValue SAW_CAN_BREAK_ALL_BLOCKS;
@@ -67,6 +68,7 @@ public class Config {
             .comment("   moveItemsToStorage: Make mined blocks drop items in-world for manual collection")
             .comment("   harvesterReplants: Prevent Harvesters from automatically replanting");
 
+        BUILDER.push("Contraption Actors");
         ACTOR_BLACKLIST = BUILDER
                 .comment("")
                 .comment(" A list of blocks to remove from being registered as contraption actors.")
@@ -75,6 +77,11 @@ public class Config {
                 .comment(" A list of blocks whose contraption actors should only be allowed to work while they are facing and moving downwards")
                 .comment(" Note that the actor will still visually spin/animate regardless of context, except for the Mechanical Drill which has special handling")
                 .defineListAllowEmpty("gravity_only_actors", List.of(), () -> "", (id) -> true);
+        SHOW_TOOLTIP_FOR_BLACKLISTED_ACTORS = BUILDER
+                .comment("")
+                .comment(" If a line should be added to the tooltip of items in the above lists")
+                .define("show_tooltip_for_blacklisted_actors", true);
+        BUILDER.pop();
 
         BUILDER.push("Mechanical Saw");
         SAW_CAN_MUTLIBREAK = BUILDER
@@ -248,6 +255,9 @@ public class Config {
         SPEC = BUILDER.build();
     }
 
+    public static boolean isLoaded() {
+        return SPEC.isLoaded();
+    }
 
     public static BlockState getBlockStateOrDefault(ModConfigSpec.ConfigValue<String> configValue, Block defaultValue) {
         return getBlockOrDefault(configValue, defaultValue).defaultBlockState();

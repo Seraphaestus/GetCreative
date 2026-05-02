@@ -1,6 +1,7 @@
 package amaryllis.get_creative.mixin.block_breaking;
 
 import amaryllis.get_creative.GetCreative;
+import amaryllis.get_creative.contraptions.ActorConfigHandler;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.content.contraptions.behaviour.MovementContext;
 import com.simibubi.create.content.contraptions.render.ActorVisual;
@@ -25,7 +26,7 @@ public class DrillActorVisualMixin extends ActorVisual {
 
     @Inject(method = "tick", at = @At("HEAD"), cancellable = true)
     public void tick(CallbackInfo cbi) {
-        if (GetCreative.shouldDisableActor(AllBlocks.MECHANICAL_DRILL.get(), context)) {
+        if (ActorConfigHandler.shouldDisableActor(AllBlocks.MECHANICAL_DRILL.get(), context)) {
             previousRotation = rotation;
             cbi.cancel();
         }

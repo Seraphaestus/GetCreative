@@ -1,5 +1,6 @@
 package amaryllis.get_creative;
 
+import amaryllis.get_creative.contraptions.ActorConfigHandler;
 import amaryllis.get_creative.contraptions.hinge_bearing.HandleBlock;
 import amaryllis.get_creative.contraptions.hinge_bearing.HingeBearingBlockEntity;
 import amaryllis.get_creative.contraptions.hinge_bearing.HingeBearingRenderer;
@@ -38,6 +39,7 @@ import com.simibubi.create.content.kinetics.base.OrientedRotatingVisual;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.simibubi.create.foundation.item.ItemDescription;
 import com.simibubi.create.foundation.item.KineticStats;
+import com.simibubi.create.foundation.item.TooltipHelper;
 import com.simibubi.create.foundation.item.TooltipModifier;
 import dev.engine_room.flywheel.lib.model.Models;
 import dev.engine_room.flywheel.lib.model.baked.PartialModel;
@@ -50,6 +52,7 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -191,26 +194,40 @@ public class GetCreativeClient {
 
     @SubscribeEvent
     public static void onTooltip(ItemTooltipEvent event) {
+        if (event.getEntity() == null) return;
+
         ItemStack stack = event.getItemStack();
         Item item = stack.getItem();
         Block block = (item instanceof BlockItem blockItem) ? blockItem.getBlock() : null;
 
+        boolean hasChanged = false;
+
         String namespace = BuiltInRegistries.ITEM.getKey(item).getNamespace();
-        if (!namespace.equals(GetCreative.MOD_ID)) return;
+        if (namespace.equals(GetCreative.MOD_ID)) {
+            // Add shift-tooltip support
 
-        // Overrides -> multiple items can share the same tooltip
-        if (block instanceof HandleBlock) {
-            item = BuiltInRegistries.ITEM.get(GetCreative.ID("oak_handle"));
-        }
-        else if (block instanceof ControlSeatBlock) {
-            item = BuiltInRegistries.ITEM.get(GetCreative.ID("red_control_seat"));
-        }
+            // Overrides -> multiple items can share the same tooltip
+            if (block instanceof HandleBlock) {
+                item = BuiltInRegistries.ITEM.get(GetCreative.ID("oak_handle"));
+            } else if (block instanceof ControlSeatBlock) {
+                item = BuiltInRegistries.ITEM.get(GetCreative.ID("red_control_seat"));
+            }
 
-        // Data-driven Create tooltips
-        TooltipModifier tooltip = new ItemDescription.Modifier(item, FontHelper.Palette.STANDARD_CREATE);
-        if (event.getEntity() != null) {
+            // Data-driven Create tooltips
+            TooltipModifier tooltip = new ItemDescription.Modifier(item, FontHelper.Palette.STANDARD_CREATE);
             tooltip = tooltip.andThen(TooltipModifier.mapNull(KineticStats.create(item)));
             tooltip.modify(event);
+        }
+
+        // Add tooltip for overridden contraption actors
+        if (block != null && Config.SHOW_TOOLTIP_FOR_BLACKLISTED_ACTORS.isTrue()) {
+            String key = null;
+            if (ActorConfigHandler.isActorDisabled(block)) key = "get_creative.disabled_actor_tooltip";
+            else if (ActorConfigHandler.isActorGravityOnly(block)) key = "get_creative.gravity_actor_tooltip";
+            if (key != null) {
+                if (CompatHelper.isModLoaded("sable")) key += ".simulated";
+                event.getToolTip().addAll(TooltipHelper.cutTextComponent(Component.translatable(key), FontHelper.Palette.RED));
+            }
         }
     }
 }

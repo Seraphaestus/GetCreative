@@ -1,6 +1,7 @@
 package amaryllis.get_creative.mixin.contraptions;
 
 import amaryllis.get_creative.GetCreative;
+import amaryllis.get_creative.contraptions.ActorConfigHandler;
 import com.simibubi.create.api.behaviour.movement.MovementBehaviour;
 import com.simibubi.create.impl.registry.SimpleRegistryImpl;
 import net.minecraft.world.level.block.Block;
@@ -15,7 +16,7 @@ public class SimpleRegistryMixin<K, V> {
     @Inject(method = "register", at = @At("HEAD"), cancellable = true)
     private void onRegister(K object, V value, CallbackInfo cbi) {
         if (value instanceof MovementBehaviour movementBehaviour && object instanceof Block block) {
-            if (!GetCreative.shouldRegisterActor(block, movementBehaviour)) {
+            if (!ActorConfigHandler.shouldRegisterActor(block, movementBehaviour)) {
                 cbi.cancel();
             }
         }

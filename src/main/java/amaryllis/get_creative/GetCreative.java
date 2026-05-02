@@ -18,18 +18,14 @@ import amaryllis.get_creative.linked_controller.AllLinkedDevices;
 import amaryllis.get_creative.linked_controller.lectern.LecternDeviceBlock;
 import amaryllis.get_creative.recipes.CustomCreateRecipeTypes;
 import amaryllis.get_creative.recipes.MysteriousConversionRecipes;
-import com.simibubi.create.api.behaviour.movement.MovementBehaviour;
 import com.simibubi.create.api.contraption.BlockMovementChecks;
 import com.simibubi.create.api.stress.BlockStressValues;
-import com.simibubi.create.content.contraptions.behaviour.MovementContext;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.item.CreativeModeTab;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntityType;
-import net.minecraft.world.phys.Vec3;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.registries.DeferredHolder;
@@ -40,7 +36,6 @@ import com.mojang.logging.LogUtils;
 
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.world.level.block.Block;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.Mod;
@@ -142,23 +137,6 @@ public class GetCreative {
     }
     public static ResourceLocation ID(String namespace, String path) {
         return ResourceLocation.fromNamespaceAndPath(namespace, path);
-    }
-
-    public static boolean shouldRegisterActor(Block block, MovementBehaviour behaviour) {
-        if (!Config.SPEC.isLoaded()) {
-            LOGGER.warn("Could not check to disable actor {} because config isn't loaded yet", block);
-            return true;
-        }
-
-        final String blockID = BuiltInRegistries.BLOCK.getKey(block).toString();
-        return !Config.ACTOR_BLACKLIST.get().contains(blockID) || Config.GRAVITY_ONLY_ACTORS.get().contains(blockID);
-    }
-    public static boolean shouldDisableActor(Block block, MovementContext context) {
-        boolean isFalling = context.motion.normalize().dot( new Vec3(0, -1, 0)) > 0.7;
-        if (isFalling) return false;
-
-        final String blockID = BuiltInRegistries.BLOCK.getKey(block).toString();
-        return Config.GRAVITY_ONLY_ACTORS.get().contains(blockID);
     }
 
     public static DeferredHolder<SoundEvent, SoundEvent> registerSound(String name) {

@@ -5,8 +5,10 @@
 
   "itemGroup.get_creative": "Get Creative",
 
+  "get_creative.configuration.Contraption Actors": "Contraption Actors",
   "get_creative.configuration.actor_blacklist": "Actor Blacklist",
   "get_creative.configuration.gravity_only_actors": "Gravity-Only Actors",
+  "get_creative.configuration.show_tooltip_for_blacklisted_actors": "Show Tooltip",
   "get_creative.configuration.Mechanical Saw": "Mechanical Saw",
   "get_creative.configuration.saw_can_multibreak": "Saw can multibreak",
   "get_creative.configuration.saw_can_break_all_blocks": "Saw can break all blocks",
@@ -53,6 +55,11 @@
   "get_creative.configuration.fluid_barrel_min_burn_temperature": "Min burn temperature",
   "get_creative.configuration.fluid_barrel_max_burn_temperature": "Max burn temperature",
   "get_creative.configuration.fluid_barrel_can_store_gas": "Can store gasses",
+
+  "get_creative.disabled_actor_tooltip": "_Disabled_ on contraptions",
+  "get_creative.disabled_actor_tooltip.simulated": "_Disabled_ on _non-simulated_ contraptions",
+  "get_creative.gravity_actor_tooltip": "_Disabled_ on contraptions, _unless moving with gravity_",
+  "get_creative.gravity_actor_tooltip.simulated": "_Disabled_ on _non-simulated_ contraptions, _unless moving with gravity_",
 
   "get_creative.recipe.arm_assembly": "Precision Assembly",
   "get_creative.recipe.assembly.arm": "Process with Arm",
