@@ -132,7 +132,7 @@ public class Config {
                 .comment(" A list of mysterious conversions to add to the Recipe Viewer category, e.g. 'create:empty_blaze_burner -> create:blaze_burner'")
                 .defineListAllowEmpty("mysterious_conversions", List.of(
                     "get_creative:empty_breeze_whirler -> get_creative:breeze_whirler",
-                    "get_creative:encapsulator -> get_creative:structure_capsule"
+                    "get_creative:encapsulator -> get_creative:structure_capsule[get_creative:stored_structure={}]"
                 ), () -> "", (id) -> true);
         BUILDER.pop();
 

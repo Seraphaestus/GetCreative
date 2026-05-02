@@ -5,6 +5,7 @@ import amaryllis.get_creative.contraptions.hinge_bearing.HingeBearingBlockEntity
 import amaryllis.get_creative.contraptions.hinge_bearing.HingeBearingRenderer;
 import amaryllis.get_creative.contraptions.hinge_bearing.HingeBearingVisual;
 import amaryllis.get_creative.control_seat.ControlSeatBlock;
+import amaryllis.get_creative.encapsulation.CapsuleItem;
 import amaryllis.get_creative.encapsulation.GlueSpreaderBlockEntity;
 import amaryllis.get_creative.encapsulation.GlueSpreaderRenderer;
 import amaryllis.get_creative.fluid_barrel.FluidBarrelBlock;
@@ -182,7 +183,9 @@ public class GetCreativeClient {
         if (event.getTab() != GetCreative.CREATIVE_MODE_TAB.get()) return;
 
         GetCreative.ITEMS.getEntries().forEach(entry -> {
-            event.accept(entry.get().asItem());
+            if (entry.is(CapsuleItem.ITEM.getKey())) event.accept(CapsuleItem.createDefault());
+            else
+                event.accept(entry.get().asItem());
         });
     }
 

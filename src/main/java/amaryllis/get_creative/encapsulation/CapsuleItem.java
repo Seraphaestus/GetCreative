@@ -80,6 +80,9 @@ public class CapsuleItem extends Item {
         if (name != null) instance.set(CapsuleItem.CONTENTS_NAME, Component.literal(name).withStyle(ChatFormatting.GOLD));
         return instance;
     }
+    public static ItemStack createDefault() {
+        return create(new CompoundTag(), 0, Vec3i.ZERO, null);
+    }
 
     @Override
     public @NotNull InteractionResult useOn(@NotNull UseOnContext context) {
@@ -158,15 +161,14 @@ public class CapsuleItem extends Item {
         CompoundTag data = stack.has(STORED_STRUCTURE_DATA) ? stack.get(STORED_STRUCTURE_DATA) : null;
         Component contentsName = stack.has(CONTENTS_NAME) ? stack.get(CONTENTS_NAME) : null;
 
-        if (data == null) {
-            tooltip.add(Component.translatable("tooltip.get_creative.structure_capsule.invalid").withStyle(ChatFormatting.GRAY));
-        } else {
-            if (contentsName != null) {
-                var nameComponent = contentsName.copy();
-                tooltip.add(Component.translatable("tooltip.get_creative.structure_capsule.named", nameComponent).withStyle(ChatFormatting.GRAY));
-            } else {
-                tooltip.add(Component.translatable("tooltip.get_creative.structure_capsule").withStyle(ChatFormatting.GRAY));
-            }
+        boolean skipTooltip = (contentsName != null && contentsName.getString().isEmpty());
+        if (!skipTooltip) {
+            tooltip.add(
+                (data == null) ? Component.translatable("tooltip.get_creative.structure_capsule.invalid")
+                : (contentsName != null)
+                    ? Component.translatable("tooltip.get_creative.structure_capsule.named", contentsName.copy())
+                    : Component.translatable("tooltip.get_creative.structure_capsule")
+            .withStyle(ChatFormatting.GRAY));
         }
         super.appendHoverText(stack, context, tooltip, flagIn);
     }
