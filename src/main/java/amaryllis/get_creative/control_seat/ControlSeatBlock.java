@@ -5,7 +5,6 @@ import com.simibubi.create.content.contraptions.actors.seat.SeatBlock;
 import com.simibubi.create.content.contraptions.actors.seat.SeatEntity;
 import com.simibubi.create.foundation.block.IBE;
 import com.simibubi.create.foundation.utility.BlockHelper;
-import dev.engine_room.flywheel.lib.model.baked.PartialModel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.tags.ItemTags;
@@ -49,8 +48,6 @@ public class ControlSeatBlock extends SeatBlock implements IBE<ControlSeatBlockE
 
     public static TagKey<Item> TAG = ItemTags.create(GetCreative.ID("control_seats"));
 
-    public static final Map<DyeColor, PartialModel> MODELS = new HashMap<>();
-
     public static Map<DyeColor, DeferredBlock<ControlSeatBlock>> BLOCKS = new HashMap<>();
     public static Map<DyeColor, DeferredItem<BlockItem>> ITEMS = new HashMap<>();
 
@@ -62,7 +59,6 @@ public class ControlSeatBlock extends SeatBlock implements IBE<ControlSeatBlockE
                     Properties.ofFullCopy(Blocks.STRIPPED_SPRUCE_WOOD).mapColor(color));
             BLOCKS.put(color, block);
             ITEMS.put(color, GetCreative.ITEMS.registerSimpleBlockItem(block));
-            MODELS.put(color, PartialModel.of(GetCreative.ID("block/control_seat/" + colorName + "_control_seat")));
         }
         ControlSeatBlockEntity.register();
     }
