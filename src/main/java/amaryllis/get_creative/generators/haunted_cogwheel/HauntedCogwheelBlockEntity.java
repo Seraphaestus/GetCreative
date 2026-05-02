@@ -80,13 +80,19 @@ public class HauntedCogwheelBlockEntity extends GeneratingKineticBlockEntity {
             return;
         }
 
-        final boolean speedIsBeingOverridden = Math.abs(hauntedSpeed) != Math.abs(getSpeed());
-        if (speedIsBeingOverridden && random.nextFloat() < 0.02f) {
+        if (Config.HAUNTED_COGWHEEL_REQUIRES_UNIQUITY.isTrue() && !isInControl() && random.nextFloat() < 0.02f) {
             level.destroyBlock(getBlockPos(), true);
             return;
         }
 
-        if (random.nextDouble() < Config.HAUNTED_COGWHEEL_VOLATILITY.getAsDouble()) randomizeSpeed(random);
+        double volatility = Config.HAUNTED_COGWHEEL_VOLATILITY.getAsDouble();
+        if (isOverStressed()) volatility *= 3;
+        if (random.nextDouble() < volatility) randomizeSpeed(random);
+    }
+
+    protected boolean isInControl() {
+        if (isOverStressed()) return true;
+        return Math.abs(hauntedSpeed) == Math.abs(Math.round(getSpeed()));
     }
 
     protected void spawnParticle(RandomSource random) {
