@@ -12,11 +12,14 @@ public class ItemStackParser {
     protected static HolderLookup.Provider registries;
     protected static ItemParser parser;
 
+    public static void init() {
+        registries = VanillaRegistries.createLookup();
+    }
+
     public static ItemStack parse(String string) {
         return parse(string, e -> {});
     }
     public static ItemStack parse(String string, Consumer<Exception> errorHandler) {
-        if (registries == null) registries = VanillaRegistries.createLookup();
         if (parser == null) parser = new ItemParser(registries);
         try {
             ItemParser.ItemResult result = parser.parse(new StringReader(string.trim()));
@@ -28,7 +31,6 @@ public class ItemStackParser {
     }
 
     public static void clean() {
-        registries = null;
         parser = null;
     }
 }
