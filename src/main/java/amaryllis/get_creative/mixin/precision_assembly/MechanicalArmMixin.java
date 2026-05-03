@@ -1,9 +1,9 @@
 package amaryllis.get_creative.mixin.precision_assembly;
 
-import amaryllis.get_creative.precision_assembly.ArmAssembly;
-import amaryllis.get_creative.precision_assembly.ArmAssemblyBehaviour;
-import amaryllis.get_creative.precision_assembly.IArmInteractionPoint;
-import amaryllis.get_creative.precision_assembly.IMechanicalArm;
+import amaryllis.get_creative.recipes.precision_assembly.ArmAssembly;
+import amaryllis.get_creative.recipes.precision_assembly.ArmAssemblyBehaviour;
+import amaryllis.get_creative.recipes.precision_assembly.IArmInteractionPoint;
+import amaryllis.get_creative.recipes.precision_assembly.IMechanicalArm;
 import com.simibubi.create.Create;
 import com.simibubi.create.api.contraption.transformable.TransformableBlockEntity;
 import com.simibubi.create.content.contraptions.StructureTransform;

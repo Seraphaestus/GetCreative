@@ -1,7 +1,7 @@
 package amaryllis.get_creative.mixin.compat.sable;
 
 import amaryllis.get_creative.Config;
-import amaryllis.get_creative.industrial_fan.IndustrialFanBlockEntity;
+import amaryllis.get_creative.appliances.industrial_fan.IndustrialFanBlockEntity;
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
 import com.simibubi.create.content.kinetics.fan.EncasedFanBlockEntity;

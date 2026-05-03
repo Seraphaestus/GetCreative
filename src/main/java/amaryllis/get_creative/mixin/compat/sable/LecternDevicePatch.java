@@ -1,7 +1,7 @@
 package amaryllis.get_creative.mixin.compat.sable;
 
-import amaryllis.get_creative.linked_controller.lectern.LecternDeviceBlock;
-import amaryllis.get_creative.linked_controller.lectern.LecternDeviceBlockEntity;
+import amaryllis.get_creative.appliances.linked_controller.lectern.LecternDeviceBlock;
+import amaryllis.get_creative.appliances.linked_controller.lectern.LecternDeviceBlockEntity;
 import dev.ryanhcode.sable.api.block.BlockSubLevelAssemblyListener;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;

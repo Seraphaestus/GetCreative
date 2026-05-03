@@ -1,19 +1,19 @@
 package amaryllis.get_creative;
 
-import amaryllis.get_creative.block_breaking.KineticBlockBreaking;
+import amaryllis.get_creative.appliances.KineticBlockBreaking;
 import amaryllis.get_creative.contraptions.hinge_bearing.HandleBlock;
 import amaryllis.get_creative.contraptions.hinge_bearing.HingeBearingBlock;
-import amaryllis.get_creative.control_seat.ControlSeatBlock;
-import amaryllis.get_creative.encapsulation.EncapsulatorBlock;
-import amaryllis.get_creative.encapsulation.GlueSpreaderBlock;
-import amaryllis.get_creative.fluid_barrel.FluidBarrelBlock;
+import amaryllis.get_creative.appliances.control_seat.ControlSeatBlock;
+import amaryllis.get_creative.appliances.encapsulation.EncapsulatorBlock;
+import amaryllis.get_creative.appliances.encapsulation.GlueSpreaderBlock;
+import amaryllis.get_creative.appliances.fluid_barrel.FluidBarrelBlock;
 import amaryllis.get_creative.generators.EntityCaptureItem;
 import amaryllis.get_creative.generators.breeze_whirler.BreezeWhirlerBlock;
 import amaryllis.get_creative.generators.clockwork_motor.ClockworkMotorBlock;
 import amaryllis.get_creative.generators.clockwork_motor.wind_up_key.WindUpKeyBlock;
 import amaryllis.get_creative.generators.haunted_cogwheel.HauntedCogwheelBlock;
-import amaryllis.get_creative.industrial_fan.IndustrialFanBlock;
-import amaryllis.get_creative.linked_controller.lectern.LecternDeviceBlock;
+import amaryllis.get_creative.appliances.industrial_fan.IndustrialFanBlock;
+import amaryllis.get_creative.appliances.linked_controller.lectern.LecternDeviceBlock;
 import com.simibubi.create.AllTags;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderLookup;

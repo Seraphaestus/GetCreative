@@ -1,6 +1,6 @@
 package amaryllis.get_creative.mixin.precision_assembly;
 
-import amaryllis.get_creative.precision_assembly.FlexibleBeltProcessingBehaviour;
+import amaryllis.get_creative.recipes.precision_assembly.FlexibleBeltProcessingBehaviour;
 import com.simibubi.create.content.kinetics.belt.behaviour.BeltProcessingBehaviour;
 import com.simibubi.create.content.logistics.depot.DepotBehaviour;
 import com.simibubi.create.foundation.blockEntity.SmartBlockEntity;

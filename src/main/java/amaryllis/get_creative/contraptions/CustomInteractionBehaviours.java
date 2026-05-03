@@ -2,7 +2,7 @@ package amaryllis.get_creative.contraptions;
 
 import amaryllis.get_creative.contraptions.hinge_bearing.HandleBlock;
 import amaryllis.get_creative.contraptions.moving_interaction.HandleMovingInteraction;
-import amaryllis.get_creative.linked_controller.lectern.LecternDeviceBlock;
+import amaryllis.get_creative.appliances.linked_controller.lectern.LecternDeviceBlock;
 import amaryllis.get_creative.contraptions.moving_interaction.LecternControllerMovingInteraction;
 import amaryllis.get_creative.contraptions.moving_interaction.LecternDeviceMovingInteraction;
 import amaryllis.get_creative.contraptions.moving_interaction.LecternMovingInteraction;

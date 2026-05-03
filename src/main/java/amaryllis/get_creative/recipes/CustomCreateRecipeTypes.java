@@ -1,7 +1,7 @@
 package amaryllis.get_creative.recipes;
 
 import amaryllis.get_creative.GetCreative;
-import amaryllis.get_creative.precision_assembly.ArmAssemblyRecipe;
+import amaryllis.get_creative.recipes.precision_assembly.ArmAssemblyRecipe;
 import com.mojang.serialization.Codec;
 import com.simibubi.create.AllTags;
 import com.simibubi.create.foundation.recipe.IRecipeTypeInfo;

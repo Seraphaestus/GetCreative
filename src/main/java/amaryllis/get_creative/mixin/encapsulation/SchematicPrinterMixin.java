@@ -1,7 +1,7 @@
 package amaryllis.get_creative.mixin.encapsulation;
 
 import amaryllis.get_creative.GetCreative;
-import amaryllis.get_creative.encapsulation.ISchematicPrinter;
+import amaryllis.get_creative.appliances.encapsulation.ISchematicPrinter;
 import com.simibubi.create.content.contraptions.StructureTransform;
 import com.simibubi.create.content.schematics.SchematicPrinter;
 import com.simibubi.create.content.schematics.SchematicProcessor;
@@ -12,7 +12,6 @@ import net.minecraft.core.Direction;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Rotation;
-import net.minecraft.world.level.block.entity.BarrelBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;

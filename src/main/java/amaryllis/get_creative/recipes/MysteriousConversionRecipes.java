@@ -2,7 +2,7 @@ package amaryllis.get_creative.recipes;
 
 import amaryllis.get_creative.Config;
 import amaryllis.get_creative.GetCreative;
-import amaryllis.get_creative.ItemStackParser;
+import amaryllis.get_creative.utility.ItemStackParser;
 import com.simibubi.create.compat.jei.ConversionRecipe;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;

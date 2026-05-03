@@ -1,9 +1,9 @@
 package amaryllis.get_creative.ponder;
 
 import amaryllis.get_creative.GetCreative;
-import amaryllis.get_creative.encapsulation.EncapsulatorBlock;
-import amaryllis.get_creative.encapsulation.GlueSpreaderBlock;
-import amaryllis.get_creative.industrial_fan.IndustrialFanBlock;
+import amaryllis.get_creative.appliances.encapsulation.EncapsulatorBlock;
+import amaryllis.get_creative.appliances.encapsulation.GlueSpreaderBlock;
+import amaryllis.get_creative.appliances.industrial_fan.IndustrialFanBlock;
 import amaryllis.get_creative.ponder.scenes.EncapsulationScenes;
 import amaryllis.get_creative.ponder.scenes.IndustrialFanScenes;
 import amaryllis.get_creative.ponder.scenes.MechanicalArmScenes;

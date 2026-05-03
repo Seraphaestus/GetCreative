@@ -1,6 +1,6 @@
 package amaryllis.get_creative.mixin.encapsulation;
 
-import amaryllis.get_creative.encapsulation.CapsulePreviewHandler;
+import amaryllis.get_creative.appliances.encapsulation.CapsulePreviewHandler;
 import com.simibubi.create.CreateClient;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;

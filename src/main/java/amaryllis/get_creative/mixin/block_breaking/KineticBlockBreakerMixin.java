@@ -1,7 +1,6 @@
 package amaryllis.get_creative.mixin.block_breaking;
 
-import amaryllis.get_creative.GetCreative;
-import amaryllis.get_creative.block_breaking.KineticBlockBreaking;
+import amaryllis.get_creative.appliances.KineticBlockBreaking;
 import com.simibubi.create.content.kinetics.base.BlockBreakingKineticBlockEntity;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
 import net.minecraft.core.BlockPos;

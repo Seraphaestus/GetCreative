@@ -2,7 +2,7 @@ package amaryllis.get_creative.generators.clockwork_motor;
 
 import amaryllis.get_creative.Config;
 import amaryllis.get_creative.GetCreative;
-import amaryllis.get_creative.value_settings.BoundedScrollValueBehaviour;
+import amaryllis.get_creative.utility.value_settings.BoundedScrollValueBehaviour;
 import amaryllis.get_creative.generators.clockwork_motor.wind_up_key.WindUpKeyBlockEntity;
 import com.simibubi.create.content.contraptions.bearing.BearingBlock;
 import com.simibubi.create.content.kinetics.RotationPropagator;

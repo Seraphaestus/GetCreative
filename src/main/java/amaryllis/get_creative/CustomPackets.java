@@ -1,9 +1,9 @@
 package amaryllis.get_creative;
 
 import amaryllis.get_creative.contraptions.hinge_bearing.HingeBearingInteractPacket;
-import amaryllis.get_creative.linked_controller.packets.LinkedDeviceBindPacket;
-import amaryllis.get_creative.linked_controller.packets.LinkedDeviceInputPacket;
-import amaryllis.get_creative.linked_controller.packets.LinkedDeviceStopLecternPacket;
+import amaryllis.get_creative.appliances.linked_controller.packets.LinkedDeviceBindPacket;
+import amaryllis.get_creative.appliances.linked_controller.packets.LinkedDeviceInputPacket;
+import amaryllis.get_creative.appliances.linked_controller.packets.LinkedDeviceStopLecternPacket;
 import net.createmod.catnip.net.base.BasePacketPayload;
 import net.createmod.catnip.net.base.CatnipPacketRegistry;
 import net.minecraft.network.RegistryFriendlyByteBuf;

@@ -1,6 +1,6 @@
 package amaryllis.get_creative.ponder.scenes;
 
-import amaryllis.get_creative.encapsulation.CapsuleItem;
+import amaryllis.get_creative.appliances.encapsulation.CapsuleItem;
 import com.simibubi.create.content.contraptions.glue.SuperGlueItem;
 import com.simibubi.create.foundation.ponder.CreateSceneBuilder;
 import net.createmod.catnip.math.Pointing;

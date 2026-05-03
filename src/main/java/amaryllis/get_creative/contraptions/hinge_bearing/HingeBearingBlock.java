@@ -1,7 +1,7 @@
 package amaryllis.get_creative.contraptions.hinge_bearing;
 
 import amaryllis.get_creative.GetCreative;
-import amaryllis.get_creative.value_settings.ToggleSwitchHandler;
+import amaryllis.get_creative.utility.value_settings.ToggleSwitchHandler;
 import com.simibubi.create.content.contraptions.bearing.BearingBlock;
 import com.simibubi.create.foundation.block.IBE;
 import net.minecraft.core.BlockPos;

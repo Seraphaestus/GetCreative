@@ -1,7 +1,6 @@
 package amaryllis.get_creative.mixin.block_breaking;
 
-import amaryllis.get_creative.GetCreative;
-import amaryllis.get_creative.block_breaking.KineticBlockBreaking;
+import amaryllis.get_creative.appliances.KineticBlockBreaking;
 import com.simibubi.create.api.behaviour.movement.MovementBehaviour;
 import com.simibubi.create.content.contraptions.behaviour.MovementContext;
 import com.simibubi.create.content.contraptions.mounted.MountedContraption;

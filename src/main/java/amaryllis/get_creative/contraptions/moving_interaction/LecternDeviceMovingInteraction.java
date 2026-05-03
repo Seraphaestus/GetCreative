@@ -1,7 +1,7 @@
 package amaryllis.get_creative.contraptions.moving_interaction;
 
 import amaryllis.get_creative.contraptions.CustomInteractionBehaviours;
-import amaryllis.get_creative.linked_controller.AllLinkedDevices;
+import amaryllis.get_creative.appliances.linked_controller.AllLinkedDevices;
 import com.simibubi.create.AllDataComponents;
 import com.simibubi.create.AllSoundEvents;
 import com.simibubi.create.api.behaviour.interaction.MovingInteractionBehaviour;

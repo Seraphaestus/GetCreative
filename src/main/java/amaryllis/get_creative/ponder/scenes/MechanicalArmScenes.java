@@ -1,8 +1,8 @@
 package amaryllis.get_creative.ponder.scenes;
 
 import amaryllis.get_creative.ponder.MulticolorChaseAABBInstruction;
-import amaryllis.get_creative.precision_assembly.ArmAssembly;
-import amaryllis.get_creative.precision_assembly.IMechanicalArm;
+import amaryllis.get_creative.recipes.precision_assembly.ArmAssembly;
+import amaryllis.get_creative.recipes.precision_assembly.IMechanicalArm;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllItems;
 import com.simibubi.create.AllShapes;

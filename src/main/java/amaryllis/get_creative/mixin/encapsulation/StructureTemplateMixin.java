@@ -1,7 +1,7 @@
 package amaryllis.get_creative.mixin.encapsulation;
 
-import amaryllis.get_creative.encapsulation.ArbitraryStructureTemplate;
-import amaryllis.get_creative.encapsulation.IStructureTemplate;
+import amaryllis.get_creative.appliances.encapsulation.ArbitraryStructureTemplate;
+import amaryllis.get_creative.appliances.encapsulation.IStructureTemplate;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Vec3i;
 import net.minecraft.world.entity.Entity;

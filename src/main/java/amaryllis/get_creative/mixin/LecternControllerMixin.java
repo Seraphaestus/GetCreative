@@ -1,7 +1,7 @@
 package amaryllis.get_creative.mixin;
 
 import amaryllis.get_creative.Config;
-import amaryllis.get_creative.linked_controller.LecternControllerHandler;
+import amaryllis.get_creative.appliances.linked_controller.LecternControllerHandler;
 import com.simibubi.create.content.redstone.link.controller.LecternControllerBlockEntity;
 import com.simibubi.create.foundation.blockEntity.SmartBlockEntity;
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;

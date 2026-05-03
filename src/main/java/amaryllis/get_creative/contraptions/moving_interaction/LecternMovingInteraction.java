@@ -1,10 +1,10 @@
 package amaryllis.get_creative.contraptions.moving_interaction;
 
 import amaryllis.get_creative.contraptions.CustomInteractionBehaviours;
-import amaryllis.get_creative.linked_controller.AllLinkedDevices;
-import amaryllis.get_creative.linked_controller.base.LinkedDeviceItem;
-import amaryllis.get_creative.linked_controller.lectern.LecternDeviceBlock;
-import amaryllis.get_creative.linked_controller.lectern.LecternDeviceBlockEntity;
+import amaryllis.get_creative.appliances.linked_controller.AllLinkedDevices;
+import amaryllis.get_creative.appliances.linked_controller.base.LinkedDeviceItem;
+import amaryllis.get_creative.appliances.linked_controller.lectern.LecternDeviceBlock;
+import amaryllis.get_creative.appliances.linked_controller.lectern.LecternDeviceBlockEntity;
 import com.simibubi.create.*;
 import com.simibubi.create.api.behaviour.interaction.MovingInteractionBehaviour;
 import com.simibubi.create.content.contraptions.AbstractContraptionEntity;

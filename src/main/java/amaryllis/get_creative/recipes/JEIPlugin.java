@@ -1,9 +1,9 @@
 package amaryllis.get_creative.recipes;
 
 import amaryllis.get_creative.GetCreative;
-import amaryllis.get_creative.industrial_fan.IndustrialFanBlock;
-import amaryllis.get_creative.precision_assembly.ArmAssemblyCategory;
-import amaryllis.get_creative.precision_assembly.ArmAssemblyRecipe;
+import amaryllis.get_creative.appliances.industrial_fan.IndustrialFanBlock;
+import amaryllis.get_creative.recipes.precision_assembly.ArmAssemblyCategory;
+import amaryllis.get_creative.recipes.precision_assembly.ArmAssemblyRecipe;
 import com.google.common.base.Preconditions;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.Create;

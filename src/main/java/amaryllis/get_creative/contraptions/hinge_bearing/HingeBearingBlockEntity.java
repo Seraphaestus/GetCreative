@@ -1,9 +1,9 @@
 package amaryllis.get_creative.contraptions.hinge_bearing;
 
 import amaryllis.get_creative.GetCreative;
-import amaryllis.get_creative.value_settings.BoundedScrollValueBehaviour;
-import amaryllis.get_creative.value_settings.SwappableScrollValues;
-import amaryllis.get_creative.value_settings.ToggleSwitchRenderer;
+import amaryllis.get_creative.utility.value_settings.BoundedScrollValueBehaviour;
+import amaryllis.get_creative.utility.value_settings.SwappableScrollValues;
+import amaryllis.get_creative.utility.value_settings.ToggleSwitchRenderer;
 import com.simibubi.create.AllSoundEvents;
 import com.simibubi.create.content.contraptions.*;
 import com.simibubi.create.content.contraptions.bearing.BearingBlock;

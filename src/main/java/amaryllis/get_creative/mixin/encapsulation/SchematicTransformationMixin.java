@@ -1,15 +1,11 @@
 package amaryllis.get_creative.mixin.encapsulation;
 
-import amaryllis.get_creative.GetCreative;
-import amaryllis.get_creative.encapsulation.ISchematicTransformation;
+import amaryllis.get_creative.appliances.encapsulation.ISchematicTransformation;
 import com.simibubi.create.content.schematics.client.SchematicTransformation;
 import net.createmod.catnip.animation.LerpedFloat;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Vec3i;
-import net.minecraft.world.level.block.Mirror;
 import net.minecraft.world.level.block.Rotation;
-import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
-import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
