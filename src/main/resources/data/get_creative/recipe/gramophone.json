@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "B": { "item": "create:brass_block" },
+    "A": { "item": "create:andesite_casing" },
+    "N": { "item": "minecraft:diamond" }
+  },
+  "pattern": [
+    "B",
+    "N",
+    "A"
+  ],
+  "result": { "id": "get_creative:gramophone", "count": 1 }
+}

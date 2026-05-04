@@ -1,5 +1,7 @@
 package amaryllis.get_creative;
 
+import amaryllis.get_creative.appliances.gramophone.GramophoneBlockEntity;
+import amaryllis.get_creative.appliances.gramophone.GramophoneRenderer;
 import amaryllis.get_creative.contraptions.ActorConfigHandler;
 import amaryllis.get_creative.contraptions.hinge_bearing.HandleBlock;
 import amaryllis.get_creative.contraptions.hinge_bearing.HingeBearingBlockEntity;
@@ -127,6 +129,8 @@ public class GetCreativeClient {
         CreateRegistrate.blockModel(() -> FluidBarrelModel::new).accept(FluidBarrelBlock.BLOCK.get());
         ItemBlockRenderTypes.setRenderLayer(FluidBarrelBlock.BLOCK.get(), RenderType.CUTOUT_MIPPED);
 
+        BlockEntityRenderers.register(GramophoneBlockEntity.BLOCK_ENTITY.get(), GramophoneRenderer::new);
+
         BlockEntityRenderers.register(GlueSpreaderBlockEntity.BLOCK_ENTITY.get(), GlueSpreaderRenderer::new);
 
         BlockEntityRenderers.register( HingeBearingBlockEntity.BLOCK_ENTITY.get(), HingeBearingRenderer::new);
@@ -200,8 +204,6 @@ public class GetCreativeClient {
         ItemStack stack = event.getItemStack();
         Item item = stack.getItem();
         Block block = (item instanceof BlockItem blockItem) ? blockItem.getBlock() : null;
-
-        boolean hasChanged = false;
 
         String namespace = BuiltInRegistries.ITEM.getKey(item).getNamespace();
         if (namespace.equals(GetCreative.MOD_ID)) {

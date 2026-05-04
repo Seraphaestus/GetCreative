@@ -98,6 +98,13 @@
   "block.get_creative.fluid_barrel.tooltip.summary": "A _lower-capacity_ variant of _Fluid Tank_ which can be _manually_ filled or drained with a _Bucket_.",
   "get_creative.fluid_barrel.invalid_fluid": "Cannot store %s in Fluid Barrel",
 
+  "block.get_creative.gramophone": "Gramophone",
+  "block.get_creative.gramophone.tooltip.summary": "When placed on a _Turntable_, allows it to hold and play _Music Discs_.",
+  "get_creative.gramophone.invalid_placement": "Gramophone must be placed on a Turntable",
+  "get_creative.display_source.gramophone_playing": "Current Song",
+  "get_creative.display_source.gramophone_title": "Song Title",
+  "get_creative.display_source.gramophone_artist": "Artist Name",
+
   "block.get_creative.glue_spreader": "Glue Spreader",
   "block.get_creative.glue_spreader.tooltip.summary": "When _powered by redstone_, blocks in front of _adjacent Glue Spreaders_ are glued together.",
   "get_creative.subtitle.glue_spreader.activate": "Glue Spreader activates",

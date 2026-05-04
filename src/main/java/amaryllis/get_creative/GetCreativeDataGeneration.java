@@ -2,6 +2,7 @@ package amaryllis.get_creative;
 
 import amaryllis.get_creative.appliances.KineticBlockBreaking;
 import amaryllis.get_creative.appliances.encapsulation.GlueCleanerBlock;
+import amaryllis.get_creative.appliances.gramophone.GramophoneBlock;
 import amaryllis.get_creative.contraptions.hinge_bearing.HandleBlock;
 import amaryllis.get_creative.contraptions.hinge_bearing.HingeBearingBlock;
 import amaryllis.get_creative.appliances.control_seat.ControlSeatBlock;
@@ -91,6 +92,7 @@ public class GetCreativeDataGeneration {
             dropSelf(HingeBearingBlock.BLOCK.get());
             HandleBlock.BLOCKS.values().forEach(block -> dropSelf(block.get()));
             dropSelf(FluidBarrelBlock.BLOCK.get());
+            dropSelf(GramophoneBlock.BLOCK.get());
             dropSelf(GlueSpreaderBlock.BLOCK.get());
             dropSelf(GlueCleanerBlock.BLOCK.get());
             dropSelf(EncapsulatorBlock.BLOCK.get());
@@ -149,6 +151,7 @@ public class GetCreativeDataGeneration {
                     .add(BreezeWhirlerBlock.BLOCK.get())
                     .add(BreezeWhirlerBlock.EMPTY_BLOCK.get())
                     .add(getMetalHandles())
+                    .add(GramophoneBlock.BLOCK.get())
                     .add(GlueSpreaderBlock.BLOCK.get())
                     .add(GlueCleanerBlock.BLOCK.get())
                     .add(EncapsulatorBlock.BLOCK.get());
@@ -160,6 +163,7 @@ public class GetCreativeDataGeneration {
                     .add(ClockworkMotorBlock.BLOCK.get())
                     .add(getWoodenHandles())
                     .add(FluidBarrelBlock.BLOCK.get())
+                    .add(GramophoneBlock.BLOCK.get())
                     .add(getControlSeats());
 
             tag(AllTags.AllBlockTags.WRENCH_PICKUP.tag)
@@ -170,6 +174,7 @@ public class GetCreativeDataGeneration {
                     .add(ClockworkMotorBlock.BLOCK.get())
                     .add(BreezeWhirlerBlock.BLOCK.get())
                     .add(BreezeWhirlerBlock.EMPTY_BLOCK.get())
+                    .add(GramophoneBlock.BLOCK.get())
                     .add(GlueSpreaderBlock.BLOCK.get())
                     .add(GlueCleanerBlock.BLOCK.get())
                     .add(EncapsulatorBlock.BLOCK.get());

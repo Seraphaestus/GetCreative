@@ -1,6 +1,7 @@
 package amaryllis.get_creative;
 
 import amaryllis.get_creative.appliances.encapsulation.GlueCleanerBlock;
+import amaryllis.get_creative.appliances.gramophone.GramophoneBlock;
 import amaryllis.get_creative.contraptions.CustomInteractionBehaviours;
 import amaryllis.get_creative.contraptions.hinge_bearing.HandleBlock;
 import amaryllis.get_creative.contraptions.hinge_bearing.HingeBearingBlock;
@@ -84,6 +85,7 @@ public class GetCreative {
         IndustrialFanBlock.register();
         // Misc
         FluidBarrelBlock.register();
+        GramophoneBlock.register();
         // Glue Spreader + Encapsulator + Capsules
         GlueSpreaderBlock.register();
         GlueCleanerBlock.register();
