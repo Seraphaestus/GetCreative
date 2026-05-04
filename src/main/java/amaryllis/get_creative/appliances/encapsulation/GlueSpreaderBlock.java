@@ -9,6 +9,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.particles.BlockParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
@@ -24,6 +25,7 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.registries.DeferredBlock;
+import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredItem;
 import org.jetbrains.annotations.NotNull;
 
@@ -36,6 +38,7 @@ public class GlueSpreaderBlock extends WrenchableDirectionalBlock implements IBE
 
     public static DeferredBlock<Block> BLOCK;
     public static DeferredItem<BlockItem> ITEM;
+    public static DeferredHolder<SoundEvent, SoundEvent> ACTIVATE_SOUND;
 
     public static void register() {
         BLOCK = GetCreative.BLOCKS.registerBlock(
@@ -43,6 +46,8 @@ public class GlueSpreaderBlock extends WrenchableDirectionalBlock implements IBE
                 Properties.of().explosionResistance(6).destroyTime(1.5f).mapColor(MapColor.GOLD).noOcclusion());
         ITEM = GetCreative.ITEMS.registerSimpleBlockItem(BLOCK);
         GlueSpreaderBlockEntity.register();
+
+        ACTIVATE_SOUND = GetCreative.registerSound("glue_spreader_activates");
     }
 
     public GlueSpreaderBlock(Properties properties) {
@@ -58,7 +63,9 @@ public class GlueSpreaderBlock extends WrenchableDirectionalBlock implements IBE
 
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext context) {
-        return defaultBlockState().setValue(FACING, context.getNearestLookingDirection().getOpposite());
+        Direction direction = context.getNearestLookingDirection();
+        boolean isHoldingShift = context.getPlayer() != null && context.getPlayer().isShiftKeyDown();
+        return defaultBlockState().setValue(FACING, isHoldingShift ? direction : direction.getOpposite());
     }
 
     @Override

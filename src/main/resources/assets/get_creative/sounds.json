@@ -3,6 +3,10 @@
     "subtitle": "get_creative.subtitle.haunted_cogwheel.refresh",
     "sounds": [{ "type": "event", "name": "create:haunted_bell_convert" }]
   },
+  "glue_spreader_activates": {
+    "subtitle": "get_creative.subtitle.glue_spreader.activate",
+    "sounds": [{ "type": "event", "name": "create:slime_added" }]
+  },
   "encapsulator_activates": {
     "subtitle": "get_creative.subtitle.encapsulator.activate",
     "sounds": [{ "type": "event", "name": "minecraft:item.bottle.fill_dragonbreath" }]

@@ -13,6 +13,8 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.Direction.AxisDirection;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
@@ -70,12 +72,16 @@ public class GlueSpreaderBlockEntity extends SmartBlockEntity {
     }
 
     public void activate(Level level, BlockPos pos, Direction facing) {
+    public void activate(ServerLevel level, BlockPos pos, Direction facing) {
         BlockPos target = pos.relative(facing);
+        boolean success = false;
         for (Direction.Axis axis: Direction.Axis.values()) {
             if (axis == facing.getAxis()) continue;
-            tryGlue(level, target, Direction.fromAxisAndDirection(axis, AxisDirection.POSITIVE));
-            tryGlue(level, target, Direction.fromAxisAndDirection(axis, AxisDirection.NEGATIVE));
+            if (tryGlue(level, target, Direction.fromAxisAndDirection(axis, AxisDirection.POSITIVE)) ||
+                tryGlue(level, target, Direction.fromAxisAndDirection(axis, AxisDirection.NEGATIVE)))
+                    success = true;
         }
+        if (success) playSound(level);
     }
     public boolean tryGlue(Level level, BlockPos from, Direction to) {
         if (!isConnectedToSpreader(to)) return false;
@@ -98,5 +104,9 @@ public class GlueSpreaderBlockEntity extends SmartBlockEntity {
         if (level == null) return false;
         BlockState adjState = level.getBlockState(getBlockPos().relative(direction));
         return adjState.is(GlueSpreaderBlock.BLOCK) && (adjState.getValue(FACING) == getBlockState().getValue(FACING));
+    }
+
+    protected void playSound(ServerLevel level) {
+        level.playSound(null, getBlockPos(), GlueSpreaderBlock.ACTIVATE_SOUND.get(), SoundSource.BLOCKS);
     }
 }

@@ -4,6 +4,7 @@ import amaryllis.get_creative.GetCreative;
 import com.simibubi.create.foundation.block.IBE;
 import com.simibubi.create.foundation.block.WrenchableDirectionalBlock;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
@@ -59,7 +60,9 @@ public class EncapsulatorBlock extends WrenchableDirectionalBlock implements IBE
 
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext context) {
-        return defaultBlockState().setValue(FACING, context.getNearestLookingDirection().getOpposite());
+        Direction direction = context.getNearestLookingDirection();
+        boolean isHoldingShift = context.getPlayer() != null && context.getPlayer().isShiftKeyDown();
+        return defaultBlockState().setValue(FACING, isHoldingShift ? direction : direction.getOpposite());
     }
 
     @Override
