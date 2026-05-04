@@ -102,6 +102,10 @@
   "block.get_creative.glue_spreader.tooltip.summary": "When _powered by redstone_, blocks in front of _adjacent Glue Spreaders_ are glued together.",
   "get_creative.subtitle.glue_spreader.activate": "Glue Spreader activates",
 
+  "block.get_creative.glue_cleaner": "Glue Cleaner",
+  "block.get_creative.glue_cleaner.tooltip.summary": "When _powered by redstone_, any _Super Glue_ attached to the block in front of the _Glue Cleaner_ is removed.",
+  "get_creative.subtitle.glue_cleaner.activate": "Glue Cleaner activates",
+
   "block.get_creative.encapsulator": "Encapsulator",
   "block.get_creative.encapsulator.tooltip.summary": "When _powered by redstone_, connected blocks in front of the _Encapsulator_ are stored into a placeable _Capsule_ item.",
   "tooltip.get_creative.encapsulator": "Encapsulating as \"%s\"",

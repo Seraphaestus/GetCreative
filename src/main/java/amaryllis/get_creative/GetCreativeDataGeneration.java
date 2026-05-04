@@ -1,6 +1,7 @@
 package amaryllis.get_creative;
 
 import amaryllis.get_creative.appliances.KineticBlockBreaking;
+import amaryllis.get_creative.appliances.encapsulation.GlueCleanerBlock;
 import amaryllis.get_creative.contraptions.hinge_bearing.HandleBlock;
 import amaryllis.get_creative.contraptions.hinge_bearing.HingeBearingBlock;
 import amaryllis.get_creative.appliances.control_seat.ControlSeatBlock;
@@ -91,6 +92,7 @@ public class GetCreativeDataGeneration {
             HandleBlock.BLOCKS.values().forEach(block -> dropSelf(block.get()));
             dropSelf(FluidBarrelBlock.BLOCK.get());
             dropSelf(GlueSpreaderBlock.BLOCK.get());
+            dropSelf(GlueCleanerBlock.BLOCK.get());
             dropSelf(EncapsulatorBlock.BLOCK.get());
             for (DyeColor color: DyeColor.values()) dropSelf(ControlSeatBlock.BLOCKS.get(color).get());
 
@@ -148,6 +150,7 @@ public class GetCreativeDataGeneration {
                     .add(BreezeWhirlerBlock.EMPTY_BLOCK.get())
                     .add(getMetalHandles())
                     .add(GlueSpreaderBlock.BLOCK.get())
+                    .add(GlueCleanerBlock.BLOCK.get())
                     .add(EncapsulatorBlock.BLOCK.get());
 
             tag(BlockTags.MINEABLE_WITH_AXE)
@@ -168,6 +171,7 @@ public class GetCreativeDataGeneration {
                     .add(BreezeWhirlerBlock.BLOCK.get())
                     .add(BreezeWhirlerBlock.EMPTY_BLOCK.get())
                     .add(GlueSpreaderBlock.BLOCK.get())
+                    .add(GlueCleanerBlock.BLOCK.get())
                     .add(EncapsulatorBlock.BLOCK.get());
 
             tag(AllTags.AllBlockTags.SAFE_NBT.tag)

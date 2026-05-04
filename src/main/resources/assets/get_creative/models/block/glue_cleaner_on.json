@@ -1,0 +1,6 @@
+{
+    "parent": "get_creative:block/glue_cleaner",
+    "textures": {
+        "front": "get_creative:block/glue_cleaner/front_on"
+    }
+}

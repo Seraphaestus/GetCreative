@@ -25,7 +25,7 @@ import java.util.function.Supplier;
 import static net.minecraft.world.level.block.state.properties.BlockStateProperties.FACING;
 import static net.minecraft.world.level.block.state.properties.BlockStateProperties.TRIGGERED;
 
-public class GlueSpreaderBlockEntity extends SmartBlockEntity {
+public class GlueSpreaderBlockEntity extends SmartBlockEntity implements GlueHighlighter {
 
     public static Supplier<BlockEntityType<GlueSpreaderBlockEntity>> BLOCK_ENTITY;
 
@@ -62,6 +62,9 @@ public class GlueSpreaderBlockEntity extends SmartBlockEntity {
         super.tick();
         if (!level.isClientSide) return;
 
+        Direction facing = getBlockState().getValue(GlueCleanerBlock.FACING);
+        outlineTargetedGlueEntities(level, getBlockPos().relative(facing), false);
+
         piston.tickChaser();
 
         if (!update) return;
@@ -71,7 +74,6 @@ public class GlueSpreaderBlockEntity extends SmartBlockEntity {
         CatnipServices.PLATFORM.executeOnClientOnly(() -> () -> VisualizationHelper.queueUpdate(this));
     }
 
-    public void activate(Level level, BlockPos pos, Direction facing) {
     public void activate(ServerLevel level, BlockPos pos, Direction facing) {
         BlockPos target = pos.relative(facing);
         boolean success = false;

@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "W": { "item": "minecraft:water_bucket" },
+    "C": { "tag": "c:cobblestones" },
+    "R": { "item": "minecraft:redstone" },
+    "A": { "item": "create:andesite_alloy" },
+    "I": { "tag": "c:plates/iron" }
+  },
+  "pattern": [
+    " I ",
+    "AWA",
+    "CRC"
+  ],
+  "result": {
+    "id": "get_creative:glue_cleaner",
+    "count": 1
+  }
+}

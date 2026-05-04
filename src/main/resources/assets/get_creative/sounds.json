@@ -7,6 +7,10 @@
     "subtitle": "get_creative.subtitle.glue_spreader.activate",
     "sounds": [{ "type": "event", "name": "create:slime_added" }]
   },
+  "glue_cleaner_activates": {
+    "subtitle": "get_creative.subtitle.glue_cleaner.activate",
+    "sounds": [{ "type": "event", "name": "minecraft:block.bubble_column.upwards_ambient", "pitch": 2 }]
+  },
   "encapsulator_activates": {
     "subtitle": "get_creative.subtitle.encapsulator.activate",
     "sounds": [{ "type": "event", "name": "minecraft:item.bottle.fill_dragonbreath" }]

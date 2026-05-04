@@ -15,6 +15,7 @@
     "get_creative:industrial_iron_handle",
     "get_creative:brass_handle",
     "get_creative:glue_spreader",
+    "get_creative:glue_cleaner",
     "get_creative:encapsulator"
   ]
 }
