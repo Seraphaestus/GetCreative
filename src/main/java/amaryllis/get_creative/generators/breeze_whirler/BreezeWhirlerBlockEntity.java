@@ -114,6 +114,6 @@ public class BreezeWhirlerBlockEntity extends GeneratingKineticBlockEntity {
 
     @Override
     protected AABB createRenderBoundingBox() {
-        return new AABB(worldPosition).inflate(1);
+        return super.createRenderBoundingBox().inflate(1);
     }
 }
