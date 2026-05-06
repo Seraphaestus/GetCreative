@@ -64,7 +64,7 @@ public class GramophoneBlock extends Block implements IBE<GramophoneBlockEntity>
     public static void register() {
         BLOCK = GetCreative.BLOCKS.registerBlock(
                 "gramophone", GramophoneBlock::new,
-                Properties.of().mapColor(MapColor.TERRACOTTA_YELLOW).noOcclusion()
+                Properties.of().strength(2).sound(SoundType.METAL).mapColor(MapColor.TERRACOTTA_YELLOW).noOcclusion()
         );
         ITEM = GetCreative.ITEMS.registerItem("gramophone", GramophoneItem::new);
         GramophoneBlockEntity.register();

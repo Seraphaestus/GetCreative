@@ -32,7 +32,7 @@ public class GlueCleanerBlock extends WrenchableDirectionalBlock implements IBE<
     public static void register() {
         BLOCK = GetCreative.BLOCKS.registerBlock(
                 "glue_cleaner", GlueCleanerBlock::new,
-                Properties.of().explosionResistance(6).destroyTime(1.5f).mapColor(MapColor.GOLD));
+                Properties.of().explosionResistance(6).destroyTime(1.5f).mapColor(MapColor.METAL));
         ITEM = GetCreative.ITEMS.registerSimpleBlockItem(BLOCK);
         GlueCleanerBlockEntity.register();
 
