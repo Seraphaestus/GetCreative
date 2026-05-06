@@ -1,15 +1,20 @@
 package amaryllis.get_creative.appliances.gramophone;
 
 import amaryllis.get_creative.GetCreative;
+import com.simibubi.create.api.equipment.goggles.IHaveGoggleInformation;
 import com.simibubi.create.content.kinetics.turntable.TurntableBlockEntity;
 import com.simibubi.create.foundation.blockEntity.SmartBlockEntity;
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
+import com.simibubi.create.foundation.utility.CreateLang;
+import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.util.Mth;
 import net.minecraft.world.Clearable;
 import net.minecraft.world.Container;
 import net.minecraft.world.entity.item.ItemEntity;
@@ -26,16 +31,14 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.ticks.ContainerSingleItem;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import java.util.function.Supplier;
 
 import static net.minecraft.world.level.block.entity.JukeboxBlockEntity.SONG_ITEM_TAG_ID;
 import static net.minecraft.world.level.block.entity.JukeboxBlockEntity.TICKS_SINCE_SONG_STARTED_TAG_ID;
 
-public class GramophoneBlockEntity extends SmartBlockEntity implements Clearable, ContainerSingleItem.BlockContainerSingleItem {
+public class GramophoneBlockEntity extends SmartBlockEntity implements Clearable, ContainerSingleItem.BlockContainerSingleItem, IHaveGoggleInformation {
 
     public static Supplier<BlockEntityType<GramophoneBlockEntity>> BLOCK_ENTITY;
 
@@ -45,9 +48,6 @@ public class GramophoneBlockEntity extends SmartBlockEntity implements Clearable
                         GramophoneBlockEntity::new, GramophoneBlock.BLOCK.get()
                 ).build(null));
     }
-
-    private static final double LOG_2 = Math.log(2);
-    public static final Map<Integer, Float> PITCH_FOR_SPEED = new HashMap<>();
 
     public ItemStack record;
 
@@ -101,15 +101,14 @@ public class GramophoneBlockEntity extends SmartBlockEntity implements Clearable
             var turntable = getTurntable();
             playbackSpeed = (turntable != null) ? Math.abs(Math.round(turntable.getSpeed())) : 0;
         }
-        if (playbackSpeed == 0) return 0.5f;
 
-        if (!PITCH_FOR_SPEED.containsKey(playbackSpeed)) {
-            double pitch = 0.25 * (Math.log(0.14 * Math.pow(playbackSpeed, 1.35) + 1)) / LOG_2;
-            if (Math.abs(Math.round(pitch) - pitch) < 0.01) pitch = Math.round(pitch); // If approx to an integer value, round exactly
-            pitch = Math.clamp(pitch, 0.5, 2);
-            PITCH_FOR_SPEED.put(playbackSpeed, (float)pitch);
-        }
-        return PITCH_FOR_SPEED.get(playbackSpeed);
+        // Linear segments between (1, 0.5), (16, 0.75), (32, 1), (128, 1.5), (256, 2)
+        float pitch;
+        if (playbackSpeed < 16) pitch = (playbackSpeed + 29) / 60f;
+        else if (playbackSpeed < 32) pitch = 0.5f + playbackSpeed / 64f;
+        else if (playbackSpeed < 128) pitch = (playbackSpeed + 160) / 192f;
+        else pitch = 1 + playbackSpeed / 256f;
+        return Mth.clamp(pitch, 0.5f, 2f);
     }
 
     public void onSongChanged() {
@@ -230,4 +229,30 @@ public class GramophoneBlockEntity extends SmartBlockEntity implements Clearable
     protected AABB createRenderBoundingBox() {
         return super.createRenderBoundingBox().inflate(0, 1, 0);
     }
+
+    //region Goggles Tooltip
+    public boolean showGoggleTooltip() {
+        return playbackSpeed > 0;
+    }
+
+    @Override
+    public boolean addToGoggleTooltip(List<Component> tooltip, boolean isPlayerSneaking) {
+        if (!showGoggleTooltip()) return false;
+
+        CreateLang.builder()
+                .add(Component.translatable("tooltip.get_creative.gramophone"))
+                .style(ChatFormatting.WHITE)
+                .forGoggles(tooltip, 0);
+
+        addGoggleTooltipBody(tooltip, isPlayerSneaking);
+
+        return true;
+    }
+    public void addGoggleTooltipBody(List<Component> tooltip, boolean isPlayerSneaking) {
+        CreateLang.builder()
+                .add(Component.translatable("tooltip.get_creative.gramophone.speed", String.format("%.2f", getPitch(false))))
+                .style(ChatFormatting.GRAY)
+                .forGoggles(tooltip, 1);
+    }
+    //endregion
 }

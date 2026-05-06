@@ -1,4 +1,4 @@
-package amaryllis.get_creative.mixin;
+package amaryllis.get_creative.mixin.gramophone;
 
 import amaryllis.get_creative.appliances.gramophone.GramophoneBlockEntity;
 import net.minecraft.client.Minecraft;

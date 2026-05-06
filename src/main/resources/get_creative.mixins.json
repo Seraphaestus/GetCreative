@@ -30,10 +30,10 @@
     "encapsulation.SchematicTransformationMixin",
     "encapsulation.CreateClientMixin",
 
+    "gramophone.JukeboxSongPlayerMixin",
+
     "compat.sable.LecternDevicePatch",
     "compat.sable.IndustrialFanThrust",
-
-    "JukeboxSongPlayerMixin",
 
     "StationBlockMixin",
     "DeployerMixin",
@@ -42,7 +42,8 @@
   ],
   "client": [
     "precision_assembly.ArmInteractionPointHandlerMixin",
-    "LevelRendererMixin"
+    "gramophone.LevelRendererMixin",
+    "gramophone.TurntableMixin"
   ],
   "injectors": {
     "defaultRequire": 1

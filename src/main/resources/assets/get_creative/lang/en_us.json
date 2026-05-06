@@ -100,6 +100,8 @@
 
   "block.get_creative.gramophone": "Gramophone",
   "block.get_creative.gramophone.tooltip.summary": "When placed on a _Turntable_, allows it to hold and play _Music Discs_.",
+  "tooltip.get_creative.gramophone": "Gramophone:",
+  "tooltip.get_creative.gramophone.speed": "Playback Speed: %sx",
   "get_creative.gramophone.invalid_placement": "Gramophone must be placed on a Turntable",
   "get_creative.display_source.gramophone_playing": "Current Song",
   "get_creative.display_source.gramophone_title": "Song Title",
