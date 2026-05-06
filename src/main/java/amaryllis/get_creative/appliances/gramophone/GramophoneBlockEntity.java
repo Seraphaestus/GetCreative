@@ -15,6 +15,7 @@ import net.minecraft.world.Container;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.JukeboxSong;
+import net.minecraft.world.item.JukeboxSongPlayer;
 import net.minecraft.world.level.block.JukeboxBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -50,7 +51,7 @@ public class GramophoneBlockEntity extends SmartBlockEntity implements Clearable
 
     public ItemStack record;
 
-    public final GramophoneSongPlayer songPlayer;
+    public final JukeboxSongPlayer songPlayer;
     protected int playbackSpeed = 0;
 
     protected int changeSpeedCooldown = 1;
@@ -59,7 +60,7 @@ public class GramophoneBlockEntity extends SmartBlockEntity implements Clearable
         super(BLOCK_ENTITY.get(), pos, state);
 
         record = ItemStack.EMPTY;
-        songPlayer = new GramophoneSongPlayer(this::onSongChanged, getBlockPos());
+        songPlayer = new JukeboxSongPlayer(this::onSongChanged, getBlockPos());
     }
 
     @Override
@@ -92,7 +93,7 @@ public class GramophoneBlockEntity extends SmartBlockEntity implements Clearable
             return;
         }
 
-        if (playbackSpeed > 0) songPlayer.tick(level, getBlockState(), getPitch(false));
+        if (playbackSpeed > 0) songPlayer.tick(level, getBlockState());
     }
 
     public float getPitch(boolean recalculateSpeed) {
@@ -100,9 +101,11 @@ public class GramophoneBlockEntity extends SmartBlockEntity implements Clearable
             var turntable = getTurntable();
             playbackSpeed = (turntable != null) ? Math.abs(Math.round(turntable.getSpeed())) : 0;
         }
+        if (playbackSpeed == 0) return 0.5f;
 
         if (!PITCH_FOR_SPEED.containsKey(playbackSpeed)) {
             double pitch = 0.25 * (Math.log(0.14 * Math.pow(playbackSpeed, 1.35) + 1)) / LOG_2;
+            if (Math.abs(Math.round(pitch) - pitch) < 0.01) pitch = Math.round(pitch); // If approx to an integer value, round exactly
             pitch = Math.clamp(pitch, 0.5, 2);
             PITCH_FOR_SPEED.put(playbackSpeed, (float)pitch);
         }
