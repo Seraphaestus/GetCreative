@@ -15,7 +15,7 @@ public class Config {
 
     public static final ModConfigSpec.ConfigValue<List<? extends String>> ACTOR_BLACKLIST;
     public static final ModConfigSpec.ConfigValue<List<? extends String>> GRAVITY_ONLY_ACTORS;
-    public static final ModConfigSpec.BooleanValue SHOW_TOOLTIP_FOR_BLACKLISTED_ACTORS;
+    public static final ModConfigSpec.BooleanValue SHOW_CONFIG_TOOLTIPS;
 
     public static final ModConfigSpec.BooleanValue SAW_CAN_MUTLIBREAK;
     public static final ModConfigSpec.BooleanValue SAW_CAN_BREAK_ALL_BLOCKS;
@@ -55,6 +55,8 @@ public class Config {
 
     public static final ModConfigSpec.DoubleValue LECTERN_CONTROLLER_REACH;
 
+    public static final ModConfigSpec.IntValue LARGE_CHEST_CAPACITY;
+
     public static final ModConfigSpec.IntValue FLUID_BARREL_CAPACITY;
     public static final ModConfigSpec.IntValue FLUID_BARREL_MAX_HEIGHT;
     public static final ModConfigSpec.IntValue FLUID_BARREL_MAX_TEMPERATURE;
@@ -68,6 +70,12 @@ public class Config {
             .comment("   moveItemsToStorage: Make mined blocks drop items in-world for manual collection")
             .comment("   harvesterReplants: Prevent Harvesters from automatically replanting");
 
+        SHOW_CONFIG_TOOLTIPS = BUILDER
+                .comment("")
+                .comment(" If item tooltips should document configuration changes")
+                .comment(" Note that #create:actor_collects_items must be populated to give proper feedback for the moveItemsToStorage option")
+                .define("show_config_tooltips", true);
+
         BUILDER.push("Contraption Actors");
         ACTOR_BLACKLIST = BUILDER
                 .comment("")
@@ -77,10 +85,6 @@ public class Config {
                 .comment(" A list of blocks whose contraption actors should only be allowed to work while they are facing and moving downwards")
                 .comment(" Note that the actor will still visually spin/animate regardless of context, except for the Mechanical Drill which has special handling")
                 .defineListAllowEmpty("gravity_only_actors", List.of(), () -> "", (id) -> true);
-        SHOW_TOOLTIP_FOR_BLACKLISTED_ACTORS = BUILDER
-                .comment("")
-                .comment(" If a line should be added to the tooltip of items in the above lists")
-                .define("show_tooltip_for_blacklisted_actors", true);
         BUILDER.pop();
 
         BUILDER.push("Mechanical Saw");
@@ -224,6 +228,12 @@ public class Config {
         LECTERN_CONTROLLER_REACH = BUILDER
                 .comment(" The max range at which a player can interact with a Lectern with Linked Controller, as a multiplier to their base block interaction range")
                 .defineInRange("lectern_controller_reach", 0.4d, 0d, 1024d);
+        BUILDER.pop();
+
+        BUILDER.push("Large Chest");
+        LARGE_CHEST_CAPACITY = BUILDER
+                .comment(" How many inventory slots a Large Chest has per block")
+                .defineInRange("large_chest_capacity", 9, 1, 1024);
         BUILDER.pop();
 
         BUILDER.push("Fluid Barrel");

@@ -1,6 +1,7 @@
 package amaryllis.get_creative.appliances.control_seat;
 
 import amaryllis.get_creative.GetCreative;
+import amaryllis.get_creative.Tooltips;
 import com.simibubi.create.content.contraptions.actors.seat.SeatBlock;
 import com.simibubi.create.content.contraptions.actors.seat.SeatEntity;
 import com.simibubi.create.foundation.block.IBE;
@@ -42,7 +43,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class ControlSeatBlock extends SeatBlock implements IBE<ControlSeatBlockEntity> {
+public class ControlSeatBlock extends SeatBlock implements IBE<ControlSeatBlockEntity>, Tooltips.RedirectShiftTooltip {
 
     public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
 
@@ -194,5 +195,10 @@ public class ControlSeatBlock extends SeatBlock implements IBE<ControlSeatBlockE
     @Override
     public BlockEntityType<? extends ControlSeatBlockEntity> getBlockEntityType() {
         return ControlSeatBlockEntity.BLOCK_ENTITY.get();
+    }
+
+    @Override
+    public Item redirectShiftTooltip() {
+        return ITEMS.get(DyeColor.RED).asItem();
     }
 }

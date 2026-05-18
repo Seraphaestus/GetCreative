@@ -1,6 +1,7 @@
 package amaryllis.get_creative.contraptions.hinge_bearing;
 
 import amaryllis.get_creative.GetCreative;
+import amaryllis.get_creative.Tooltips;
 import com.simibubi.create.foundation.block.WrenchableDirectionalBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -10,6 +11,7 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -33,7 +35,7 @@ import java.util.Map;
 
 import static net.minecraft.world.level.block.state.properties.BlockStateProperties.POWERED;
 
-public class HandleBlock extends WrenchableDirectionalBlock {
+public class HandleBlock extends WrenchableDirectionalBlock implements Tooltips.RedirectShiftTooltip {
 
     // Used to determine its door-opening sound
     public enum Material { WOODEN, COPPER, IRON }
@@ -132,5 +134,10 @@ public class HandleBlock extends WrenchableDirectionalBlock {
             case Material.IRON ->   isOpening ? SoundEvents.IRON_DOOR_OPEN   : SoundEvents.IRON_DOOR_CLOSE;
         };
         level.playSound(null, pos, sound, SoundSource.BLOCKS, 1.0F, level.getRandom().nextFloat() * 0.1F + 0.9F);
+    }
+
+    @Override
+    public Item redirectShiftTooltip() {
+        return ITEMS.get("oak").asItem();
     }
 }
