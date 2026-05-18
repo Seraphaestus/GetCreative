@@ -118,7 +118,8 @@ public class Tooltips {
                     : "tooltip.get_creative.config.mining_speciality.saw");
             components.add(Component.translatable("tooltip.get_creative.config.mining_speciality", speciality));
         }
-        if (configOptions.noMultibreak) components.add(Component.translatable("tooltip.get_creative.config.no_multibreak"));
+        if (configOptions.noMultibreak) components.add(Component.translatable("tooltip.get_creative.config.saw.no_multibreak"));
+        if (configOptions.deterministicSaw) components.add(Component.translatable("tooltip.get_creative.config.saw.deterministic"));
         if (configOptions.noReplant) components.add(Component.translatable("tooltip.get_creative.config.harvester.no_replant"));
         if (configOptions.harvestImmature) components.add(Component.translatable("tooltip.get_creative.config.harvester.immature"));
         if (configOptions.fueledTrains) components.add(Component.translatable("tooltip.get_creative.config.trains.need_fuel"));
@@ -136,12 +137,12 @@ public class Tooltips {
 
 
     private record ConfigOptions(boolean actorDisabled, boolean gravityActor, boolean noStoreItems, boolean miningSpecialty,
-                                 boolean noMultibreak, boolean harvestImmature, boolean noReplant, boolean fueledTrains,
-                                 List<ResourceLocation> noFanProcessing) {
+                                 boolean noMultibreak, boolean deterministicSaw, boolean harvestImmature, boolean noReplant,
+                                 boolean fueledTrains, List<ResourceLocation> noFanProcessing) {
         public boolean hasAny() {
             return actorDisabled || gravityActor || noStoreItems || miningSpecialty ||
-                    noMultibreak || harvestImmature || noReplant || fueledTrains ||
-                   !noFanProcessing.isEmpty();
+                   noMultibreak || deterministicSaw || harvestImmature || noReplant ||
+                   fueledTrains || !noFanProcessing.isEmpty();
         }
 
         public static ConfigOptions of(Block block) {
@@ -160,6 +161,7 @@ public class Tooltips {
                     block.defaultBlockState().is(ACTOR_COLLECTS_ITEMS) && !AllConfigs.server().kinetics.moveItemsToStorage.get(),
                     miningSpecialityDrill || miningSpecialitySaw,
                     isSaw && Config.SAW_CAN_MUTLIBREAK.isFalse(),
+                    isSaw && Config.DETERMINISTIC_SAW_PROCESSING.isTrue(),
                     isHarvester && AllConfigs.server().kinetics.harvestPartiallyGrown.get(),
                     isHarvester && !AllConfigs.server().kinetics.harvesterReplants.get(),
                     block instanceof StationBlock && AllConfigs.server().trains.trainTopSpeed.get() <= 0,

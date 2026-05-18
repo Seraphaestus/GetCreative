@@ -19,6 +19,7 @@ public class Config {
 
     public static final ModConfigSpec.BooleanValue SAW_CAN_MUTLIBREAK;
     public static final ModConfigSpec.BooleanValue SAW_CAN_BREAK_ALL_BLOCKS;
+    public static final ModConfigSpec.BooleanValue DETERMINISTIC_SAW_PROCESSING;
 
     public static final ModConfigSpec.DoubleValue DRILL_SPEED_MODIFIER;
     public static final ModConfigSpec.DoubleValue SAW_SPEED_MODIFIER;
@@ -97,6 +98,11 @@ public class Config {
                 .comment(" If true, the Mechanical Saw can break all block types, like the Mechanical Drill")
                 .comment("   Saplings remain unmineable by Mechanical Saws, as in base Create")
                 .define("saw_can_break_all_blocks", true);
+        DETERMINISTIC_SAW_PROCESSING = BUILDER
+                .comment("")
+                .comment(" If true, unfiltered Mechanical Saws will prefer processing a specific result, instead of cycling through every possible output")
+                .comment(" Wood will prefer to become Stripped, then Planks. Blocks will prefer to become Stairs.")
+                .define("deterministic_saw_processing", false);
         BUILDER.pop();
 
         BUILDER.push("Drill/Saw Specialties");
