@@ -147,6 +147,7 @@ public class Config {
         MYSTERIOUS_CONVERSIONS = BUILDER
                 .comment("")
                 .comment(" A list of mysterious conversions to add to the Recipe Viewer category, e.g. 'create:empty_blaze_burner -> create:blaze_burner'")
+                .comment(" Accepts an item definition in item[nbt] format, or an item tag in #tag format. Non-tag items may specify a count, e.g. '2x item'")
                 .defineListAllowEmpty("mysterious_conversions", List.of(
                     "get_creative:empty_breeze_whirler -> get_creative:breeze_whirler",
                     "get_creative:encapsulator -> get_creative:structure_capsule[get_creative:stored_structure={}]"
