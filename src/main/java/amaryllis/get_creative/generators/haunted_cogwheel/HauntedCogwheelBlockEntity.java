@@ -59,7 +59,7 @@ public class HauntedCogwheelBlockEntity extends GeneratingKineticBlockEntity {
     @Override
     public void initialize() {
         super.initialize();
-        if (level != null) randomizeSpeed(level.random);
+        if (level != null && hauntedSpeed == 0) randomizeSpeed(level.random);
         if (!hasSource() || getGeneratedSpeed() > getTheoreticalSpeed()) updateGeneratedRotation();
     }
 
