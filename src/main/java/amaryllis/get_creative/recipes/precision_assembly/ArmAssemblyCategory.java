@@ -78,11 +78,11 @@ public class ArmAssemblyCategory extends CreateRecipeCategory<ArmAssemblyRecipe>
     }
 
     // Recipe Viewer for Sequenced Assembly
-    public static class RecipeViewerCategory extends SequencedAssemblySubCategory {
+    public static class SequencedAssembly extends SequencedAssemblySubCategory {
 
         AnimatedMechanicalArm arm = new AnimatedMechanicalArm();
 
-        public RecipeViewerCategory() { super(25); }
+        public SequencedAssembly() { super(25); }
 
         @Override
         public void setRecipe(IRecipeLayoutBuilder builder, SequencedRecipe<?> recipe, IFocusGroup focuses, int x) {

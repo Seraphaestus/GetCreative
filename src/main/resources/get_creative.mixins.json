@@ -42,6 +42,9 @@
   ],
   "client": [
     "precision_assembly.ArmInteractionPointHandlerMixin",
+    "precision_assembly.SequencedAssemblyCategoryMixin",
+    "precision_assembly.SequencedDeployingCategoryMixin",
+
     "gramophone.LevelRendererMixin",
     "gramophone.TurntableMixin"
   ],

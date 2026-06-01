@@ -2,6 +2,7 @@ package amaryllis.get_creative;
 
 import java.util.List;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
@@ -9,6 +10,8 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.common.ModConfigSpec;
 
 public class Config {
+
+    public enum MechArmDisplay { NEVER, ALTERNATING, ALWAYS }
 
     private static final ModConfigSpec.Builder BUILDER = new ModConfigSpec.Builder();
     static final ModConfigSpec SPEC;
@@ -34,6 +37,10 @@ public class Config {
     public static final ModConfigSpec.ConfigValue<List<? extends String>> MYSTERIOUS_CONVERSIONS;
 
     public static final ModConfigSpec.BooleanValue PRECISION_ASSEMBLY_BULK_PROCESSING;
+    public static final ModConfigSpec.BooleanValue PRECISION_ASSEMBLY_CAN_SWAP_INPUTS;
+    public static final ModConfigSpec.BooleanValue MECHANICAL_ARMS_HANDLE_DEPLOYING_RECIPES;
+    public static final ModConfigSpec.BooleanValue MECHANICAL_ARMS_HANDLE_SEQUENCED_DEPLOYING_RECIPES;
+    public static final ModConfigSpec.EnumValue<MechArmDisplay> SEQUENCED_DEPLOYING_DISPLAYS_MECH_ARM;
 
     public static final ModConfigSpec.DoubleValue INDUSTRIAL_FAN_STRESS_IMPACT;
     public static final ModConfigSpec.DoubleValue INDUSTRIAL_FAN_PROPELLER_THRUST;
@@ -55,8 +62,6 @@ public class Config {
     public static final ModConfigSpec.DoubleValue BREEZE_WHIRLER_ROTATION_SPEED;
 
     public static final ModConfigSpec.DoubleValue LECTERN_CONTROLLER_REACH;
-
-    public static final ModConfigSpec.IntValue LARGE_CHEST_CAPACITY;
 
     public static final ModConfigSpec.IntValue FLUID_BARREL_CAPACITY;
     public static final ModConfigSpec.IntValue FLUID_BARREL_MAX_HEIGHT;
@@ -90,7 +95,7 @@ public class Config {
 
         BUILDER.push("Mechanical Saw");
         SAW_CAN_MUTLIBREAK = BUILDER
-                .comment(" If mining a tree will a Mechanical Saw will fell the whole tree")
+                .comment(" If true, mining a tree with a Mechanical Saw will fell the whole tree")
                 .comment("   Applies to both blocks and contraption actors")
                 .define("saw_can_multibreak", true);
         SAW_CAN_BREAK_ALL_BLOCKS = BUILDER
@@ -157,6 +162,23 @@ public class Config {
         BUILDER.push("Precision Assembly");
         PRECISION_ASSEMBLY_BULK_PROCESSING = BUILDER
                 .define("precision_assembly_bulk_processing", false);
+        PRECISION_ASSEMBLY_CAN_SWAP_INPUTS = BUILDER
+                .comment("")
+                .comment(" If true, Mechanical Arms performing assembly can pick up the next input item, even if they already holding something")
+                .comment(" This allows a single Mechanical Arm to handle all applicable steps of a Sequenced Assembly recipe on its own")
+                .define("precision_assembly_can_swap_inputs", true);
+        MECHANICAL_ARMS_HANDLE_DEPLOYING_RECIPES = BUILDER
+                .comment("")
+                .comment(" If true, Mechanical Arms can be used for Deployer Application recipes, in the same way as Precision Assembly")
+                .define("mechanical_arms_handle_deploying_recipes", false);
+        MECHANICAL_ARMS_HANDLE_SEQUENCED_DEPLOYING_RECIPES = BUILDER
+                .comment("")
+                .comment(" If true, Mechanical Arms can be used for Deploying steps in Sequenced Assembly, in the same way as Precision Assembly")
+                .define("mechanical_arms_handle_sequenced_deploying_recipes", true);
+        SEQUENCED_DEPLOYING_DISPLAYS_MECH_ARM = BUILDER
+                .comment("")
+                .comment(" Determines if the Sequenced Assembly category displays Mechanical Arms for Deploying steps, in Recipe Viewers")
+                .defineEnum("sequenced_deploying_displays_mech_arm", MechArmDisplay.NEVER);
         BUILDER.pop();
 
         //region Appliances
@@ -237,12 +259,6 @@ public class Config {
                 .defineInRange("lectern_controller_reach", 0.4d, 0d, 1024d);
         BUILDER.pop();
 
-        BUILDER.push("Large Chest");
-        LARGE_CHEST_CAPACITY = BUILDER
-                .comment(" How many inventory slots a Large Chest has per block")
-                .defineInRange("large_chest_capacity", 9, 1, 1024);
-        BUILDER.pop();
-
         BUILDER.push("Fluid Barrel");
         FLUID_BARREL_CAPACITY = BUILDER
                 .comment(" How many buckets of fluid a Fluid Barrel can hold per block")
@@ -282,5 +298,17 @@ public class Config {
     public static Block getBlockOrDefault(ModConfigSpec.ConfigValue<String> configValue, Block defaultValue) {
         return (configValue.get().isEmpty()) ? defaultValue
                : BuiltInRegistries.BLOCK.get(ResourceLocation.parse(configValue.get()));
+    }
+
+    public static boolean shouldDisplayMechArmForSequencedAssemblyStep(int index) {
+        return switch (Config.SEQUENCED_DEPLOYING_DISPLAYS_MECH_ARM.get()) {
+            case Config.MechArmDisplay.NEVER -> false;
+            case Config.MechArmDisplay.ALWAYS -> true;
+            case Config.MechArmDisplay.ALTERNATING -> {
+                if (Minecraft.getInstance().level == null) yield false;
+                long time = Minecraft.getInstance().level.getGameTime() - index * 10;
+                yield (time / 80 % 2 != 0);
+            }
+        };
     }
 }

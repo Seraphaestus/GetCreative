@@ -1,5 +1,6 @@
 package amaryllis.get_creative.mixin.precision_assembly;
 
+import amaryllis.get_creative.Config;
 import amaryllis.get_creative.recipes.precision_assembly.ArmAssembly;
 import amaryllis.get_creative.recipes.precision_assembly.ArmAssemblyBehaviour;
 import amaryllis.get_creative.recipes.precision_assembly.IArmInteractionPoint;
@@ -102,6 +103,11 @@ public class MechanicalArmMixin extends KineticBlockEntity implements Transforma
     protected void getCreative$searchItemForAssembly(CallbackInfo cbi) {
         if (redstoneLocked) return;
 
+        if (!heldItem.isEmpty() && Config.PRECISION_ASSEMBLY_CAN_SWAP_INPUTS.isFalse()) {
+            cbi.cancel();
+            return;
+        }
+
         int startIndex = (selectionMode.get() == SelectionMode.PREFER_FIRST) ? 0 : lastInputIndex + 1;
         int scanRange = (selectionMode.get() == SelectionMode.FORCED_ROUND_ROBIN) ? lastInputIndex + 2 : inputs.size();
         if (scanRange > inputs.size()) scanRange = inputs.size();
@@ -119,6 +125,10 @@ public class MechanicalArmMixin extends KineticBlockEntity implements Transforma
                 }
             }
         }
+
+        if (!heldItem.isEmpty()) {
+            cbi.cancel();
+        }
     }
 
     @Inject(method = "collectItem", at = @At(value = "HEAD"), cancellable = true)
@@ -131,6 +141,12 @@ public class MechanicalArmMixin extends KineticBlockEntity implements Transforma
             int amountExtracted = getDistributableAmountForAssembly(inputPoint, slot);
             if (amountExtracted <= 0) continue;
 
+            // If holding an item, we can only swap them if we can pick up the whole stack
+            if (!heldItem.isEmpty()) {
+                ItemStack stackToGrab = inputPoint.extract(thisInstance, slot, true);
+                if (amountExtracted < stackToGrab.getCount()) continue;
+            }
+
             // Grab item for assembly
             ItemStack prevHeld = heldItem;
             heldItem = inputPoint.extract(thisInstance, slot, amountExtracted, false);
@@ -139,6 +155,9 @@ public class MechanicalArmMixin extends KineticBlockEntity implements Transforma
             chasedPointIndex = -1;
             sendData();
             setChanged();
+
+            // Replace with previously held item
+            if (!prevHeld.isEmpty()) inputPoint.insert(thisInstance, prevHeld, false);
 
             if (!ItemStack.isSameItem(heldItem, prevHeld))
                 level.playSound(null, worldPosition, SoundEvents.ITEM_PICKUP, SoundSource.BLOCKS, 0.125f, 0.5f + Create.RANDOM.nextFloat() * 0.25f);
@@ -149,7 +168,7 @@ public class MechanicalArmMixin extends KineticBlockEntity implements Transforma
     }
 
     protected int getDistributableAmountForAssembly(ArmInteractionPoint inputPoint, int slot) {
-        if (!heldItem.isEmpty()) return -1;
+        if (!heldItem.isEmpty() && Config.PRECISION_ASSEMBLY_CAN_SWAP_INPUTS.isFalse()) return -1;
         ArmBlockEntity thisInstance = (ArmBlockEntity)(Object)this;
 
         ItemStack stackToGrab = inputPoint.extract(thisInstance, slot, true);
@@ -166,7 +185,7 @@ public class MechanicalArmMixin extends KineticBlockEntity implements Transforma
 
             ItemStack assemblyInput = outputPoint.extract(thisInstance, slot, true);
             if (assemblyInput.isEmpty()) continue;
-            if (ArmAssembly.getRecipe(level, assemblyInput, stackToGrab).isPresent()) {
+            if (ArmAssembly.requiresItemForRecipe(level, assemblyInput, stackToGrab)) {
                 // This output requires us to grab this item for assembly, so grab the whole stack
                 return stackToGrab.getCount();
             }
@@ -194,6 +213,7 @@ public class MechanicalArmMixin extends KineticBlockEntity implements Transforma
     public boolean getCreative$setHeldItem(ItemStack item) {
         if (!heldItem.isEmpty()) return false;
         heldItem = item;
+
         return true;
     }
     public void getCreative$damageHeldItem() {

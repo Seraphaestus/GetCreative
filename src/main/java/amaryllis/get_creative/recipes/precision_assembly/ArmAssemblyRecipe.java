@@ -92,7 +92,7 @@ public class ArmAssemblyRecipe extends ProcessingRecipe<RecipeWrapper, ArmAssemb
 
     @Override
     public Supplier<Supplier<SequencedAssemblySubCategory>> getJEISubCategory() {
-        return () -> ArmAssemblyCategory.RecipeViewerCategory::new;
+        return () -> ArmAssemblyCategory.SequencedAssembly::new;
     }
 
     //region Factory, Builder, and Serializer
