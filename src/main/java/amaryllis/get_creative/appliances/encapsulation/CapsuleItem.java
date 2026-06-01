@@ -2,6 +2,7 @@ package amaryllis.get_creative.appliances.encapsulation;
 
 import amaryllis.get_creative.GetCreative;
 import com.simibubi.create.AllDataComponents;
+import com.simibubi.create.content.kinetics.deployer.DeployerFakePlayer;
 import com.simibubi.create.content.schematics.SchematicPrinter;
 import com.simibubi.create.foundation.utility.BlockHelper;
 import net.minecraft.ChatFormatting;
@@ -20,6 +21,7 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -92,8 +94,10 @@ public class CapsuleItem extends Item {
         Level level = context.getLevel();
         if (level.isClientSide) return InteractionResult.SUCCESS;
 
-        Rotation rotation = getStructureRotation(stack, context.getHorizontalDirection());
-        BlockPos anchor = context.getClickedPos().relative(context.getClickedFace())
+        BlockPlaceContext placeContext = new BlockPlaceContext(context);
+
+        Rotation rotation = getStructureRotation(stack, placeContext.getHorizontalDirection());
+        BlockPos anchor = placeContext.getClickedPos()
                 .offset(getOffset(stack).rotate(rotation));
 
         StructureTemplate structure = getStructure(level, stack);
