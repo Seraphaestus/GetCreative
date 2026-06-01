@@ -38,6 +38,7 @@ import net.neoforged.neoforge.common.util.FakePlayer;
 import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.DeferredItem;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
 import java.util.List;
@@ -99,16 +100,21 @@ public class ControlSeatBlock extends SeatBlock implements IBE<ControlSeatBlockE
     public int getSignal(@NotNull BlockState state, @NotNull BlockGetter level, @NotNull BlockPos pos, @NotNull Direction oppositeDir) {
         if (!(level instanceof CommonLevelAccessor entityGetter)) return 0;
         if (!(level.getBlockEntity(pos) instanceof ControlSeatBlockEntity controlSeatBE)) return 0;
+        if (oppositeDir.getAxis() == Direction.Axis.Y) return 0;
 
         Entity passenger = getPassenger(entityGetter, pos);
         if (passenger == null) return 0;
 
         Direction facing = state.getValue(FACING);
         Direction relativeDirection = getRelativeDirection(oppositeDir.getOpposite(), facing);
+        if (relativeDirection == null) {
+            GetCreative.LOGGER.error("Couldn't determine relative direction for Control Seat output");
+            return 0;
+        }
         return getSignalForSide(controlSeatBE, passenger, relativeDirection, facing);
     }
 
-    protected Direction getRelativeDirection(Direction direction, Direction facing) {
+    protected @Nullable Direction getRelativeDirection(Direction direction, Direction facing) {
         return switch (direction.get2DDataValue() - facing.get2DDataValue()) {
             case 0 -> Direction.UP;
             case 1, -3 -> Direction.EAST;
@@ -119,7 +125,6 @@ public class ControlSeatBlock extends SeatBlock implements IBE<ControlSeatBlockE
     }
 
     protected int getSignalForSide(ControlSeatBlockEntity be, Entity passenger, Direction side, Direction facing) {
-
         switch (side) {
             // Pitch
             case Direction.UP, Direction.DOWN:
