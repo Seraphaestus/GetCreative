@@ -108,12 +108,8 @@ public class MechanicalArmMixin extends KineticBlockEntity implements Transforma
             return;
         }
 
-        int startIndex = (selectionMode.get() == SelectionMode.PREFER_FIRST) ? 0 : lastInputIndex + 1;
-        int scanRange = (selectionMode.get() == SelectionMode.FORCED_ROUND_ROBIN) ? lastInputIndex + 2 : inputs.size();
-        if (scanRange > inputs.size()) scanRange = inputs.size();
-
         ArmBlockEntity thisInstance = (ArmBlockEntity)(Object)this;
-        for (int i = startIndex; i < scanRange; i++) {
+        for (int i = 0; i < inputs.size(); i++) {
             ArmInteractionPoint inputPoint = inputs.get(i);
             if (!inputPoint.isValid()) continue;
             for (int slot = 0; slot < inputPoint.getSlotCount(thisInstance); slot++) {
