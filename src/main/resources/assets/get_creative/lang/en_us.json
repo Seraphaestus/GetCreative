@@ -70,7 +70,7 @@
   "tooltip.get_creative.config.mining_speciality.drill": "_Pickaxe or Shovel_",
   "tooltip.get_creative.config.mining_speciality.saw": "_Axe or Hoe_",
   "tooltip.get_creative.config.saw.no_multibreak": "- Can't chop _whole trees_ at once",
-  "tooltip.get_creative.config.saw.deterministic": "- Prioritizes particular _outputs_ when _processing items_ with _no filter_",
+  "tooltip.get_creative.config.saw.deterministic": "- Prioritizes crafting _default outputs_ when _unfiltered_",
   "tooltip.get_creative.config.harvester.no_replant": "- Doesn't automatically _replant_",
   "tooltip.get_creative.config.harvester.immature": "- _Harvests_ _partially grown_ crops",
   "tooltip.get_creative.config.trains.need_fuel": "- _Trains_ require _fuel_",
