@@ -5,6 +5,8 @@ import com.simibubi.create.content.kinetics.belt.behaviour.BeltProcessingBehavio
 import com.simibubi.create.content.kinetics.belt.behaviour.TransportedItemStackHandlerBehaviour;
 import com.simibubi.create.content.kinetics.belt.behaviour.TransportedItemStackHandlerBehaviour.TransportedResult;
 import com.simibubi.create.content.kinetics.belt.transport.TransportedItemStack;
+import net.createmod.catnip.platform.CatnipServices;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.item.ItemStack;
 
 import java.util.ArrayList;
@@ -61,6 +63,9 @@ public class BeltArmAssemblyCallbacks {
                     ? TransportedResult.convertTo(left)
                     : TransportedResult.convertToAndLeaveHeld(collect, left));
         }
+
+        CatnipServices.NETWORK.sendToClientsAround((ServerLevel)behaviour.blockEntity.getLevel(), handler.getPos(), 16,
+                new ArmAssemblyParticlesPacket(handler.getPos(), transported.stack.copy()));
 
         behaviour.blockEntity.sendData();
         return ProcessingResult.HOLD;

@@ -4,6 +4,7 @@ import amaryllis.get_creative.contraptions.hinge_bearing.HingeBearingInteractPac
 import amaryllis.get_creative.appliances.linked_controller.packets.LinkedDeviceBindPacket;
 import amaryllis.get_creative.appliances.linked_controller.packets.LinkedDeviceInputPacket;
 import amaryllis.get_creative.appliances.linked_controller.packets.LinkedDeviceStopLecternPacket;
+import amaryllis.get_creative.recipes.precision_assembly.ArmAssemblyParticlesPacket;
 import net.createmod.catnip.net.base.BasePacketPayload;
 import net.createmod.catnip.net.base.CatnipPacketRegistry;
 import net.minecraft.network.RegistryFriendlyByteBuf;
@@ -17,7 +18,9 @@ public enum CustomPackets implements BasePacketPayload.PacketTypeProvider {
     HINGE_BEARING_INTERACT(HingeBearingInteractPacket.class, HingeBearingInteractPacket.STREAM_CODEC),
     LINKED_DEVICE_INPUT(LinkedDeviceInputPacket.class, LinkedDeviceInputPacket.STREAM_CODEC),
     LINKED_DEVICE_BIND(LinkedDeviceBindPacket.class, LinkedDeviceBindPacket.STREAM_CODEC),
-    LINKED_DEVICE_USE_LECTERN(LinkedDeviceStopLecternPacket.class, LinkedDeviceStopLecternPacket.STREAM_CODEC)
+    LINKED_DEVICE_USE_LECTERN(LinkedDeviceStopLecternPacket.class, LinkedDeviceStopLecternPacket.STREAM_CODEC),
+    // Server to Client
+    PRECISION_ASSEMBLY_PARTICLES(ArmAssemblyParticlesPacket.class, ArmAssemblyParticlesPacket.STREAM_CODEC)
     ;
 
     private final CatnipPacketRegistry.PacketType<?> type;
