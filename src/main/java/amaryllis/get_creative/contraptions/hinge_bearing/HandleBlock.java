@@ -138,6 +138,6 @@ public class HandleBlock extends WrenchableDirectionalBlock implements Tooltips.
 
     @Override
     public Item redirectShiftTooltip() {
-        return ITEMS.get("oak").asItem();
+        return ITEMS.get("oak_handle").asItem();
     }
 }
