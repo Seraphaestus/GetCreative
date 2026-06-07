@@ -8,6 +8,7 @@ import com.simibubi.create.foundation.block.IBE;
 import com.simibubi.create.foundation.utility.BlockHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.InteractionHand;
@@ -203,7 +204,7 @@ public class ControlSeatBlock extends SeatBlock implements IBE<ControlSeatBlockE
     }
 
     @Override
-    public Item redirectShiftTooltip() {
-        return ITEMS.get(DyeColor.RED).asItem();
+    public ResourceLocation redirectShiftTooltip() {
+        return GetCreative.ID("red_control_seat");
     }
 }

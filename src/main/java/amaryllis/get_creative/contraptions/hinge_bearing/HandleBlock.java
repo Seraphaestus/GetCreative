@@ -5,6 +5,7 @@ import amaryllis.get_creative.Tooltips;
 import com.simibubi.create.foundation.block.WrenchableDirectionalBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -137,7 +138,7 @@ public class HandleBlock extends WrenchableDirectionalBlock implements Tooltips.
     }
 
     @Override
-    public Item redirectShiftTooltip() {
-        return ITEMS.get("oak_handle").asItem();
+    public ResourceLocation redirectShiftTooltip() {
+        return GetCreative.ID("oak_handle");
     }
 }

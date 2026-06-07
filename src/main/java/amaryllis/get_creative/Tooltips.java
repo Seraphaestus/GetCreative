@@ -81,7 +81,10 @@ public class Tooltips {
     private static void addShiftDescriptions(ItemTooltipEvent event, Block block, Item item) {
         // Allow item variants to redirect to one single tooltip
         if (block instanceof RedirectShiftTooltip redirector) {
-            item = redirector.redirectShiftTooltip();
+            var itemID = redirector.redirectShiftTooltip();
+            if (BuiltInRegistries.ITEM.containsKey(itemID)) {
+                item = BuiltInRegistries.ITEM.get(itemID);
+            }
         }
 
         // Data-driven Create tooltips
@@ -226,6 +229,6 @@ public class Tooltips {
 
     
     public interface RedirectShiftTooltip {
-        Item redirectShiftTooltip();
+        ResourceLocation redirectShiftTooltip();
     }
 }
