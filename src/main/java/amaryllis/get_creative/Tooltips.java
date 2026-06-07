@@ -3,9 +3,8 @@ package amaryllis.get_creative;
 import amaryllis.get_creative.appliances.industrial_fan.IndustrialFanBlock;
 import amaryllis.get_creative.contraptions.ActorConfigHandler;
 import amaryllis.get_creative.utility.CompatHelper;
-import amaryllis.get_creative.utility.TagHelper;
+import amaryllis.get_creative.utility.FanProcessingTypeHelper;
 import com.simibubi.create.Create;
-import com.simibubi.create.api.registry.CreateBuiltInRegistries;
 import com.simibubi.create.content.contraptions.actors.harvester.HarvesterBlock;
 import com.simibubi.create.content.kinetics.drill.DrillBlock;
 import com.simibubi.create.content.kinetics.fan.EncasedFanBlock;
@@ -18,9 +17,7 @@ import com.simibubi.create.foundation.item.TooltipModifier;
 import com.simibubi.create.infrastructure.config.AllConfigs;
 import net.createmod.catnip.lang.FontHelper;
 import net.minecraft.ChatFormatting;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
@@ -28,21 +25,14 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.crafting.RecipeHolder;
-import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.material.Fluid;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.player.ItemTooltipEvent;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Stream;
 
 @EventBusSubscriber(value = Dist.CLIENT)
 public class Tooltips {
@@ -93,10 +83,6 @@ public class Tooltips {
         tooltip.modify(event);
     }
 
-    private static Stream<RecipeHolder<?>> getRecipes() {
-        return Minecraft.getInstance().getConnection().getRecipeManager().getRecipes().stream();
-    }
-
     private static int getConfigDocumentationIndex(List<Component> tooltip) {
         for (int i = 0; i < tooltip.size(); i++) {
             if (tooltip.get(i).getString().isEmpty()) return i;
@@ -127,9 +113,7 @@ public class Tooltips {
         if (configOptions.harvestImmature) components.add(Component.translatable("tooltip.get_creative.config.harvester.immature"));
         if (configOptions.fueledTrains) components.add(Component.translatable("tooltip.get_creative.config.trains.need_fuel"));
         for (ResourceLocation fanType: configOptions.noFanProcessing) {
-            var typePath = fanType.getPath();
-            if (typePath.equals("splashing")) typePath = "washing";
-            var type = Component.translatable(fanType.getNamespace() + ".recipe.fan_" + typePath);
+            var type = FanProcessingTypeHelper.getName(fanType);
             components.add(Component.translatable("tooltip.get_creative.config.no_fan_processing", type));
         }
 
@@ -156,7 +140,7 @@ public class Tooltips {
             boolean miningSpecialitySaw = isSaw && Config.SAW_CAN_BREAK_ALL_BLOCKS.isTrue() && Config.SAW_SPEED_MODIFIER.get() != 1;
             List<ResourceLocation> disabledFanProcessingTypes =
                 (block instanceof EncasedFanBlock || block instanceof IndustrialFanBlock)
-                    ? FanProcessingTypeHelper.getDisabledTypes() : List.of();
+                    ? FanProcessingTypeHelper.getDisabledTypes(true) : List.of();
 
             return new ConfigOptions(
                     actorDisabled,
@@ -172,61 +156,6 @@ public class Tooltips {
             );
         }
     }
-
-
-    private record FanProcessingTypeHelper(TagKey<Block> blockCatalysts, TagKey<Fluid> fluidCatalysts, Boolean hasRecipes) {
-        private static final Map<ResourceLocation, FanProcessingTypeHelper> PROCESSING_TYPES = new HashMap<>();
-
-        private static final ResourceLocation FAN_BLASTING = Create.asResource("blasting");
-        private static final ResourceLocation FAN_SMOKING = Create.asResource("smoking");
-
-        public static FanProcessingTypeHelper of(ResourceLocation typeID, RecipeType<?> recipeType) {
-            var catalystID = typeID.withPrefix("fan_processing_catalysts/");
-            return new FanProcessingTypeHelper(
-                    TagKey.create(Registries.BLOCK, catalystID),
-                    TagKey.create(Registries.FLUID, catalystID),
-                    getRecipes().anyMatch(recipe -> recipe.value().getType().equals(recipeType))
-            );
-        }
-
-        public static @Nullable RecipeType<?> getRecipeType(ResourceLocation typeID) {
-            if (typeID.equals(FAN_BLASTING)) return RecipeType.BLASTING;
-            if (typeID.equals(FAN_SMOKING)) return RecipeType.SMOKING;
-            return BuiltInRegistries.RECIPE_TYPE.get(typeID);
-        }
-
-        public boolean isDisabled(RegistryAccess registryAccess) {
-            return !hasRecipes || !TagHelper.hasAnyBlocks(registryAccess, blockCatalysts)
-                               && !TagHelper.hasAnyFluids(registryAccess, fluidCatalysts);
-        }
-
-        public static boolean isDisabled(ResourceLocation type) {
-            if (Minecraft.getInstance().level == null) return false;
-            var registryAccess = Minecraft.getInstance().level.registryAccess();
-
-            // Redirect Blasting, Smoking types which don't have their own recipe type
-            RecipeType<?> recipeType = FanProcessingTypeHelper.getRecipeType(type);
-            if (recipeType == null) return false;
-
-            // Cache data for fan processing type
-            if (!PROCESSING_TYPES.containsKey(type)) {
-                PROCESSING_TYPES.put(type, FanProcessingTypeHelper.of(type, recipeType));
-            }
-
-            return PROCESSING_TYPES.get(type).isDisabled(registryAccess);
-        }
-
-        public static List<ResourceLocation> getDisabledTypes() {
-            List<ResourceLocation> disabledTypes = new ArrayList<>();
-            for (var entry : CreateBuiltInRegistries.FAN_PROCESSING_TYPE.entrySet()) {
-                var type = entry.getKey().location();
-                if (FanProcessingTypeHelper.isDisabled(type)) disabledTypes.add(type);
-            }
-            return disabledTypes;
-        }
-
-    }
-
     
     public interface RedirectShiftTooltip {
         ResourceLocation redirectShiftTooltip();
