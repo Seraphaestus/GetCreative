@@ -1,5 +1,6 @@
 package amaryllis.get_creative.mixin;
 
+import amaryllis.get_creative.generators.EntityCaptureItem;
 import com.mojang.datafixers.util.Either;
 import net.minecraft.util.random.SimpleWeightedRandomList;
 import net.minecraft.util.random.WeightedEntry;
@@ -16,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Mixin(BaseSpawner.class)
-public class BaseSpawnerAccessor implements IOwnedSpawner {
+public class SpawnerMixin implements IOwnedSpawner, EntityCaptureItem.ISpawner {
 
     @Shadow private SimpleWeightedRandomList<SpawnData> spawnPotentials;
     @Shadow private SpawnData nextSpawnData;

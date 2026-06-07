@@ -38,7 +38,9 @@
     "StationBlockMixin",
     "DeployerMixin",
 
-    "LecternControllerMixin"
+    "LecternControllerMixin",
+
+    "SpawnerMixin"
   ],
   "client": [
     "precision_assembly.ArmInteractionPointHandlerMixin",
